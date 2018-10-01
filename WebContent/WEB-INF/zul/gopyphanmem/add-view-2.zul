@@ -1,0 +1,109 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client"
+	viewModel="@id('vm') @init(arg.model)"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native" title="${arg.save}" id="wdn"
+		border="normal" mode="modal" contentStyle="overflow:auto;"
+		closable="true" style="max-width:600px"
+		whatever="@load(false) @converter('vn.toancauxanh.service.DetachConverter')">
+		<zscript><![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			import java.awt.*;
+			import java.awt.image.*;
+			import javax.imageio.ImageIO;
+			import java.net.URL;
+			import java.awt.geom.*;
+			BufferedImage imagevar2 = new BufferedImage(400, 300, BufferedImage.TYPE_INT_ARGB);
+		]]></zscript>
+		<script type="text/javascript">
+			function zoomImg(index){
+				// Get the modal
+				var modal = document.getElementById('myModal');
+				// Get the image and insert it inside the modal - use its "alt" text as a caption
+				var img = document.getElementById('img-'+index);
+				var modalImg = document.getElementById("img01");
+				var captionText = document.getElementById("caption");
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				captionText.innerHTML = img.alt;
+				var span = document.getElementsByClassName("close")[0];
+				span.onclick = function() { 
+					modal.style.display = "none";
+				}
+			}
+		</script>
+		<div zclass="panel-body">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<div zclass="row">
+						<div zclass="col-lg-12">
+							<div class="form-group">
+								<x:label>
+									Họ và tên : 
+								</x:label>
+								<label width="100%" maxlength="255" value="@load(vm.hoTen)" />
+							</div>
+							<div class="form-group">
+								<x:label>
+									Email : 
+								</x:label>
+								<label width="100%" maxlength="255" value="@load(vm.email)" />
+							</div>
+							<div class="form-group">
+								<x:label>
+									Số điện thoại : 
+								</x:label>
+								<label width="100%" maxlength="255" value="@load(vm.soDienThoai)" />
+							</div>
+							<div class="form-group">
+								<x:label class="control-label">
+									Nội dung góp ý : 
+								</x:label>
+								<textbox multiline="true" rows="5" readonly="true"
+									class="form-control" width="100%"
+									placeholder="Nhập..."
+									value="@load(vm.noiDung)" />
+							</div>
+						</div>
+						<div zclass="col-lg-12">
+							<div class="form-group">
+								<x:label class="control-label">
+								Tài liệu hoặc hình ảnh phản hồi
+								</x:label>
+								<x:label class="control-label" percentage-width="48%" percentage-height="4.7%" data-width="499px" data-height="36px" style="font-family: initial; font-size: 12px; color: #989A9C; overflow: hidden;">
+									(Click vào để phóng to hình ảnh hoặc tải file)
+								</x:label>
+							</div>
+						</div>
+						<div zclass="col-lg-12" style="margin-bottom: 3%;">
+							<div children="@load(vm.showListImgs)" class="content-gopy">
+						   		<template name="children">
+						   			<div class="col-md-4 col-sm-4 col-xs-4">
+						    			<x:img onClick="return zoomImg(${forEachStatus.index })" id="img-${forEachStatus.index }" sclass="images-error mis-image-upload" src="@load(vm.isFileWord(each) eq false ? each: vm.srcImageFile(each))" width="264px" height="100px" />
+						   				<button label="" visible="@load(vm.isFileWord(each) eq true)" onClick="@command('downloadFile',filePath=each)" sclass="downloadfile">
+						   				</button>
+						   			</div>
+						   		</template> 
+						   	</div>
+							<!-- The Modal -->
+							<x:div id="myModal" class="modal">
+								<n:span class="close" title="Đóng hình ảnh">X</n:span>
+								<x:img class="modal-content" id="img01" />
+								<x:div id="caption"></x:div>
+							</x:div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div zclass="row form-actions">
+				<div zclass="col-lg-12">
+					<x:button class="btn btn-dong" onClick="@command('close', detach=wdn, fileName=fileName)">
+						<n:i class="fa fa-remove"></n:i> 
+						Đóng
+					</x:button>
+				</div>
+			</div>		
+		</div>
+	</window>
+</idspace>

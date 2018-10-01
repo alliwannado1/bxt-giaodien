@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<n:html lang="en">
+
+<n:head>
+  <n:meta charset="utf-8">
+  <n:meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <n:title>Quản lý chi tiêu</n:title>
+  <n:link rel="stylesheet" href="spendManager/materialdesignicons.min.css" tppabs="http://www.urbanui.com/pearl-admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <n:link rel="stylesheet" href="spendManager/feather.css" tppabs="http://www.urbanui.com/pearl-admin/vendors/iconfonts/puse-icons-feather/feather.css">
+  <n:link rel="stylesheet" href="spendManager/vendor.bundle.base.css" tppabs="http://www.urbanui.com/pearl-admin/vendors/css/vendor.bundle.base.css">
+  <n:link rel="stylesheet" href="spendManager/vendor.bundle.addons.css" tppabs="http://www.urbanui.com/pearl-admin/vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <n:link rel="stylesheet" href="spendManager/font-awesome.min.css" tppabs="http://www.urbanui.com/pearl-admin/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <n:link rel="stylesheet" href="spendManager/style.css" tppabs="http://www.urbanui.com/pearl-admin/css/style.css">
+  <!-- endinject -->
+  <n:link rel="shortcut icon" href="spendManager/favicon.png" tppabs="http://www.urbanui.com/pearl-admin/images/favicon.png" />
+</n:head>
+<n:body>
+  <n:div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <n:nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row navbar-success">
+      <n:div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <n:a class="navbar-brand brand-logo" href="spendManager/index.html" tppabs="http://www.urbanui.com/pearl-admin/index.html"><n:img src="spendManager/logo.svg" tppabs="http://www.urbanui.com/pearl-admin/images/logo.svg" alt="logo"/></n:a>
+        <n:a class="navbar-brand brand-logo-mini" href="spendManager/index.html" tppabs="http://www.urbanui.com/pearl-admin/index.html"><n:img src="spendManager/logo-mini.svg" tppabs="http://www.urbanui.com/pearl-admin/images/logo-mini.svg" alt="logo"/></n:a>
+      </n:div>
+      <n:div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <n:button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <n:span class="mdi mdi-menu"></n:span>
+        </n:button>
+        <n:ul class="navbar-nav">
+          <n:li class="nav-item d-none d-lg-block">
+            <n:a class="nav-link">
+              <n:i class="mdi mdi-fullscreen" id="fullscreen-button"></n:i>
+            </n:a>
+          </n:li>
+          <n:li class="nav-item">
+            <n:form class="nav-link form-inline mt-2 mt-md-0 d-none d-lg-flex search">
+              <n:input type="text" class="form-control" placeholder="Tìm kiếm thông tin ...">
+            </n:form>
+          </n:li>
+        </n:ul>
+        <n:ul class="navbar-nav navbar-nav-right">
+          <n:li class="nav-item dropdown d-none d-lg-flex">
+            <n:a class="nav-link dropdown-toggle" id="languageDropdown" href="spendManager/#" data-toggle="dropdown">
+              English
+            </n:a>
+            <n:div class="dropdown-menu navbar-dropdown" aria-labelledby="languageDropdown">
+              <n:a class="dropdown-item" href="spendManager/#">
+                French
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item" href="spendManager/#">
+                Spain
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item" href="spendManager/#">
+                Latin
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item" href="spendManager/#">
+                Japanese
+              </n:a>
+            </n:div>
+          </n:li>
+          
+          <n:li class="nav-item dropdown">
+            <n:a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="spendManager/#" data-toggle="dropdown">
+              <n:i class="mdi mdi-bell-outline"></n:i>
+              <n:span class="count bg-danger">7</n:span>
+            </n:a>
+            <n:div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <n:h6 class="p-3 mb-0">Notifications</n:h6>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item preview-item">
+                <n:div class="preview-thumbnail">
+                  <n:div class="preview-icon bg-success">
+                    <n:i class="mdi mdi-calendar"></n:i>
+                  </n:div>
+                </n:div>
+                <n:div class="preview-item-content">
+                  <n:h6 class="preview-subject">Event today</n:h6>
+                  <n:p class="text-muted ellipsis">
+                    Just a reminder that you have an event today
+                  </n:p>
+                </n:div>
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item preview-item">
+                <n:div class="preview-thumbnail">
+                  <n:div class="preview-icon bg-warning">
+                    <n:i class="mdi mdi-settings"></n:i>
+                  </n:div>
+                </n:div>
+                <n:div class="preview-item-content">
+                  <n:h6 class="preview-subject">Settings</n:h6>
+                  <n:p class="text-muted ellipsis">
+                    Update dashboard
+                  </n:p>
+                </n:div>
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item preview-item">
+                <n:div class="preview-thumbnail">
+                  <n:div class="preview-icon bg-info">
+                    <n:i class="mdi mdi-link-variant"></n:i>
+                  </n:div>
+                </n:div>
+                <n:div class="preview-item-content">
+                  <n:h6 class="preview-subject">Launch Admin</n:h6>
+                  <n:p class="text-muted ellipsis">
+                    New admin wow!
+                  </n:p>
+                </n:div>
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:h6 class="p-3 mb-0 text-center">See all notifications</n:h6>
+            </n:div>
+          </n:li>
+          <n:li class="nav-item dropdown">
+            <n:a class="nav-link dropdown-toggle nav-profile" id="profileDropdown" href="spendManager/#" data-toggle="dropdown" aria-expanded="false">
+              <n:img src="spendManager/face1.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face1.jpg" alt="image">
+              <n:span class="d-none d-lg-inline">Nguyễn Tuấn Bảo</n:span>
+            </n:a>
+            <n:div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+              <n:a class="dropdown-item" href="spendManager/#">
+                <n:i class="mdi mdi-cached mr-2 text-success"></n:i>
+                Cập nhật hồ sơ
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+
+              <n:a class="dropdown-item" href="spendManager/#">
+                <n:i class="mdi mdi-cached mr-2 text-success"></n:i>
+                Sao lưu dữ liệu
+              </n:a>
+              <n:div class="dropdown-divider"></n:div>
+              <n:a class="dropdown-item" href="spendManager/#">
+                <n:i class="mdi mdi-logout mr-2 text-primary"></n:i>
+                Đăng xuất
+              </n:a>
+            </n:div>
+          </n:li>
+
+        </n:ul>
+        <n:button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <n:span class="mdi mdi-menu"></n:span>
+        </n:button>
+      </n:div>
+    </n:nav>
+    <!-- partial -->
+    <n:div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <n:div class="theme-setting-wrapper">
+        <n:div id="settings-trigger"><n:i class="mdi mdi-settings"></n:i></n:div>
+        <n:div id="theme-settings" class="settings-panel">
+          <n:i class="settings-close mdi mdi-close"></n:i>
+          <n:p class="settings-heading">SIDEBAR SKINS</n:p>
+          <n:div class="sidebar-bg-options selected" id="sidebar-light-theme"><n:div class="img-ss rounded-circle bg-light border mr-3"></n:div>Light</n:div>
+          <n:div class="sidebar-bg-options" id="sidebar-dark-theme"><n:div class="img-ss rounded-circle bg-dark border mr-3"></n:div>Dark</n:div>
+          <n:p class="settings-heading mt-2">HEADER SKINS</n:p>
+          <n:div class="color-tiles mx-0 px-4">
+            <n:div class="tiles primary"></n:div>
+            <n:div class="tiles success"></n:div>
+            <n:div class="tiles warning"></n:div>
+            <n:div class="tiles danger"></n:div>
+            <n:div class="tiles pink"></n:div>
+            <n:div class="tiles info"></n:div>
+            <n:div class="tiles dark"></n:div>
+            <n:div class="tiles default"></n:div>
+          </n:div>
+        </n:div>
+      </n:div>
+      <n:div id="right-sidebar" class="settings-panel">
+        <n:i class="settings-close mdi mdi-close"></n:i>
+        <n:ul class="nav nav-tabs" id="setting-panel" role="tablist">
+          <n:li class="nav-item">
+            <n:a class="nav-link active" id="todo-tab" data-toggle="tab" href="spendManager/#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</n:a>
+          </n:li>
+          <n:li class="nav-item">
+            <n:a class="nav-link" id="chats-tab" data-toggle="tab" href="spendManager/#chats-section" role="tab" aria-controls="chats-section">CHATS</n:a>
+          </n:li>
+        </n:ul>
+        <n:div class="tab-content" id="setting-content">
+          <n:div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+            <n:div class="add-items d-flex px-3 mb-0">
+              <n:form class="form w-100">
+                <n:div class="form-group d-flex">
+                  <n:input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <n:button type="submit" class="add btn btn-primary todo-list-add-btn">Add</n:button>
+                </n:div>
+              </n:form>
+            </n:div>
+            <n:div class="list-wrapper px-3">
+              <n:ul class="d-flex flex-column-reverse todo-list">
+                <n:li>
+                  <n:div class="form-check">
+                    <n:label class="form-check-label">
+                      <n:input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </n:label>
+                  </n:div>
+                  <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                </n:li>
+                <n:li>
+                  <n:div class="form-check">
+                    <n:label class="form-check-label">
+                      <n:input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </n:label>
+                  </n:div>
+                  <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                </n:li>
+                <n:li>
+                  <n:div class="form-check">
+                    <n:label class="form-check-label">
+                      <n:input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </n:label>
+                  </n:div>
+                  <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                </n:li>
+                <n:li class="completed">
+                  <n:div class="form-check">
+                    <n:label class="form-check-label">
+                      <n:input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </n:label>
+                  </n:div>
+                  <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                </n:li>
+                <n:li class="completed">
+                  <n:div class="form-check">
+                    <n:label class="form-check-label">
+                      <n:input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </n:label>
+                  </n:div>
+                  <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                </n:li>
+              </n:ul>
+            </n:div>
+            <n:div class="events py-4 border-bottom px-3">
+              <n:div class="wrapper d-flex mb-2">
+                <n:i class="mdi mdi-circle-outline text-primary mr-2"></n:i>
+                <n:span>Feb 11 2018</n:span>
+              </n:div>
+              <n:p class="mb-0 font-weight-thin text-gray">Creating component page</n:p>
+              <n:p class="text-gray mb-0">build a js based app</n:p>
+            </n:div>
+            <n:div class="events pt-4 px-3">
+              <n:div class="wrapper d-flex mb-2">
+                <n:i class="mdi mdi-circle-outline text-primary mr-2"></n:i>
+                <n:span>Feb 7 2018</n:span>
+              </n:div>
+              <n:p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</n:p>
+              <n:p class="text-gray mb-0 ">Call Sarah Graves</n:p>
+            </n:div>
+          </n:div>
+          <!-- To do section tab ends -->
+          <n:div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <n:div class="d-flex align-items-center justify-content-between border-bottom">
+              <n:p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</n:p>
+              <n:small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</n:small>
+            </n:div>
+            <n:ul class="chat-list">
+              <n:li class="list active">
+                <n:div class="profile"><n:img src="spendManager/face1.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face1.jpg" alt="image"><n:span class="online"></n:span></n:div>
+                <n:div class="info">
+                  <n:p>Thomas Douglas</n:p>
+                  <n:p>Available</n:p>
+                </n:div>
+                <n:small class="text-muted my-auto">19 min</n:small>
+              </n:li>
+              <n:li class="list">
+                <n:div class="profile"><n:img src="spendManager/face2.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face2.jpg" alt="image"><n:span class="offline"></n:span></n:div>
+                <n:div class="info">
+                  <n:div class="wrapper d-flex">
+                    <n:p>Catherine</n:p>
+                  </n:div>
+                  <n:p>Away</n:p>
+                </n:div>
+                <n:div class="badge badge-success badge-pill my-auto mx-2">4</n:div>
+                <n:small class="text-muted my-auto">23 min</n:small>
+              </n:li>
+              <n:li class="list">
+                <n:div class="profile"><n:img src="spendManager/face3.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face3.jpg" alt="image"><n:span class="online"></n:span></n:div>
+                <n:div class="info">
+                  <n:p>Daniel Russell</n:p>
+                  <n:p>Available</n:p>
+                </n:div>
+                <n:small class="text-muted my-auto">14 min</n:small>
+              </n:li>
+              <n:li class="list">
+                <n:div class="profile"><n:img src="spendManager/face4.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face4.jpg" alt="image"><n:span class="offline"></n:span></n:div>
+                <n:div class="info">
+                  <n:p>James Richardson</n:p>
+                  <n:p>Away</n:p>
+                </n:div>
+                <n:small class="text-muted my-auto">2 min</n:small>
+              </n:li>
+              <n:li class="list">
+                <n:div class="profile"><n:img src="spendManager/face5.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face5.jpg" alt="image"><n:span class="online"></n:span></n:div>
+                <n:div class="info">
+                  <n:p>Madeline Kennedy</n:p>
+                  <n:p>Available</n:p>
+                </n:div>
+                <n:small class="text-muted my-auto">5 min</n:small>
+              </n:li>
+              <n:li class="list">
+                <n:div class="profile"><n:img src="spendManager/face6.jpg" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face6.jpg" alt="image"><n:span class="online"></n:span></n:div>
+                <n:div class="info">
+                  <n:p>Sarah Graves</n:p>
+                  <n:p>Available</n:p>
+                </n:div>
+                <n:small class="text-muted my-auto">47 min</n:small>
+              </n:li>
+            </n:ul>
+          </n:div>
+          <!-- chat tab ends -->
+        </n:div>
+      </n:div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <n:nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <n:ul class="nav">
+          <n:li class="nav-item nav-profile">
+            <n:div class="nav-link d-flex">
+              <n:div class="profile-image">
+                <n:img src="https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/16998810_1019911564820316_6581161353725435989_n.jpg?_nc_cat=0&oh=0915d49240ff4cdb4be807bdba0b5c16&oe=5B99BE28" tppabs="http://www.urbanui.com/pearl-admin/images/faces/face1.jpg" alt="image"/>
+                <n:span class="online-status online"></n:span> <!--change class online to offline or busy as needed-->
+              </n:div>
+              <n:div class="profile-name">
+                <n:p class="name">
+                  tuanbao97
+                </n:p>
+                <n:p class="designation">
+                  Admin
+                </n:p>
+              </n:div>
+            </n:div>
+          </n:li>
+          <n:li class="nav-item nav-category">
+            <n:span class="nav-link">Main</n:span>
+          </n:li>
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/index.html" tppabs="http://www.urbanui.com/pearl-admin/index.html">
+              <n:i class="icon-layout menu-icon"></n:i>
+              <n:span class="menu-title">Bảng chính</n:span>
+              
+            </n:a>
+          </n:li>
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/widgets.html" tppabs="http://www.urbanui.com/pearl-admin/pages/widgets.html">
+              <n:i class="icon-clipboard menu-icon"></n:i>
+              <n:span class="menu-title">Sổ thu</n:span>
+              <n:span class="badge badge-danger">New</n:span>
+            </n:a>
+          </n:li>
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/widgets.html" tppabs="http://www.urbanui.com/pearl-admin/pages/widgets.html">
+              <n:i class="icon-clipboard menu-icon"></n:i>
+              <n:span class="menu-title">Sổ chi</n:span>
+              <n:span class="badge badge-danger">New</n:span>
+            </n:a>
+          </n:li>
+
+
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/widgets.html" tppabs="http://www.urbanui.com/pearl-admin/pages/widgets.html">
+              <n:i class="icon-paper menu-icon"></n:i>
+              <n:span class="menu-title">Loại mục thu chi</n:span>
+            </n:a>
+          </n:li>
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/widgets.html" tppabs="http://www.urbanui.com/pearl-admin/pages/widgets.html">
+              <n:i class="icon-globe menu-icon"></n:i>
+              <n:span class="menu-title">Thay đổi tiền tệ</n:span>
+            </n:a>
+          </n:li>
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/widgets.html" tppabs="http://www.urbanui.com/pearl-admin/pages/widgets.html">
+              <n:i class="icon-bar-graph menu-icon"></n:i>
+              <n:span class="menu-title">Biểu đồ báo cáo</n:span>
+            </n:a>
+          </n:li>
+
+          <n:li class="nav-item nav-category">
+            <n:span class="nav-link">Cá nhân</n:span>
+          </n:li>
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/notifications.html" tppabs="http://www.urbanui.com/pearl-admin/pages/ui-features/notifications.html">
+              <n:i class="icon-lock menu-icon"></n:i>
+              <n:span class="menu-title">Thông tin cá nhân</n:span>
+            </n:a>
+          </n:li>
+
+          <n:li class="nav-item">
+            <n:a class="nav-link" href="spendManager/popups.html" tppabs="http://www.urbanui.com/pearl-admin/pages/ui-features/popups.html">
+              <n:i class="icon-bell menu-icon"></n:i>
+              <n:span class="menu-title">Thông báo</n:span>
+              <n:span class="badge badge-primary badge-pill">69</n:span>
+            </n:a>
+          </n:li>
+
+
+
+        </n:ul>
+      </n:nav>
+      <!-- partial -->
+      <n:div class="main-panel">
+        <n:div class="content-wrapper">
+
+          <n:div class="row">
+            <n:div class="col-12 grid-margin stretch-card">
+              <n:div class="card">
+                <n:div class="card-body">
+                  <n:div class="row">
+                    <n:div class="col-12 col-md-3 col-sm-6 mb-4 mb-md-0 border-right-md d-flex justify-content-between justify-content-md-center">
+                      <n:div class="wrapper d-flex align-items-center justify-content-center">
+                        <n:div class="btn social-btn btn-twitter btn-rounded d-inline-block"><n:i class="fa fa-pencil" aria-hidden="true"></n:i></n:div>
+                        <n:div class="wrapper d-flex flex-column ml-4">
+                          <n:p class="font-weight-bold mb-2">Ghi chép nhanh</n:p>
+                          <!--   <n:p class="mb-0 text-muted">656 follower</n:p> -->
+                        </n:div>
+                      </n:div>
+                    </n:div>
+                    <n:div class="col-12 col-md-3 col-sm-6 mb-4 mb-md-0 border-right-md d-flex justify-content-between justify-content-md-center">
+                      <n:div class="wrapper d-flex align-items-center justify-content-center">
+                        <n:div class="btn social-btn btn-facebook btn-rounded d-inline-block"><n:i class="fa fa-user-o" aria-hidden="true"></n:i></n:div>
+                        <n:div class="wrapper d-flex flex-column ml-4">
+                          <n:p class="font-weight-bold mb-2">Tài khoản</n:p>
+                          <!--  <n:p class="mb-0 text-muted">1,235 friends</n:p> -->
+                        </n:div>
+                      </n:div>
+                    </n:div>
+                    <n:div class="col-12 col-md-3 col-sm-6 mb-4 mb-md-0 border-right-md d-flex justify-content-between justify-content-md-center">
+                      <n:div class="wrapper d-flex align-items-center justify-content-center">
+                        <n:div class="btn social-btn btn-google btn-rounded d-inline-block"><n:i class="fa fa-pie-chart" aria-hidden="true"></n:i></n:div>
+                        <n:div class="wrapper d-flex flex-column ml-4">
+                          <n:p class="font-weight-bold mb-2">Báo cáo</n:p>
+                          <!--  <n:p class="mb-0 text-muted">835 friends</n:p> -->
+                        </n:div>
+                      </n:div>
+                    </n:div>
+                    <n:div class="col-12 col-md-3 col-sm-6 d-flex justify-content-between justify-content-md-center">
+                      <n:div class="wrapper d-flex align-items-center justify-content-center">
+                        <n:div class="btn social-btn btn-warning btn-rounded d-inline-block"><n:i class="fa fa-cog" aria-hidden="true"></n:i></n:div>
+                        <n:div class="wrapper d-flex flex-column ml-4">
+                          <n:p class="font-weight-bold mb-2">Thiết lập</n:p>
+                          <!--   <n:p class="mb-0 text-muted">335 people</n:p> -->
+                        </n:div>
+                      </n:div>
+                    </n:div>
+                  </n:div>
+                </n:div>
+              </n:div>
+            </n:div>
+          </n:div>
+
+          <n:div class="row">
+            <n:div class="col-md-4 grid-margin stretch-card">
+              <n:div class="card text-center">
+                <n:div class="card-body">
+                  <n:img src="https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/16998810_1019911564820316_6581161353725435989_n.jpg?_nc_cat=0&oh=0915d49240ff4cdb4be807bdba0b5c16&oe=5B99BE28" class="img-lg rounded-circle mb-2" alt="profile image">
+                  <n:h4 style="padding-bottom:5px ">Nguyễn Tuấn Bảo</n:h4>
+                  <!--  <n:p class="text-muted">Developer</n:p> -->
+
+                  <n:p class="mt-4 text-muted card-text">
+                    Bạn đang sử dụng ví <n:img width="25px" src="https://image.flaticon.com/icons/png/128/214/214362.png"></n:img> 
+                  </n:p>
+                  
+                  <n:h6 class="text-linkedin">Ví ATM</n:h6>
+
+
+                  <n:div class="dropdown">
+                    <n:button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton6" data-toggle="dropdown" aria-haspopup="true" 
+                    aria-expanded="false">
+                    Chuyển đổi ví
+                  </n:button>
+
+
+
+                  <n:div class="dropdown-menu" aria-labelledby="dropdownMenuButton6">
+                    <n:a class="dropdown-item" href="#" style="color: #1c6da9"><n:i class="fa fa-money" style="color: #1094f7" aria-hidden="true"></n:i> Ví cá nhân</n:a>
+                    <n:a class="dropdown-item" href="#" style="color: #1c6da9"><n:i class="fa fa-money" style="color: #1094f7" aria-hidden="true"></n:i> Ví của vợ</n:a>
+                    
+
+                  </n:div>
+                </n:div>
+                
+                <n:br></n:br>
+                <n:div class="border-top pt-3">
+                  <n:div class="row">
+                    <n:div class="col-6">
+                      <n:h6>Số lần thu</n:h6>
+                      <n:p>50</n:p>
+                    </n:div>
+                    <n:div class="col-6">
+                      <n:h6>Số lần chi</n:h6>
+                      <n:p>45</n:p>
+                    </n:div>
+                    
+                  </n:div>
+                </n:div>
+
+
+
+              </n:div>
+            </n:div>
+          </n:div>
+          <n:div class="col-md-4 grid-margin d-flex align-items-stretch">
+            <n:div class="row">
+              <n:div class="col-12 grid-margin stretch-card">
+                <n:div class="card">
+                 <n:div class="card-body">
+                  <n:h4 class="card-title">Tổng quan</n:h4>
+
+
+                  <n:div class="d-flex flex-row align-items-top">
+                    <n:i class="fa fa-plus icon-md" style="color: #1094f7"></n:i>
+                    <n:div class="ml-3">
+                      <n:h6 class="text-linkedin">Tổng thu</n:h6>
+                      <n:p class="mt-2 text-muted card-text" style="font-size:15px ">1.000.000 VNĐ</n:p>
+                    </n:div>
+                  </n:div>
+                  <n:br></n:br>
+                  <n:div class="d-flex flex-row align-items-top">
+                   <n:i class="fa fa-minus icon-md"  style="color: #1094f7"></n:i>
+                   <n:div class="ml-3">
+                    <n:h6 class="text-linkedin">Tổng chi</n:h6>
+                    <n:p class="mt-2 text-muted card-text" style="font-size:15px ">500.000 VNĐ</n:p>
+                  </n:div>
+                </n:div>
+
+
+
+                <n:table class="table table-borderless mt-3">
+                  <n:tbody>
+
+                    <n:tr>
+                      <n:td class="p-0 text-gray"><n:i class="fa fa-money" aria-hidden="true"></n:i></n:td>
+                      <n:td class="w-100">
+                        <n:div class="progress progress-sm">
+                          <n:div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></n:div>
+                        </n:div>
+                      </n:td>
+
+                    </n:tr>
+
+                  </n:tbody>
+                </n:table>
+
+              </n:div>
+            </n:div>
+          </n:div>
+
+
+          <n:div class="col-12 stretch-card">
+            <n:div class="card">
+              <n:div class="card-body py-4">
+                <n:h4 class="card-title">Lịch sử</n:h4>
+                <n:div class="row d-flex justify-content-center align-items-center">
+                  <n:div class="col-6 col-md-6 grid-margin grid-margin-md-0 d-flex flex-column align-items-center justify-content-center">
+                    <n:div class="w-75 mx-auto">
+                      <n:div id="revenueCircle1" class="progressbar-js-circle"></n:div>
+                    </n:div>
+                    <n:p class="mb-0 mt-2">Sales</n:p>
+                    <n:h4 class="mb-0"><n:strong>65.00%</n:strong></n:h4>
+                  </n:div>
+                  <n:div class="col-6 col-md-6 grid-margin grid-margin-md-0 d-flex flex-column align-items-center justify-content-center border-left">
+                    <n:div class="w-75 mx-auto">
+                      <n:div id="revenueCircle2" class="progressbar-js-circle"></n:div>
+                    </n:div>
+                    <n:p class="mb-0 mt-2">Purchases</n:p>
+                    <n:h4 class="mb-0"><n:strong>80.26%</n:strong></n:h4>
+                  </n:div>
+                </n:div>
+              </n:div>
+            </n:div>
+          </n:div>
+        </n:div>
+      </n:div>
+      <n:div class="col-md-4 grid-margin stretch-card">
+        <n:div class="card">
+          <n:div class="card-body">
+            <n:h4 class="card-title">Lịch sử</n:h4>
+            <n:div class="add-items d-flex">
+              <n:input type="text" class="form-control todo-list-input" placeholder="Nhập từ khóa muốn tìm?">
+              <n:button class="add btn btn-primary font-weight-bold todo-list-add-btn">Tìm</n:button>
+            </n:div>
+            <n:div class="list-wrapper">
+              <n:ul class="d-flex flex-column-reverse todo-list">
+                <n:li>
+                  <n:div class="form-check">
+                    <n:label class="form-check-label">
+                      <n:input class="checkbox" type="checkbox">
+                      Đi mua tivi
+                      <n:i class="input-helper"></n:i></n:label>
+                    </n:div>
+                    <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                  </n:li>
+                  <n:li>
+                    <n:div class="form-check">
+                      <n:label class="form-check-label">
+                        <n:input class="checkbox" type="checkbox">
+                        Mua đồ ăn tháng này
+                        <n:i class="input-helper"></n:i></n:label>
+                      </n:div>
+                      <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                    </n:li>
+                    <n:li>
+                      <n:div class="form-check">
+                        <n:label class="form-check-label">
+                          <n:input class="checkbox" type="checkbox">
+                          Về nội
+                          <n:i class="input-helper"></n:i></n:label>
+                        </n:div>
+                        <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                      </n:li>
+                      <n:li class="completed">
+                        <n:div class="form-check">
+                          <n:label class="form-check-label">
+                            <n:input class="checkbox" type="checkbox" checked="">
+                            Sửa chữa máy điều hòa
+                            <n:i class="input-helper"></n:i></n:label>
+                          </n:div>
+                          <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                        </n:li>
+                        <n:li>
+                          <n:div class="form-check">
+                            <n:label class="form-check-label">
+                              <n:input class="checkbox" type="checkbox">
+                              Sắm cặp mới
+                              <n:i class="input-helper"></n:i></n:label>
+                            </n:div>
+                            <n:i class="remove mdi mdi-close-circle-outline"></n:i>
+                          </n:li>
+                        </n:ul>
+                      </n:div>
+                    </n:div>
+                  </n:div>
+                </n:div>
+              </n:div>
+
+
+
+            </n:div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <n:footer class="footer">
+              <n:div class="container-fluid clearfix">
+                <n:span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018 <n:a href="spendManager/javascript:if(confirm(%27http://www.urbanui.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.urbanui.com/%27" tppabs="http://www.urbanui.com/" target="_blank">By admin tuanbao97@gmail.com</n:a>. </n:span>
+                <n:span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hãy chi tiêu một cách hợp lý <n:i class="mdi mdi-heart text-danger"></n:i></n:span>
+              </n:div>
+            </n:footer>
+            <!-- partial -->
+          </n:div>
+          <!-- main-panel ends -->
+        </n:div>
+        
+        <!-- page-body-wrapper ends -->
+      </n:div>
+      <!-- container-scroller -->
+
+      <!-- plugins:js -->
+      <n:script src="spendManager/vendor.bundle.base.js" tppabs="http://www.urbanui.com/pearl-admin/vendors/js/vendor.bundle.base.js"></n:script>
+      <n:script src="spendManager/vendor.bundle.addons.js" tppabs="http://www.urbanui.com/pearl-admin/vendors/js/vendor.bundle.addons.js"></n:script>
+      <!-- endinject -->
+      <!-- Plugin js for this page-->
+      <!-- End plugin js for this page-->
+      <!-- inject:js -->
+      <n:script src="spendManager/off-canvas.js" tppabs="http://www.urbanui.com/pearl-admin/js/off-canvas.js"></n:script>
+      <n:script src="spendManager/hoverable-collapse.js" tppabs="http://www.urbanui.com/pearl-admin/js/hoverable-collapse.js"></n:script>
+      <n:script src="spendManager/misc.js" tppabs="http://www.urbanui.com/pearl-admin/js/misc.js"></n:script>
+      <n:script src="spendManager/settings.js" tppabs="http://www.urbanui.com/pearl-admin/js/settings.js"></n:script>
+      <n:script src="spendManager/todolist.js" tppabs="http://www.urbanui.com/pearl-admin/js/todolist.js"></n:script>
+      <!-- endinject -->
+      <!-- Custom js for this page-->
+      <n:script src="spendManager/dashboard.js" tppabs="http://www.urbanui.com/pearl-admin/js/dashboard.js"></n:script>
+      <!-- End custom js for this page-->
+    </n:body>
+
+    </n:html>

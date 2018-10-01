@@ -1,0 +1,2 @@
+<?component name="add-view" inline="true" macroURI="view-list-video.zul"?>
+<add-view model="${arg.vm}"  vmArgs="${arg.vmArgs}" save="Xem danh sách video" readOnly="${arg.readOnly}"/>

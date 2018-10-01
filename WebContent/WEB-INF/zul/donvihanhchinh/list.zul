@@ -1,0 +1,94 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('vn.toancauxanh.service.DonViHanhChinhService')"
+	class="form-list">
+	<zscript>
+	<![CDATA[
+		page.title = "Danh sách đơn vị hành chính";
+		
+	]]>
+	</zscript>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						Danh sách đơn vị hành chinh
+					</n:h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wd-search-form">
+		<div zclass="row">
+			<div zclass="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-sm-4">
+						<n:div class="form-group">
+							<x:span>Tên đơn vị hành chính</x:span> 
+							<textbox class="hv-textbox tb-search"
+								maxlength="255" value="@bind(vm.arg.tukhoa)"
+								placeholder="Tìm kiếm theo tên đơn vị hành chính" width="100%"/>
+						</n:div>
+					</div>
+					<div class="col-sm-6">
+					</div>
+					<div class="col-sm-2" style="padding-right:0px">
+						<x:label class="control-label">&#160;</x:label>
+						<n:div zk:if="${entry.quyen.dsvhpvt_timkiem}" class="form-group">
+							<x:button class="btn btn-search-page"
+								zk:onClick='vm.cmd("", vm, "model");'>
+								<x:image class="img-search"
+									src="${contexPath}/assets/img/front/search.svg" />
+								Tìm kiếm
+							</x:button>
+						</n:div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<tree id="tree" class="hidden-xs" 
+	    		model="@load(vm.model)">
+	    		<treecols sizable="false">
+	    			<treecol width="30%" label="Tên đơn vị"/>
+	    			<treecol width="20%" label="Ngày cập nhật"/>
+	    			<treecol width="25%" label="Trạng thái"/>
+	    			<treecol width="150px" style="text-align:center" label="Thao tác"/>						
+	    		</treecols>
+	    		<template name="model" var="node">
+	    			<treeitem open="true">
+	    				<treerow apply="org.zkoss.bind.BindComposer"
+	    					viewModel="@id('vmchild') @init(node.data)">
+	    						<treecell>
+	    							<label value="@load(vmchild.name)"/>
+	    						</treecell>
+	    						<treecell>
+	    							<label value="@load(vmchild.ngaySua) @converter('formatedDate',format='dd/MM/YYYY')"/>
+	    						</treecell>
+	    						<treecell>
+	    							<label class="${vmchild.setStyleTrangThai(vmchild.trangThai)}"  value="@load(vmchild.typeTrangThai)"/>
+	    						</treecell>
+	    						<treecell style="text-align:center">
+				    					 <x:a label="Xem" class="button-list"
+											onClick="@command('redirectPageAction', zul='donvihanhchinh/view.zul',vmArgs=vm,vm=vmchild, readOnly=true)">
+											<n:i class="fa fa-eye"></n:i>
+										</x:a>
+	    								<x:a label="Sửa" class="button-list"
+											onClick="@command('redirectPageAction', zul='donvihanhchinh/view.zul',vmArgs=vm,vm=vmchild, readOnly=false)">
+											<x:image class="img-edit" src="${contexPath}/assets/img/front/edit.svg"/>
+										</x:a>
+	    								<x:a label="Xóa" class="button-list"
+											onClick="@command('deleteDonViHanhChinh', notify=vm, attr='model', item = vmchild)">
+											<x:image class="img-edit" src="${contexPath}/assets/img/front/delete.svg"/>
+										</x:a>
+	    						</treecell>
+	    					</treerow>
+	    				</treeitem>
+	    			</template>
+	    		</tree>
+	    	</div>
+		</div>
+</window>

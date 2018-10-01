@@ -1,0 +1,104 @@
+/*----- Reset -----*/
+html {
+  margin:0;
+  padding:0;
+  border:0;height:100%;
+}
+body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd,
+fieldset, form, label,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, dialog, figure, footer, header,
+hgroup, nav, section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+ol,ul{margin-bottom:0;}
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('../fonts/opensans-regular.eot');
+    src: url('../fonts/opensans-regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-regular.woff') format('woff'),
+         url('../fonts/opensans-regular.ttf') format('truetype'),
+         url('../fonts/opensans-regular.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('../fonts/opensans-bold.eot');
+    src: url('../fonts/opensans-bold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-bold.woff') format('woff'),
+         url('../fonts/opensans-bold.ttf') format('truetype'),
+         url('../fonts/opensans-bold.svg#open_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Line-height should always be unitless! */
+body {
+  color:#000;
+  background: #e6efff;
+  word-wrap:break-word;
+  height:auto;
+  min-height:100%;position:relative;
+}
+
+/* This helps to make newer HTML5 elements behave like DIVs in older browers */
+article, aside, details, figcaption, figure, dialog,
+footer, header, hgroup, menu, nav, section {
+    display:block;
+}
+input, select, textarea{
+	margin:0;
+	font-family:'open_sansregular',Arial, Helvetica,sans-serif;
+}
+
+/* Remove possible quote marks (') from &lt;q&gt, &lt;blockquote&gt. */
+blockquote:before, blockquote:after, q:before, q:after { content: ''; }
+blockquote, q { quotes: '' ''; }
+
+/* Remove annoying border on linked images. */
+a { text-decoration:none }
+a img { border: none; }
+
+/* Remember to define your own focus styles! */
+:focus { outline: 0; }
+
+input[type='search']{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+input[type='checkbox'],input[type='radio']{box-sizing: border-box;padding: 0;}
+*{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+*:before,*:after{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+a:link, a:visited{color:#0e98cb;}
+a:hover{color:#0e98cb}
+a:link,a:visited,a:hover,a:focus{
+text-decoration:none;outline:0;
+	-webkit-transition:all 0.4s ease-in-out;
+	-moz-transition:all 0.4s ease-in-out;
+	-o-transition:all 0.4s ease-in-out;
+	transition:all 0.4s ease-in-out;
+}
+img{width:auto\9;height:auto;max-width:100%;vertical-align:middle;-ms-interpolation-mode:bicubic;}
+/* clearfix */
+.clearfix:after { clear: both; content: '.'; display: block; height: 0; line-height: 0; visibility: hidden; }
+.clearfix { display: inline-block; }
+html[xmlns] .clearfix { display: block; }
+* html .clearfix { height: 1%; }
+.clear{clear:both}

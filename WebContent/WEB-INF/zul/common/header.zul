@@ -1,0 +1,97 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<!-- <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?> -->
+<zk xmlns:n="native" xmlns:zk="zk" xmlns:x="xhtml" xmlns:u="zul" xmlns:w="client">
+	<zk:zscript><![CDATA[
+		entry = new vn.toancauxanh.service.BaseObject().core();
+		nhanVien = entry.nhanVien;
+		import java.awt.image.*;
+		BufferedImage image = new BufferedImage(400, 300, BufferedImage.TYPE_INT_ARGB);
+	]]></zk:zscript>	
+	<style>
+		.item-noti .notifi-mesg:hover {
+			color: #428bca;
+    		text-decoration: none;
+		}
+		.item-noti li:hover {
+			color: #428bca;
+    		text-decoration: none;
+    		background-color: #bce8f1;
+		}
+		.item-noti a:hover {
+    		text-decoration: none;
+		}
+		.item-noti span {
+			color: #428bca !important;
+			padding-right: 5px;
+		}
+		.item-noti .notifi-mesg {
+			margin: 0 10px !important;
+		}
+		.seeall {
+			text-align: center;
+			padding: 5px;
+			font-size: 13px;
+		}
+	</style>
+	<n:nav class="header-top-be">
+		<div zclass="navbar-header">
+			<n:div>
+				<x:image href="${ctxPath}" class="logo-image" src="${contexPath}/assets/frontend/image/logoquangnam.png"/>
+			</n:div>
+			<n:a class="nav-title-page" href="${ctxPath}/cp">
+				<n:h5 style="margin-top: 15px;">SỞ VĂN HÓA, THỂ THAO VÀ DU LỊCH</n:h5> 
+				<n:h5 style="margin-bottom: 15px;">TỈNH QUẢNG NAM</n:h5>
+			</n:a>
+		</div>
+		<div viewModel="@id('vm') @init(nhanVien)">
+			<n:ul class="nav" style="display:flex;">
+				<x:button zk:onClick="@command('redirectPage', zul='hotro/add.zul',vmArgs=null,vm=null)"  type="button" class="btn btn-primary">Hỗ trợ</x:button>
+				<n:li class="dropdown pd-header-avarta" style="display: inline-block">
+					<n:a class="dropdown-toggle" href="#" style="background: #18253F;">
+						<div class="avatar-home">
+			         		<image visible="@load(vm.avatarImage ne null)" content="@load(vm.avatarImage eq null ? image : vm.avatarImage)"></image>
+			         		<image visible="@load(vm.avatarImage eq null)" src="/assets/img/employeebig.png"></image>
+			         	</div>
+						<n:i class="fa fa-chevron-down" style="position: absolute; top: 25px;"></n:i>
+					</n:a>
+					<n:ul class="dropdown-menu dropdown-menu-right dropdown-user">
+						<n:li>
+							<x:a class="info-user" onClick="@command('redirectEditUser', zul='thongtinnguoidung/add-view.zul',vmArgs=null,vm=vm)"
+								href="#">
+								<x:image class="img-trogiup img-info" src="${contexPath}/assets/img/front/nguoidung.svg"/>
+								Thông tin người dùng
+							</x:a>
+						</n:li>
+						<n:li class="divider"></n:li>
+						<n:li>
+							<x:a href="javascript:void(0);" class="info-user"
+								viewModel="@id('vm2') @init(entry.nhanViens)"
+								onClick="@command('logout')">
+								<n:i class="fa fa-sign-out fa-fw"></n:i>
+								Đăng xuất
+							</x:a>
+						</n:li>
+					</n:ul>
+					<!-- /.dropdown-user -->
+				</n:li>
+				<n:li class="menu-icon-repon" style="display:none;" onclick="toggleMenu()">
+					<x:img src="${contexPath}/assets/img/front/menu.png"></x:img>
+				</n:li>
+				<!-- /.dropdown -->
+			</n:ul>
+		</div>
+		<!-- /.navbar-top-links -->
+	</n:nav>
+	<n:script>
+		function toggleMenu(){
+			if($(".nav-side-menu").css("display")=="none"){
+				$(".nav-side-menu").css("display","block");
+				$("body").css("overflow","hidden");
+			}else{
+				$(".nav-side-menu").css("display","none");
+				$("body").css("overflow","auto");
+			}
+			
+		}
+	</n:script>
+</zk>

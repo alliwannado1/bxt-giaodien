@@ -1,0 +1,105 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('vn.toancauxanh.service.GopYPhanMemService')"
+	class="form-list">
+	<zscript>
+	<![CDATA[
+		page.title = "Danh sách góp ý phần mềm";
+		
+	]]>
+	</zscript>
+	<div class="panel-list" zk:if="${entry.nhanVien.quyens eq '[*]'}">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<n:h3 class="page-header">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/donvi.svg"/>
+					Danh sách góp ý phần mềm
+					<div zclass="wd-action-bar" viewModel="@id('ditichId') @init('vn.toancauxanh.model.DiTich')">
+						<x:image class="img-add" src="${contexPath}/assets/img/front/congxanh.svg"/>
+						<x:a  href="javascript:void(0);"
+							class="btn-custom"
+							onClick="@command('redirectPage', zul='gopyphanmem/add.zul',vmArgs=vm,vm=null)">
+							Thêm mới
+						</x:a>
+					</div>
+				</n:h3>
+			</div>
+		
+		</div>
+	</div>
+	<div class="wd-search-form">
+		<div zclass="row">
+			<div zclass="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-sm-10">
+						<n:div class="form-group">
+							<x:label class="control-label">
+								Từ khóa
+							</x:label>
+							<textbox class="hv-textbox tb-search"
+								maxlength="255" value="@bind(vm.arg.tukhoa)"
+								placeholder="Từ khóa tìm kiếm" width="100%"
+								onOK="@command('cmd', notify=vm, attr='targetQuery')" />
+						</n:div>
+					</div>
+
+
+					<div class="col-sm-2">
+						<x:label class="control-label">&#160;</x:label>
+						<n:div class="form-group">
+							<x:button class="btn btn-search-page"
+								zk:onClick="@command('cmd', notify=vm, attr='targetQuery')">
+								<x:image class="img-search"
+									src="${contexPath}/assets/img/front/search.svg" />
+								Tìm kiếm
+							</x:button>
+						</n:div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<grid model="@load(vm.page(vm.targetQuery).fetch())" id="grid" 
+			emptyMessage="Không có mục nào trong danh sách">
+			<columns>
+					<column label="STT" width="5%" />
+					<column label="Họ và tên"  />
+					<column label="Số điện thoại" width="20%" />
+					<column label="Email" width="25%" />
+					<column label="Thao tác" hflex="min" />
+			</columns>
+			 <template name="model">
+				<row 
+					viewModel="@id('item') @init(each)">
+					<label
+						value="@bind(forEachStatus.index + 1 + vm.arg.page * vm.arg.pagesize)"
+						style="text-align:center;display:block" />
+					<a label="@load(each.hoTen)" 
+					onClick="@command('redirectPage', zul='gopyphanmem/view.zul',vmArgs=vm,vm=item,readOnly=true)" />
+					<label value="@load(each.soDienThoai)" />
+					<label value="@load(each.email)" />
+					<div zclass="thaotac">
+						<x:button label="Xem" class="btn btn-primary btn-xs" 
+							onClick="@command('redirectPage', zul='gopyphanmem/view.zul',vmArgs=vm,vm=item,readOnly=true)">
+							<n:i class="fa fa-eye"></n:i>
+							Xem
+						</x:button>
+					</div>
+				</row>
+			</template> 
+			 <foot visible="@load(vm.targetQuery.fetchCount() gt 10)">
+				<footer span="5">
+					<div class="">
+						<paging pageSize="@load(vm.arg.pagesize)" mold="os"
+							totalSize="@load(vm.targetQuery.fetchCount())"
+							activePage="@bind(vm.arg.page)"
+							onPaging="@command('cmd', notify=vm, attr='targetQuery')" />
+					</div>
+				</footer>
+			</foot> 
+		</grid>
+	</div>
+</window>

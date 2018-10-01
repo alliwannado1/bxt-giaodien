@@ -1,0 +1,148 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk"
+	apply="org.zkoss.bind.BindComposer"  id="wdn" border="normal"
+	mode="modal" action="show: slideIn" contentStyle="overflow:auto;"
+	closable="true" title="${arg.save}"
+	viewModel="@id('vm') @init(arg.model)" validationMessages="@id('vmsgs')"
+	class="form-list popup-image">
+	<zscript>
+		page.title = "Quản lí hình ảnh lễ hội";
+	</zscript>
+	<zscript>
+		<![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			readOnly = arg.get("readOnly") == null ? false : arg.get("readOnly");
+			import java.awt.*;
+    		import java.awt.image.*;
+    		import java.awt.geom.*;
+			BufferedImage imageTemp = new BufferedImage(460, 294, BufferedImage.TYPE_INT_ARGB); 
+		]]>
+	</zscript>
+	<style>
+		.close { position: absolute; top: 5px; right: 20px; color:
+		#f1f1f1; font-size: 20px; font-weight: bold; transition: 0.3s;
+		opacity: 1; }
+
+		.carousel-indicators li { display: inline-block; width: 20px;
+		height: 20px; margin: 1px; text-indent: -999px; cursor: pointer;
+		background-color: #000 \9; background-color: rgba(3, 169, 244,
+		0.59); border: 1px solid #fff; border-radius: 2px; }
+
+		.carousel-indicators .active { width: 20px; height: 20px;
+		margin: 0; background-color: red; }
+
+		.xoa { position: absolute; top: 15px; color: #f1f1f1; font-size:
+		20px; font-weight: bold; transition: 0.3s; opacity: 1; left:
+		22px; top: 0px; }
+	</style>
+
+
+		<div class="line-panel">
+			<div zclass="panel-list ho-tro">
+				<div zclass="row">
+					<div zclass="col-md-12">
+							<n:div class='row'>
+								<n:div class='col-md-9'>
+									<n:div class="form-group" zk:if="${!readOnly}">
+										<button label="Tải ảnh lên"
+											sclass="wd-upload-btn2"
+											onUpload="@command('uploadImage',image=event.medias,vm=vm)"
+											upload="true,multiple=true,maxsize=51200,accept=.png|.jpg|.jpeg"
+											image="/img/attachment.png" />
+										<x:button
+											style="height: 31px;"
+											zk:visible="@load(vm.checkShowButtonRemovMultiImage)"
+											class="btn btn-danger right" type="button"
+											zk:onClick="@command('removeMultiImages',  imagesTemp = vm.imagesTemp, vm= vm)">
+											Xóa ảnh đã chọn
+										</x:button>
+									</n:div>
+									<n:div id="carousel-simple"
+										class="carousel slide media-carousel">
+										<div class="carousel-inner">
+											<div class="item  active" style="max-height: 510px;overflow-y: auto;overflow-x: hidden">
+												<div visible="@load((vm.imagesTemp.size() eq 0) ) " class="alert alert-secondary"
+													style="margin-top:10px;padding-top:20px;color: #383d41;background-color: #e2e3e542;border-color: #e2e3e50a;">
+													<n:h4>Chưa có hình ảnh nào !</n:h4>
+												</div>
+												<div class="row" children="@load(vm.imagesTemp)">
+													<template name="children" var="itemImage">
+														<div class="col-sm-3 md-image-z">
+															<checkbox zk:if="${!readOnly}"
+																checked="@bind(itemImage.checkRemove)"
+																onClick="@command('clickImageToRemoveMulti', vm = vm)"
+																class="xoa">
+															</checkbox>
+															<x:button zk:if="${!readOnly}"
+																zk:onClick="@command('deleteImage', image = itemImage, vm= vm)"
+																type="button" class="close" aria-label="Close">
+																<n:i
+																	class="fa fa-close" style="color:black;">
+																</n:i>
+															</x:button>
+															<image sclass="mis-image-upload"
+																content="@bind(itemImage.media eq null ? imageTemp : itemImage.media)">
+															</image>
+															<n:div class='text-right'
+																style=" overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;">
+																<n:small class='text-muted'>
+																	<textbox readonly="${readOnly}" value="@bind(itemImage.description)" width="100%"/>
+																</n:small>
+															</n:div>
+														</div>
+													</template>
+												</div>
+											</div>
+										</div>
+									</n:div>
+								</n:div>
+								<div class="col-md-3"
+									 apply="org.zkoss.bind.BindComposer" 
+									 viewModel="@id('imageId') @init('vn.toancauxanh.model.Image')">
+									<div zclass="form-group">
+										<x:label>Hình đại diện</x:label>
+										<div zclass="img-crop">
+											<image id="imageCmp" width="100%" height="150px" style="background:rgb(238, 238, 238)"
+												sclass="mis-image-upload" content="@load(vm.avatarImageTemp.imageContent eq null ? imageTemp : vm.avatarImageTemp.imageContent)">
+											</image>
+											<label zclass="error" value="@load(vmsgs['error'])" />
+										</div>
+										<hlayout style="margin-top:10px" zk:if="${!readOnly}">
+											<button disabled="" label="Chọn hình" sclass="wd-upload-btn2"
+												upload="true,maxsize=10000, accept=.png|.jpg|.jpeg"
+												onUpload="@command('uploadImageAvatarLeHoi',media=event.media, vm = vm)"
+												image="/img/attachment.png" />
+											<a  sclass="" visible="@load(vm.avatarImageTemp.imageContent ne null)" onClick="@command('deleteImgLeHoi', vm = vm)">
+												<n:i class="fa fa-trash-o"></n:i>
+												Xóa
+											</a>
+										</hlayout>
+										<n:small style="padding-top:10px">
+											Hỗ trợ định dạng *.png, *.jpg, *.jpeg tối đa 10MB
+										</n:small>
+									</div>
+								</div>
+							</n:div>
+						</div>
+					</div>
+				</div>
+			</div>	
+			<div zclass="row formac-cauhinh">
+				<div zclass="col-lg-12">
+				 	<x:button zk:if="${!readOnly}" class="btn default left" onClick="@command('closePopupImages', vm=vm, wdn=wdn, attr='targetQuery')" >
+						<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+						Hủy
+					</x:button> 
+					<x:button zk:if="${!readOnly}" class="btn primary right" 
+						onClick="@command('saveImage',list=vmArgs, wdn=wdn, vm=vm)">
+						<x:image class="img-title" src="${contexPath}/assets/img/front/luu.svg"/>
+						Lưu
+					</x:button>
+					<x:button zk:if="${readOnly}" class="btn default left" onClick="@command('closeView', wdn=wdn)" >
+						<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+						Đóng
+					</x:button> 
+				</div>
+			</div>
+</window>

@@ -1,0 +1,408 @@
+<?style href="/assets/frontend/css/common.css" type="text/css" ?>
+<?style href="/assets/frontend/css/bootstrap.min.css" type="text/css" ?>
+<?style href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" type="text/css" ?>
+<?script type="text/javascript" src="/assets/frontend/js/jquery-3.2.1.slim.min.js"?>
+<?script type="text/javascript" src="/assets/frontend/js/jquery-3.2.1.min.js"?>
+<?script type="text/javascript" src="/assets/frontend/js/popper.min.js"?>
+<?script type="text/javascript" src="/assets/frontend/js/bootstrap.min.js"?>
+<?script type="text/javascript" src="/assets/frontend/js/jquery.touchSwipe.min.js"?>
+<html xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml" xmlns:w="client"
+apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('vn.toancauxanh.cms.service.HomeService')">
+	<head>
+		<title>Sở VHTTDL Quảng Nam</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		    <zscript>
+			<![CDATA[
+				int limitReSultDetailLienQuans = new vn.toancauxanh.cms.service.HomeService().getLimitReSultDetailLienQuans();
+				String valueKeyMap = new vn.toancauxanh.cms.service.ThamSoService().getStringApiKeyGoogle();
+				int limitReSultDetailLienQuans = new vn.toancauxanh.cms.service.HomeService().getLimitReSultDetailLienQuans();
+				int bientam = 0;
+				listDiTich = vm.getListObject();
+				String valueDiTich =  vn.toancauxanh.gg.model.enums.HomeEnum.DITICH.getText();
+				String valueLeHoi =  vn.toancauxanh.gg.model.enums.HomeEnum.LEHOI.getText();
+				String valueDiSan =  vn.toancauxanh.gg.model.enums.HomeEnum.DISAN.getText();
+				String nameDiTich =  vn.toancauxanh.gg.model.enums.HomeEnum.NAMEDITICH.getText();
+				String nameLeHoi =  vn.toancauxanh.gg.model.enums.HomeEnum.NAMELEHOI.getText();
+				String nameBaoTang =  vn.toancauxanh.gg.model.enums.HomeEnum.NAMEBAOTANG.getText();
+				String nameDiSan =  vn.toancauxanh.gg.model.enums.HomeEnum.NAMEDISAN.getText();
+				String showMap = vn.toancauxanh.gg.model.enums.HomeEnum.SHOWMAP.getText();
+				String hiddenMap = vn.toancauxanh.gg.model.enums.HomeEnum.HIDDENMAP.getText();
+				String hiddenMap = vn.toancauxanh.gg.model.enums.HomeEnum.HIDDENMAP.getText();
+				Double latDefaultOfQn = vn.toancauxanh.gg.model.enums.LatLongQuanHuyenQuangNamEnum.TINH_QUANG_NAM.getLat();
+				Double lngDefaultOfQn =  vn.toancauxanh.gg.model.enums.LatLongQuanHuyenQuangNamEnum.TINH_QUANG_NAM.getLng();
+				String page_home = vn.toancauxanh.gg.model.enums.HomeEnum.PAGE_HOME.getText();
+				String page_detail = vn.toancauxanh.gg.model.enums.HomeEnum.PAGE_DETAIL.getText();
+				String page_moreDetail = vn.toancauxanh.gg.model.enums.HomeEnum.PAGE_MOREDETAIL.getText();
+				String show_map = vn.toancauxanh.gg.model.enums.HomeEnum.SHOWMAP.getText();
+				String hide_map = vn.toancauxanh.gg.model.enums.HomeEnum.HIDDENMAP.getText();
+				int zoomDefault = 10;
+				int zoomSearch = 13;
+				int zoomClickMarker = 15;
+				String ctxPath = execution.getContextPath();
+				boolean checkedDiTich = true;
+				boolean checkedLeHoi = false;
+				boolean checkedDiSan = false;
+				boolean checkExistImageAvatar = false;
+				String type = nameDiTich;
+				if(execution.getParameter("type") != null){
+					type = execution.getParameter("type");
+					if (type.equalsIgnoreCase(nameDiTich)){
+						checkedDiTich = true;
+						vm.setSearchCategory(valueDiTich);
+					}
+					else if (type.equalsIgnoreCase(nameBaoTang)){
+						type = nameLeHoi;
+						checkedLeHoi = true;
+						vm.setSearchCategory(valueLeHoi);
+					}
+					else if (type.equalsIgnoreCase(nameDiSan)){
+						checkedDiSan = true;
+						vm.setSearchCategory(valueDiSan);
+					}
+				}
+				String idObject = "-1";
+				if(execution.getParameter("id") != null){
+					idObject = execution.getParameter("id");
+					vm.setIdDetail(Long.parseLong(idObject));
+				}
+				if(execution.getParameter("type") != null && execution.getParameter("id") != null && vm.detail.avatarImage != null) {
+					checkExistImageAvatar = true;
+				}
+				
+				
+			]]>
+			</zscript>
+			<style>
+				.tool-tip-item{
+					display:flex;
+					flex-wrap:nowrap;
+				}
+				.tool-tip-avarta{
+					width:60px;
+					height:100px;
+				}
+				.transition-more{
+					background:#f9fafa;
+				}
+				.z-temp, .z-modal-mask {
+				    width: 100%;
+				    height: 100%;
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    bottom: 0;
+				}
+				.gm-style .gm-style-iw{
+					overflow:hidden;
+					left:7px !important;
+					height:70px !important;
+				}
+			</style>
+	</head>
+	<body>
+		<div class="container-fluid" >
+			<div class="row box-wrapper" style="position:relative;">
+				<div class="btn-click" onclick="toggleShowMenu()"></div>
+				<div class="col-lg-3 col-md-3 position-leftlayout">
+  					<!-- Search -->
+  					<div class="row" id="menu-height">
+						<header>
+							<div class="col-lg-12" style="height:100%;display:flex;">
+								<div>
+									<img href="${ctxPath}" class="logo-image" src="/assets/frontend/image/logoquangnam.png"></img>
+								</div>
+								<a href="${ctxPath}" class="hd-title-cs">
+									<h5 style="margin-top: 15px;">SỞ VĂN HÓA, THỂ THAO VÀ DU LỊCH</h5>
+									<h5 style="margin-bottom: 15px;">TỈNH QUẢNG NAM</h5>
+								</a>
+							</div>
+						</header>
+					</div>
+  						<z:include class="custom-height get-height-search" zk:visible="@load(!vm.hiddenSearch)" src="/frontend/home/search.zhtml"></z:include>
+					<!-- Detail -->
+			  			<z:include class="custom-height" zk:visible="@load(vm.hiddenSearch)" src="/frontend/home/detail.zhtml"></z:include>
+			  			
+				</div>
+				<div class="col-md-12 position-map"  style="padding-right:0;padding-left:0;position:relative;">
+						<div zk:visible="@load(vm.checkShow eq showMap)" id="map" style="min-height:100vh;"></div>
+						<div class="col-md-9 transition-more">
+							<z:include class="custom-height" zk:visible="@load(vm.checkShow eq hiddenMap)" src="@load(vm.urlPageDetail)"></z:include>
+						</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<x:div children="@load(vm.listObject)" id="idList">
+			<template name="children">
+				<x:label style="display:none"
+					id="id_${forEachStatus.index}">
+					${each.id}
+				</x:label>
+				<x:label style="display:none"
+					id="name_${forEachStatus.index}">
+					${each.name}
+				</x:label>
+				<x:label style="display:none"  zk:if="${each.avatarImage ne null}"
+					id="avatar_${forEachStatus.index}">
+					/${each.avatarImage.imageUrl}/s_${each.avatarImage.nameFileHash}
+				</x:label>
+				
+				<x:label style="display:none"  zk:if="${each.avatarImage eq null}"
+					id="avatar_${forEachStatus.index}">
+					${ctxPath}/assets/frontend/image/noImageChung.jpg
+				</x:label>
+				
+				<x:label style="display:none"
+					id="lat_${forEachStatus.index}">
+					${each.banDo.lat}
+				</x:label>
+				<x:label style="display:none"
+					id="lng_${forEachStatus.index}">
+					${each.banDo.lng}
+				</x:label>
+			</template>
+		</x:div>
+
+		<script>
+		 var herenow = false;
+		 function setHereNowTrue(){
+			herenow = true;
+	  	 }
+	  	 function setHereNowFalse(){
+			herenow = false;
+	  	 }
+		 var checkDemo;
+		 var checkClicked = true;
+		 var checkHoverMarker = true;
+	     var thutuTemp = 0;
+	     var firstBegin = 1000;
+	     var markTemp;
+		 var map; 
+		  		function initMap() { 
+			  		map = new google.maps.Map(document.getElementById('map'), {
+					  	 center:{lat: ${latDefaultOfQn}, lng: ${lngDefaultOfQn}}, 
+					  	 zoom: ${zoomDefault},
+					  	 mapTypeControl: false, 
+			  		 }); 
+		  		 }
+		  		 var markers = [];
+		  		// Lấy số thứ tự của marker từ id của object
+		  		function getThuThuByIdObject(id) {
+			  		for (var i = 0; i < $("#idList").children().length / 3 ; i++) {
+			  			if (parseFloat($("#id_"+i).text()) == id) {
+			  				return i;
+			  			}
+			  		}
+			    }
+			    // Lấy kinh độ và vĩ độ marker từ id của object
+		  		function getLatLngByIdObject(id) {
+			  		for (var i = 0; i < $("#idList").children().length / 3 ; i++) {
+			  			if (parseFloat($("#id_"+i).text()) == id) {
+			  				return parseFloat($("#lat_"+i).text()) + ";" + parseFloat($("#lng_"+i).text());
+			  			}
+			  		}
+			    }
+		  		function addingMarker() {
+		  			// Xóa danh sách marker cũ đi
+				    for (var i = 0; i < markers.length; i++) {
+				       markers[i].setMap(null);
+				     }
+				    markers = [];
+			  		var arrMarker = [];
+			  		for (var i = 0; i < $("#idList").children().length / 3 ; i++) {
+			  			arrMarker.push({ 
+				  			lat: parseFloat($("#lat_"+i).text()), 
+				  			lng: parseFloat($("#lng_"+i).text())
+						});
+						addMarkerWithTimeout(arrMarker[i], i,  parseFloat($("#id_"+i).text()), $("#name_"+i).text(), $("#avatar_"+i).text()); 
+			  		}
+			  		function addMarkerWithTimeout(position, thutu, id, name, avatar) {
+			  			markers.push(new google.maps.Marker({ 
+			  				position: position, 
+			  				map: map, 
+			  				icon: '${execution.contextPath}/assets/frontend/image/pinred.png'
+			  			}));
+						// Khi click vào marker
+			  				markers[thutu].addListener('click', function() {
+								map.setZoom(${zoomClickMarker});
+								smoothZoom(map, 12, map.getZoom());  
+				  				markers[thutuTemp].setIcon('${execution.contextPath}/assets/frontend/image/pinred.png');
+				  				markers[thutu].setIcon('${execution.contextPath}/assets/frontend/image/pinblue.png');
+				  				if (markTemp != null) {
+				  					markTemp.setMap(null);
+									markTemp=null;
+				  				}
+				  				map.setCenter(position);   
+				  				thutuTemp = thutu;
+				  				showLoading();
+				  				zk.afterMount(function(){
+									zk.Widget.$('$ditich').setValue(id.toString());
+									zk.Widget.$('$ditich').fireOnChange();
+								})
+			  			});
+			  	 		var infoContent = "<img src='"+avatar+"' alt='Ảnh' width='100px' style='float:left' height='100px'></img><div class='tool-tip-title' style='float:left; padding-left : 10px'><h6 style='overflow: hidden; text-overflow: ellipsis; display: -webkit-box; line-height: 16px; max-height: 62px;-webkit-line-clamp: 4; -webkit-box-orient: vertical;max-width: 170px;'>" + name + "</h6></div>"; 
+			  			var infoWindow = new google.maps.InfoWindow({
+						    content: infoContent
+						});
+			  			// Khi hover vô marker
+			  			markers[thutu].addListener('mouseover', function() {
+						     infoWindow.open(map,  markers[thutu]);
+						});
+						markers[thutu].addListener('mouseout', function() {
+							 infoWindow.close(map,  markers[thutu]);  
+						});
+			  		 }
+		  		}
+		  		// Khi load hết dữ liệu mới cho hiển thị map
+	  		$(document).ready(function() {
+	  			setTimeout(function(){ 
+	  				addingMarker();
+	  			}, 1000);
+				
+			})
+			//Zoom hiệu ứng chọn marker
+			function smoothZoom (map, max, cnt) {
+			    if (cnt >= max) {
+			        return;
+			    }
+			    else {
+			        z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+			            google.maps.event.removeListener(z);
+			            smoothZoom(map, max, cnt + 1);
+			        });
+			        setTimeout(function(){map.setZoom(cnt)}, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
+			    }
+			} 
+	  	</script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=${valueKeyMap}&callback=initMap">
+		</script>
+		<script>
+			// 0 trang chủ, 1 trang detail, 2 trang moredetail
+			var pageStatus =  0;
+			var checkPush = true;
+			// Hàm bắt sự kiện nút back trình duyệt
+			window.onpopstate = function(event) {
+			  location.reload();
+			  checkPush = false;
+			  
+			};
+			function pushStateHistory(urlTypeSearch, idDetail){
+				if(checkPush){
+					history.pushState(null, null, "${ctxPath}"+"/" + urlTypeSearch + "/" + idDetail);
+				}
+			}
+			function pushStateHistoryHome(){
+				if(checkPush){
+					history.pushState(null, null, "${ctxPath}");
+				}
+			}
+			function toggleShowMenu(){
+				if($('.position-leftlayout').css('max-width')=='0px'){
+					$('.position-leftlayout').css('max-width','25%');
+					$('.position-leftlayout').css('padding','0 15px');
+					$('.position-leftlayout').css('overflow','visble');
+					$('.btn-click').css('left','25%');
+					$('.btn-click').css('transform','scaleX(1)');
+					if(herenow){
+						$('.transition-more').css('flex','0 0 75%');
+						$('.transition-more').css('max-width','75%');
+						$('.transition-more').css('margin-left','25%');
+					}
+				}else{
+					$('.col-md-3').css('border','none');
+					$('.position-leftlayout').css('max-width','0');
+					$('.position-leftlayout').css('padding','0');
+					$('.position-leftlayout').css('overflow','hidden');
+					$('.btn-click').css('left','0');
+					$('.btn-click').css('transform','scaleX(-1)');
+					if(herenow){
+						$('.transition-more').css('max-width','100%');
+						$('.transition-more').css('flex','0 0 100%');
+						$('.transition-more').css('margin-left','0');
+					}
+				}
+				
+			}
+			function zoomInAndZoomOutWhenSearch() {
+				map.setZoom(${zoomDefault});
+				setTimeout(function(){ 
+					map.setZoom(${zoomSearch});
+				}, 500);
+			}
+			
+			var idObjectUrl = ${idObject};
+			function showDetailByIdUrl() {
+				// Trang home
+				if (idObjectUrl == -1) {
+				}
+				else {
+				// Trang detail by url
+					if (getThuThuByIdObject(idObjectUrl) != null) {
+					// Nếu id này tồn tại marker với danh sách marker mặc định ban đầu thì tìm marker đó chuyển pin blue
+							setTimeout(function(){ 
+								var latObjectById = parseFloat(getLatLngByIdObject(idObjectUrl).split(';')[0]);
+								var lngObjectById = parseFloat(getLatLngByIdObject(idObjectUrl).split(';')[1]);
+								thutuTemp = getThuThuByIdObject(idObjectUrl);
+				  				markers[getThuThuByIdObject(idObjectUrl)].setIcon('${execution.contextPath}/assets/frontend/image/pinblue.png');
+				  				map.setCenter({lat: latObjectById, lng: lngObjectById});              
+								map.setZoom(${zoomClickMarker});
+								smoothZoom(map, 12, map.getZoom());
+								idObjectUrl = -1;
+				  			}, 1000);
+					}
+					else{
+					// Còn không thì tạo mới marker đó
+							var latObjectByIdWhenMarkerExist = parseFloat(${vm.detail.banDo.lat});
+							var lngObjectByIdWhenMarkerExist = parseFloat(${vm.detail.banDo.lng});
+								
+							markTemp = new google.maps.Marker({
+									 position: new google.maps.LatLng(latObjectByIdWhenMarkerExist, lngObjectByIdWhenMarkerExist),
+									 map: map,
+									 icon : '${execution.contextPath}/assets/frontend/image/pinblue.png'
+							});
+							map.setCenter({lat: latObjectByIdWhenMarkerExist, lng: lngObjectByIdWhenMarkerExist});              
+							map.setZoom(${zoomClickMarker});
+							smoothZoom(map, 12, map.getZoom());
+							var infoContentByUrl = ""; 
+							if (${checkExistImageAvatar}) {
+								 infoContentByUrl = "<img src='/dtdsfiles/qnfiles/${type}/image/s_${vm.detail.avatarImage.nameFileHash}' alt='Ảnh' width='100px' style='float:left' height='100px'></img><div class='tool-tip-title' style='float:left; padding-left : 10px'><h6 style='overflow: hidden; text-overflow: ellipsis; display: -webkit-box; line-height: 16px; max-height: 62px;-webkit-line-clamp: 4; -webkit-box-orient: vertical;max-width: 170px;'>${vm.detail.name}</h6>"; 
+							}
+							else{
+								 infoContentByUrl = "<img src='${ctxPath}/assets/frontend/image/noImageChung.jpg' alt='Ảnh' width='100px' style='float:left' height='100px'></img><div class='tool-tip-title' style='float:left; padding-left : 10px'><h6 style='overflow: hidden; text-overflow: ellipsis; display: -webkit-box; line-height: 16px; max-height: 62px;-webkit-line-clamp: 4; -webkit-box-orient: vertical;max-width: 170px;'>${vm.detail.name}</h6>"; 
+							}
+				  			var infoWindowByUrl = new google.maps.InfoWindow({
+							    content: infoContentByUrl
+							});
+				  			// Khi hover vô marker
+				  			markTemp.addListener('mouseover', function() {
+							     infoWindowByUrl.open(map,  markTemp);
+							});
+							markTemp.addListener('mouseout', function() {
+								 infoWindowByUrl.close(map,  markTemp);  
+							});			
+							idObjectUrl = -1;
+					}
+				}
+				
+					
+			}
+			
+			function addInfoWindowContentMarker(url ,name) {
+							var infoContentInfoMarkerNotExist = ""; 
+								 infoContentInfoMarkerNotExist = "<img src='" + url + "' alt='Ảnh' width='100px' style='float:left' height='100px'></img><div class='tool-tip-title' style='float:left; padding-left : 10px'><h6 style='overflow: hidden; text-overflow: ellipsis; display: -webkit-box; line-height: 16px; max-height: 62px;-webkit-line-clamp: 4; -webkit-box-orient: vertical;max-width: 170px;'>" + name + " </h6>"; 
+				  			var infoWindowMarkerNotExist = new google.maps.InfoWindow({
+							    content: infoContentInfoMarkerNotExist
+							});
+				  			// Khi hover vô marker
+				  			markTemp.addListener('mouseover', function() {
+							     infoWindowMarkerNotExist.open(map,  markTemp);
+							});
+							markTemp.addListener('mouseout', function() {
+								 infoWindowMarkerNotExist.close(map,  markTemp);  
+							});
+			}
+		</script>
+	</body>
+</html>

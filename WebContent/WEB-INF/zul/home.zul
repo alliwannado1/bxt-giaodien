@@ -1,0 +1,159 @@
+
+<?style href="/assets/css/bootstrap.css" type="text/css" ?>
+<!-- Custom CSS -->
+<?style href="/assets/css/sb-admin-2.css" type="text/css" ?>
+<?style href="/assets/css/common.css" type="text/css" ?>
+<?style href="/assets/font-awesome-4.2.0/css/font-awesome.min.css" type="text/css" ?>
+<?style href="/assets/toastr/build/toastr.css" type="text/css" ?>
+<?style href="/assets/css/gopy.css" type="text/css" ?>
+<?style href="/assets/css/general.css" type="text/css" ?>
+<!-- Bootstrap Core JavaScript -->
+<?script type="text/javascript" src="/assets/js/bootstrap.min.js"?>
+<?script type="text/javascript" src="/assets/js/sb-admin-2.js"?>
+<?script type="text/javascript" src="/assets/toastr/build/toastr.min.js" ?>
+<?script type="text/javascript" src="/backend/assets/js/bootbox.min.js" ?>
+
+<zk xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk"
+ xmlns:w="http://www.zkoss.org/2005/zk/client">
+ <n:script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></n:script>
+<n:script src="//code.jquery.com/jquery-1.11.1.min.js"></n:script>
+	<zscript><![CDATA[
+	                  entry = new vn.toancauxanh.service.BaseObject().core();
+	                  String file = execution.getParameter("file");
+	                  String ctxPath = execution.getContextPath();
+	                  String resource = execution.getParameter("resource");
+	                  String action = execution.getParameter("action");
+	                  boolean coquyen = entry.quyen.get(resource + "_" + action);
+	]]></zscript>
+	<style>
+		.z-messagebox-buttons .z-button:hover {
+			background-color: #5cb85c;
+		}
+		.z-messagebox-icon {
+			margin-left: 40px;
+		}
+		find out what goes wrong in this code:
+
+#site-logo {
+    float: right;
+    height: 110px;
+    width: 930px;
+}
+
+#site-logo img {
+    height: 110px;
+    max-height: 110px;
+    width: 720px;
+    float: right;
+}
+
+#hgroup {
+    float: right;
+    width: 100%;
+   text-align: right;
+}
+
+#header-left {
+    width: 100%;
+    float: left;
+}
+	</style>
+<div class="wrapper" >
+	<?component name="backendheader" inline="true" macroURI="/WEB-INF/zul/common/header.zul"?>
+	<backendheader/>
+	<n:div>
+		<n:div id="page-wrapper" class="wrap-fix">
+			<include src="/WEB-INF/zul/common/menu-left.zul"  />
+			<div zclass="body-include box-col-full">
+				<include if="${coquyen}" instant="true" src="${file}" class="box-col-7"></include>
+				<label if="${!coquyen}">Bạn không có quyền truy cập chức năng này!</label>
+			</div>
+		</n:div>
+	</n:div>
+</div>	
+<script defer="true"><![CDATA[
+var _portrait = {'0': true, '180': true}, //default portrait definition
+    _initLandscape = jq.innerWidth() > jq.innerHeight(), // initial orientation is landscape or not
+    _initDefault = _portrait[window.orientation]; //default orientation
+
+zAu.cmd0.clientInfo = function(dtid) {
+    zAu._cInfoReg = true;
+    var orient = '',
+        dpr = 1;
+
+    if (zk.mobile) {
+        //change default portrait definition because landscape is the default orientation for this device/browser.
+        if ((_initLandscape && _initDefault) || (!_initLandscape && !_initDefault))
+            _portrait = {'-90': true, '90': true};
+
+        orient = _portrait[window.orientation] ? 'portrait' : 'landscape';
+    } else {
+        orient = jq.innerWidth() > jq.innerHeight() ? 'landscape' : 'portrait';
+    }
+
+    if (window.devicePixelRatio)
+        dpr = window.devicePixelRatio;
+
+    zAu.send(new zk.Event(zk.Desktop.$(dtid), 'onClientInfo', 
+        [new Date().getTimezoneOffset(),
+        zk.parseInt(screen.width), zk.parseInt(screen.height), screen.colorDepth,
+        zk.parseInt(jq.innerWidth()), zk.parseInt(jq.innerHeight()), zk.parseInt(jq.innerX()), zk.parseInt(jq.innerY()), dpr.toFixed(1), orient],
+        {implicit:true, rtags: {onClientInfo: 1}}));
+}
+]]></script>
+	<script defer="true">
+    var saveArray = new Array();
+    saveArray[0] = false;
+    saveArray[1] = false;
+    window.addEventListener("keyup", function (event) {
+     if (event.defaultPrevented) {
+        return; 
+      }
+      if(event.keyCode == 18){
+       saveArray[0] = true;
+      }
+      if(event.keyCode == 80){
+       saveArray[1] = true;
+      }
+      if(saveArray[0] == true &amp;&amp; saveArray[1] == true) {
+          zAu.send(new zk.Event(zk.Widget.$('$gopy'), 'onTest', null, {toServer:true}));
+          saveArray[0] = false;
+          saveArray[1] = false;
+      }
+     });
+ </script>
+ <script>
+	//$(document).ready(function() { alert("width: " + $(window).width()) });
+	$(function() {
+		    var oldAlert = jq.alert;
+			jq.alert = function (msg, opts) {
+				if (!msg.indexOf('the request was rejected because its size')) {
+					msg = msg.replace('the request was rejected because its size (', '');
+					msg = msg.replace(') exceeds the configured maximum (', '_');
+					msg = msg.replace(')', '');
+					var v2 = msg.substring(msg.indexOf('_')+1, msg.length);
+					var n2 = (parseInt(v2)/1024/ 1024).toFixed(2) + 'MB';
+					newMsg = "File upload có dung lượng vượt quá " + n2;
+					opts.title = "Lỗi";
+					toastrError(newMsg,"");
+					//oldAlert(newMsg, opts);
+				} else if (!msg.indexOf('The request was rejected because the file size')) {
+					msg = msg.replace('The request was rejected because the file size (', '');
+					msg = msg.replace(') exceeds the configured maximum (', '_');
+					msg = msg.replace(')', '');
+					var v2 = msg.substring(msg.indexOf('_')+1, msg.length);
+					//var n2 = (parseInt(v2)/1024/ 1024).toFixed(2) + 'MB';
+					newMsg = "File upload có dung lượng vượt quá " + v2;
+					opts.title = "Lỗi";
+					toastrError(newMsg,"");
+					//oldAlert(newMsg, opts);
+				} else {
+					oldAlert(msg, opts);
+				}
+			}
+		});
+		
+		
+</script>
+
+</zk>

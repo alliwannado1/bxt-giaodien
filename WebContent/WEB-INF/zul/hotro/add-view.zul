@@ -1,0 +1,160 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('vn.toancauxanh.cms.service.ThamSoService')"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native" title="${arg.save}" id="wdn"
+		border="normal" mode="modal" contentStyle="overflow:auto;"
+		closable="true" class="popup-gopy-phanmem"
+		whatever="@load(false,after='saveGopYPhanMem') @converter('vn.toancauxanh.service.DetachConverter')">
+		<zscript><![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+		]]></zscript>
+		<script type="text/javascript">
+			function zoomImg(index){
+				// Get the modal
+				var modal = document.getElementById('myModal');
+				// Get the image and insert it inside the modal - use its "alt" text as a caption
+				var img = document.getElementById('img-'+index);
+				var modalImg = document.getElementById("img01");
+				var captionText = document.getElementById("caption");
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				captionText.innerHTML = img.alt;
+				var span = document.getElementsByClassName("close")[0];
+				span.onclick = function() { 
+					modal.style.display = "none";
+				}
+			}
+		</script>
+		<style>
+			.label-description {
+				font-size : 12px;
+			}
+		</style>
+		<style>
+		.title-gopy-chucnang{
+			color:#0076D7;
+		}
+		.formac-cauhinh button{
+			margin-left:15px;
+		}
+		.txt-tailieu-dinhkem{
+			color:#0076D7;
+		}
+		.tailieu-dinhkiem-delete{
+			font-size:13px;
+			color:red;
+			margin-left:15px;
+		}
+		.dinhkem-toida{
+			font-size:13px;
+			font-style:italic;
+			margin-left:10px;
+		}
+		.btn-dinhkem{
+			background: #0076D7;
+			border: 1px solid #006BC3;
+			color: #FFFFFF;
+		}
+		.btn-dinhkem:hover{
+			background:#055496;
+			color:#FFFFFF;
+		}
+		.btn-dinhkem:sel
+		.btn:hover{
+			background-color: #3071a9;
+			border-color: #285e8e;
+		}
+		.xoa-dinhkem-c{
+			color:red;
+			font-style:italic;
+		}
+	</style>
+		<div class="line-panel">
+				<div zclass="panel-list ho-tro">
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div zclass="form-group">
+								<x:label class="control-label">
+									Đơn vị hỗ trợ kỹ thuật
+								</x:label>
+								<textbox class="hv-textbox"
+									readonly="true" width="100%" maxlength="255"
+									value="@load(vm.donViHoTroKyThuat)" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-6">
+							<div class="form-group">
+								<x:label class="control-label">
+									Số điện thoại
+								</x:label>
+								<textbox class="hv-textbox"
+									readonly="true" width="100%" maxlength="255"
+									value="@load(vm.phoneLienHe)" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+							<div class="form-group">
+								<x:label class="control-label">
+									Email
+								</x:label>
+								<textbox class="hv-textbox"
+									readonly="true" width="100%" maxlength="255"
+									value="@load(vm.emailLienHe)" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div class="form-group">
+								<x:label class="control-label">
+									Hướng dẫn sử dụng Backend
+								</x:label>
+								<div style="padding:10px 0;" visible="@load(empty vm.taiLieuHoTro)">
+									<x:img src="/backend/assets/img/12.File-512.png" width="30px" height="30px"></x:img>
+									<label class="name-file-dinhkem" value="Chưa có tài liệu HDSD"></label> 
+								</div>
+								<div style="padding:10px 0;" visible="@load(not empty vm.taiLieuHoTro)">
+									<x:img src="/backend/assets/img/12.File-512.png" width="30px" height="30px"></x:img>
+									<label class="name-file-dinhkem" value="@load(vm.taiLieuHoTro)"></label> 
+									<button class="btn-dinhkem" visible="@load(not empty vm.taiLieuHoTro)"
+									onClick="@command('downloadTepDinhKem', vm = vm)">Tải xuống</button>
+								</div>
+							</div>
+						</div>
+						
+							<div zclass="col-md-12">
+							<div class="form-group">
+								<x:label class="control-label">
+									Hướng dẫn sử dụng Frontend
+								</x:label>
+								<div style="padding:10px 0;" visible="@load(empty vm.taiLieuHoTroFrontEnd)">
+									<x:img src="/backend/assets/img/12.File-512.png" width="30px" height="30px"></x:img>
+									<label class="name-file-dinhkem" value="Chưa có tài liệu HDSD"></label> 
+								</div>
+								<div style="padding:10px 0;" visible="@load(not empty vm.taiLieuHoTroFrontEnd)">
+									<x:img src="/backend/assets/img/12.File-512.png" width="30px" height="30px"></x:img>
+									<label class="name-file-dinhkem" value="@load(vm.taiLieuHoTroFrontEnd)"></label> 
+									<button class="btn-dinhkem" visible="@load(not empty vm.taiLieuHoTroFrontEnd)"
+									onClick="@command('downloadTepDinhKemFE', vm = vm)">Tải xuống</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div zclass="row formac-cauhinh">
+					<div zclass="col-lg-12">
+						<x:button class="btn default right"
+							zk:onClick="wdn.detach()">
+							<x:image class="img-title"
+								src="${contexPath}/assets/img/front/dong.svg" />
+							Đóng
+						</x:button>
+					</div>
+				</div>
+			</div>
+	</window>
+</idspace>

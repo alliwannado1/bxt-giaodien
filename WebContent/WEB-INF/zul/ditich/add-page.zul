@@ -1,0 +1,567 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer" class="form-list">
+	<zscript>
+		page.title = "Thêm mới, chỉnh sửa di tích - danh thắng";
+	</zscript>
+	<zscript>
+		<![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			model = arg.get("model");
+			String id = execution.getParameter("id");
+			vn.toancauxanh.model.DiTich vm = new vn.toancauxanh.service.DiTichService().getDitichById(id);
+			import java.awt.*;
+    		import java.awt.image.*;
+    		import java.awt.geom.*;	
+			BufferedImage imageTemp = new BufferedImage(460, 294, BufferedImage.TYPE_INT_ARGB); 
+		]]>
+	</zscript>
+	<style>
+			.pac-container, .pac-logo{ position: relative; display:
+			block; } #map { height: 100%; } /* Optional: Makes the
+			sample page fill the window. */ html, body { height: 100%;
+			margin: 0; padding: 0; } .controls { background-color: #fff;
+			border-radius: 2px; border: 1px solid transparent;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); box-sizing:
+			border-box; font-family: Roboto; font-size: 15px;
+			font-weight: 300; height: 29px; margin-left: 17px;
+			margin-top: 10px; outline: none; padding: 0 11px 0 13px;
+			text-overflow: ellipsis; width: 400px; }
+
+			.controls:focus { border-color: #4d90fe; } .title {
+			font-weight: bold; } #infowindow-content { display: none; }
+			#map #infowindow-content { display: inline; }
+
+			.pac-container { z-index: 10000 !important; }
+			.carousel-control {width:10%}
+			
+			
+			.carousel-indicators li {
+		    display: inline-block;
+		    width: 20px;
+		    height: 20px;
+		    margin: 1px;
+		    text-indent: -999px;
+		    cursor: pointer;
+		    background-color: #000 \9;
+		    background-color: rgba(3, 169, 244, 0.59);
+		    border: 1px solid #fff;
+		    border-radius: 2px;
+			}
+		
+			.carousel-indicators .active {
+		    width: 20px;
+		    height: 20px;
+		    margin: 0;
+		    background-color: red;
+			}
+
+			.modal {
+			    display: none;
+			    position: fixed;
+			    z-index: 1;
+			    padding-top: 100px;
+			    left: 0;
+			    top: 0;
+			    width: 100%;
+			    height: 100%;
+			    overflow: auto;
+			    background-color: transparent !important;
+			}
+
+			.modal-backdrop {
+			    position : relative !important;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			    z-index: 1040;
+			    background-color: transparent !important;
+			}
+			</style>
+	
+<div viewModel="@id('vm') @init(vm)"  validationMessages="@id('vmsgs')"
+	form="@id('fx') @load(vm) @save(vm, before={'saveDiSanVanHoaPhiVatThe'})"> 
+	<zscript>
+	  <![CDATA[	 	 
+	 	// Nếu như chỉnh sửa đã có lng, lat thì hiển thị marker tương ứng
+	 	boolean check = !vm.noId();
+	 	// Nếu đã có dữ liệu thì zoom gần 17 vào địa chỉ marker đó. Còn tạo mới thì zoom xa 9 vào bản đồ Quảng Nam
+		int zoom = check ? 21 : 9;
+		// lng và lat. Nếu mặc định sẽ là 2 kinh độ và vĩ độ của tỉnh Quảng Nam
+		double lat = check ? vm.getBanDo().getLat() : 15.3760702;
+	 	double lng = check ? vm.getBanDo().getLng() : 108.2177968;	
+	 ]]>
+	</zscript>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						Thêm di tích - danh thắng
+						<div zclass="wd-action-bar">
+							<x:image class="img-add" src="${contexPath}/assets/img/back_burned.png"/>
+							<x:a  href="javascript:void(0);"
+								class="btn-custom"
+								onClick="@command('redirectBackPageListDiTich', url = '/cp/ditich')">
+								Trở về
+							</x:a>
+						</div>
+					</n:h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-md-12">
+					<div zclass="row">
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span>Loại di tích - danh thắng<n:small class="required"> *</n:small></x:span> 
+									<combobox readonly="true" class="his" disabled="@load(vm.view)"
+										model="@load(entry.loaiDiTichs.targetQuery.fetch())" placeholder="Loại di tích, danh thắng"
+										value="@bind(vm.loai.name)  @save(vm.loai.name,before='saveDiTich') @validator('vn.toancauxanh.vm.BaseValid', constraint = 'no empty')"
+										selectedItem="@bind(vm.loai)"
+										width="100%">
+										<template name="model">
+											<comboitem label="@load(each.name)" />
+										</template>
+									</combobox>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+								<div zclass="form-group">
+										<x:span>Đơn vị quản lí cấp tỉnh</x:span> 
+											<combobox readonly="true" class="his" onCreate="@command('boxCapTinhOnCreate')"
+													value="@bind(vm.donViCapTinh.ten)"
+													model="@load(vm.listDonViCapTinh)"
+													selectedItem="@bind(vm.donViCapTinh)"
+													 width="100%">
+													<template name="model">
+														<comboitem label="@load(each.ten)" />
+													</template>
+											</combobox>
+										<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+								</div>
+							</div>
+						</div>
+						<div zclass="row">
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Tên di tích - danh thắng<n:small class="required"> *</n:small></x:span> 
+								<textbox class="form-control" placeholder="Tên di tích, danh thắng" 
+									readonly="${readOnly})" width="100%" maxlength="255" id="ten"
+									value="@bind(vm.name)  @save(vm.name, before='saveDiTich') @validator(vm.validatorNameDitich)" onFocus="self.select()" />
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+									<x:span>Đơn vị quản lí cấp huyện</x:span> 
+									<combobox readonly="true" class="his" onCreate="@command('boxCapHuyenOnCreate')" onSelect="@command('boxCapHuyenOnSelect')"
+										value="@load(vm.donViCapHuyen.ten)"
+										model="@load(vm.listDonViCapHuyen)"
+										selectedItem="@bind(vm.donViCapHuyen)"
+										width="100%">
+										<template name="model">
+											<comboitem label="@load(each.ten)" />
+										</template>
+									</combobox>
+									<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Quyết định công nhận di tích - danh thắng</x:span> 
+								<textbox class="form-control" placeholder="Quyết định công nhận di tích, danh thắng" 
+									readonly="${readOnly})" width="100%" maxlength="255"
+									value="@bind(vm.quyetDinhXepHangDitich)"/>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+									<x:span>Đơn vị quản lí cấp xã</x:span> 
+									<combobox readonly="true" class="his" onCreate="@command('boxCapXaOnCreate')"
+										value="@load(vm.donViCapXa.ten)"
+										model="@load(vm.listDonViCapXa)"
+										selectedItem="@bind(vm.donViCapXa)"
+										width="100%">
+										<template name="model">
+											<comboitem label="@load(each.ten)" />
+										</template>
+									</combobox>
+									<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+							
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Địa chỉ<n:small class="required"> *</n:small></x:span> 
+								<textbox class="form-control" width="100%" maxlength="255" id="diachi" placeholder="Địa chỉ"
+									value="@bind(vm.address)  @save(vm.address, before='saveDiTich') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" onFocus="self.select()" />
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Thực trạng di tích, danh thắng</x:span> 
+								<combobox readonly="true" class="his" placeholder="Thực trạng di tích, danh thắng"
+									value="@load(vm.thucTrangDiTich eq null ? 'Không chọn' : vm.thucTrangDiTich.name)"
+									model="@load(entry.thucTrangDitichs.thucTrangDiTichAndNull)"
+									selectedItem="@save(vm.thucTrangDiTich)" width="100%">
+									<template name="model">
+										<comboitem label="@load(each.name ne null ? each.name : 'Không chọn')" />
+									</template>
+								</combobox>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Kinh độ<n:small class="required"> *</n:small></x:span> 
+								<doublebox class="form-control" id="kinhdo" width="100%" maxlength="255"
+								value="@bind(vm.banDo.lat) @save(vm.banDo.lat,before='saveDiTich') @validator(vm.validateKinhViDo)"/>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Vĩ độ<n:small class="required"> *</n:small></x:span> 
+								<doublebox class="form-control" id="vido" width="100%" maxlength="255"
+								value="@bind(vm.banDo.lng) @save(vm.banDo.lng,before='saveDiTich') @validator(vm.validateKinhViDo)" />
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12" style="margin:10px 0px">
+							<n:div zclass="form-group">
+								<n:input id="pac-input" class="controls" type="text" 
+									placeholder="Vui lòng nhập địa điểm" />
+								<n:div id="map" style="height:400px"></n:div>
+								<n:div id="infowindow-content">
+									<n:br />
+									<n:span id="place-name"></n:span>
+									<n:br />
+									<n:span id="place-id"></n:span>
+									<n:br />
+									<n:span id="place-address"></n:span>
+								</n:div>
+							</n:div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div zclass="form-group">
+								<x:span class="issue-search">Ghi chú</x:span> 
+								<textbox rows="2" class="form-control"
+									readonly="${readOnly})"
+									value="@bind(vm.ghichu)"/>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div zclass="form-group">
+								<x:span class="issue-search">Bài viết giới thiệu</x:span> 
+								<textbox rows="10" class="form-control"
+									readonly="${readOnly})"
+									value="@bind(vm.description)"/>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12">
+								<div zclass="form-group">
+									<x:span class="issue-search">Bài viết chi tiết</x:span> 
+									<ckeditor toolbar="Full" id="WYSIWYG2" width="100%" height="350px"
+										filebrowserImageBrowseUrl="${labels.filestore.folder}"
+										filebrowserImageUploadUrl="${labels.filestore.galleryditich}"
+										filebrowserBrowseUrl="${labels.filestore.folder}"
+										customConfigurationsPath="/backend/assets/js/configWYSIYG.js"
+										value="@bind(vm.details)">
+									</ckeditor>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div zclass="col-md-12 row-button">
+					<div zclass="row">
+						<div zclass="form-group">
+							<x:span class="issue-search">Hình ảnh</x:span> 
+							<n:i class="far fa-images"></n:i>
+							 <button onClick="@command('redirectPage', zul='ditich/view-images.zul',vmArgs=vm,vm=vm)"
+							 	label="Quản lý danh sách hình ảnh" sclass="wd-upload-btn"
+							 	image="/img/pic.png"/>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="form-group">
+							<x:span class="issue-search">File đính kèm</x:span> 
+							 <button onClick="@command('redirectPage', zul='ditich/view-file.zul',vm=vm)"
+							 	label="Quản lý danh sách tệp tin" sclass="wd-upload-btn"
+							 	image="/img/folder.png" />
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="form-group">
+							<x:span class="issue-search">Video</x:span> 
+							 	<button onClick="@command('redirectPage', zul='ditich/list-video.zul',vm=vm)"
+							 		label="Quản lý danh sách video" sclass="wd-upload-btn"
+							 		image="/img/play-button.png" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div zclass="row formac-cauhinh">
+			<div zclass="col-lg-12">
+				<x:button class="btn default left" onClick="@command('redirectBackPageListDiTich', url = '/cp/ditich')" >
+					<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+					Hủy
+				</x:button>
+				<x:button class="btn primary right" if="${vm.noId()}"
+					onClick="@command('saveDiTich',list=vmArgs, attr='targetQuery', wdn=wdn, vm=vm)">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+					Thêm mới
+				</x:button>
+				<x:button class="btn primary right"  if="${!vm.noId()}"
+					onClick="@command('saveDiTich',list=vmArgs, attr='targetQuery', wdn=wdn,  vm=vm)">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+					Cập nhật
+				</x:button>
+			</div>
+		</div>
+	</div>
+  	<!-- <script type="text/javascript" src="/assets/js/mapJs.js"
+       defer="true" ></script>  -->
+       
+     <include src="/WEB-INF/zul/keymap.zhtml"></include>
+       
+	 <n:script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: ${lat}, lng: ${lng}},
+          zoom: ${zoom},
+          gestureHandling: 'cooperative',
+          disableDefaultUI: true
+        });
+        
+        var input = document.getElementById('pac-input');
+	
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+		var myLatLng = {lat: ${lat}, lng: ${lng}};
+		
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+		
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+        
+        var marker = new google.maps.Marker({
+          map: map,
+          draggable:true,
+          icon: {
+				 url: 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
+   				 labelOrigin: new google.maps.Point(25, 50)
+		  },
+        });
+        
+        
+        if (${check}) {
+        	  	 marker = new google.maps.Marker({
+     		  	 position: myLatLng,
+     		  	 draggable:true,
+   				 animation: google.maps.Animation.DROP,
+       			 map: map,
+       			 icon: {
+				     url: 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
+   					 labelOrigin: new google.maps.Point(25, 50)
+				 },
+        		 label: {
+  			 	 	 color: '#333300',
+ 					 fontWeight: 'bold',
+ 					 fontSize: "16px",
+  				 	 text: '${vm.name}',  			 
+  				 },
+        		});
+        	
+        	    // Khi kéo thả marker sẽ cập nhật kinh độ, vĩ độ mới
+	       	    google.maps.event.addListener(marker, 'dragend', function() {
+    	  
+    				   zk.afterMount(function(){
+                	      zk.Widget.$('$kinhdo').setValue(marker.getPosition().lat());
+                  	      zk.Widget.$('$kinhdo').fireOnChange();
+            		    });
+            		    
+            		    zk.afterMount(function(){
+                	      zk.Widget.$('$vido').setValue(marker.getPosition().lng());
+                  	      zk.Widget.$('$vido').fireOnChange();
+            		    });
+              
+				});
+        }
+             
+
+       // Hiển thị danh sách gợi ý địa điểm 
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            return;
+          }
+
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(21);
+          }
+          // Set the position of the marker using the place ID and location.
+          marker.setPlace({
+            placeId: place.place_id,
+            location: place.geometry.location,
+          });
+          marker.setLabel({
+          	  color: '#333300',
+ 			  fontWeight: 'bold',
+ 			  fontSize: "16px",
+  			  text: place.name,
+          });
+          
+          
+          marker.setTitle(place.name);
+          marker.setVisible(true);
+       	  marker.setDraggable(true);
+			     // Phần set dữ liệu textbox zk 
+			     
+			     if (${!check}) {
+			   <!--   	 zk.afterMount(function(){
+                     	 zk.Widget.$('$ten').setValue(place.name);
+                     	 zk.Widget.$('$ten').fireOnChange();
+               		 });
+                
+                    zk.afterMount(function(){
+                 	     zk.Widget.$('$diachi').setValue(place.formatted_address);
+                 	     zk.Widget.$('$diachi').fireOnChange();
+              		 }); -->
+			     }
+			    
+                
+                  zk.afterMount(function(){
+                      zk.Widget.$('$kinhdo').setValue(place.geometry.location.lat());
+                      zk.Widget.$('$kinhdo').fireOnChange();
+                });
+                
+                  zk.afterMount(function(){
+                      zk.Widget.$('$vido').setValue(place.geometry.location.lng());
+                      zk.Widget.$('$vido').fireOnChange();
+                });
+                
+        });
+        
+       
+       //  Click để tạo marker mới trên bản đồ 
+        google.maps.event.addListener(map, 'click', function(event) { 
+				bootbox.confirm({
+				    message: "Khi chọn địa điểm bằng tay sẽ không chính xác hoàn toàn. Bạn có muốn tiếp tục hay không?",
+				    buttons: {
+				    	 confirm: {
+				            label: 'Có',
+				        },
+				        cancel: {
+				            label: 'Không',
+				        }
+				    },
+				    callback: function (result) {
+				    	if(result) {
+				    		 // Xóa marker cũ khi chọn marker mới 
+			        		marker.setMap(null);  
+			        		// Thêm marker mới vừa chọn 
+			           	    addMarker(event.latLng, map); 
+				    	}
+					 }
+				});
+        });
+        
+		
+        // Add a marker at the center of the map.
+        addMarker(bangalore, map);
+        
+        function addMarker(location, map) {
+	        marker = new google.maps.Marker({
+     		  	 position: location,
+     		  	 draggable:true,
+   				 animation: google.maps.Animation.DROP,
+       			 map: map,
+       			 icon: {
+				     url: 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
+   					 labelOrigin: new google.maps.Point(25, 50)
+				 },
+        		 label: {
+  			 	 	 color: '#333300',
+ 					 fontWeight: 'bold',
+ 					 fontSize: "16px"
+  				 },
+        	});
+	       	  
+	       	    // Khi kéo thả marker sẽ cập nhật kinh độ, vĩ độ mới 
+	       	    google.maps.event.addListener(marker, 'dragend', function() {
+    	  
+    				   zk.afterMount(function(){
+                	      zk.Widget.$('$kinhdo').setValue(marker.getPosition().lat());
+                  	      zk.Widget.$('$kinhdo').fireOnChange();
+            		    });
+            		    
+            		    zk.afterMount(function(){
+                	      zk.Widget.$('$vido').setValue(marker.getPosition().lng());
+                  	      zk.Widget.$('$vido').fireOnChange();
+            		    });
+              
+				});
+			
+			 //  Khi chọn marker bằng tay sẽ xóa ô input nhập vị trí place đi 
+	       	  $('#pac-input').val("");
+	       	  
+	       	  if (${!check}) {
+	       	  		<!-- zk.afterMount(function(){
+                      zk.Widget.$('$ten').setValue('');
+                      zk.Widget.$('$ten').fireOnChange();
+             		 });
+                
+              		zk.afterMount(function(){
+                      zk.Widget.$('$diachi').setValue('');
+                      zk.Widget.$('$diachi').fireOnChange();
+            		  }); -->
+	       	  }
+	       	  
+                
+	     	  zk.afterMount(function(){
+                      zk.Widget.$('$kinhdo').setValue(location.lat());
+                      zk.Widget.$('$kinhdo').fireOnChange();
+              });
+                
+              zk.afterMount(function(){
+                      zk.Widget.$('$vido').setValue(location.lng());
+                      zk.Widget.$('$vido').fireOnChange();
+              }); 
+    	  }
+     }
+    </n:script>
+    </div>
+</window>

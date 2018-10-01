@@ -1,0 +1,121 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk"
+	  onClientInfo="@command('onClientInfo',flag=true)"
+	viewModel="@id('vm') @init('vn.toancauxanh.xdcb.model.DonVi')"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native" title="Tạo mới đơn vị" id="wdn"
+		border="normal" mode="modal" contentStyle="overflow:auto;"
+		closable="true" width="90%" onClose="@command('cancelNoVm',wdn=wdn)"
+		whatever="@load(false,after='saveVanBanUpLoad') @converter('vn.toancauxanh.service.DetachConverter')">
+	<zscript>
+			vmArgs = arg.get("vmArgs");
+			nguoiDung = arg.get("vm");
+   </zscript>
+	
+	<div zclass="panel-body">
+			<div zclass="row">
+				<div zclass="col-md-6">
+					<div zclass="form-group">
+						<hlayout>
+							<label class="control-label"
+								value="Tên đơn vị" />
+							<label class="required" value="*" />
+						</hlayout>
+						<vlayout>
+							<textbox class="form-control" width="100%" maxlength="255"
+								value="@load(vm.ten) @save(vm.ten, before={'saveDonVi'}) @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" />
+							<label zclass="error"
+								value="@load(vmsgs[self.previousSibling])" />
+						</vlayout>
+					</div>
+					<div zclass="form-group">
+						<hlayout>
+							<label class="control-label"
+								value="Mã đơn vị" />
+							<label class="required" value="*" />
+						</hlayout>
+						<vlayout>
+							<textbox class="form-control" width="100%" maxlength="255"
+								value="@load(vm.ma) @save(vm.ma, before={'saveDonVi'}) @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')"/>
+							<label zclass="error"
+								value="@load(vmsgs[self.previousSibling])" />
+						</vlayout>
+					</div>
+					<div zclass="form-group">
+						<hlayout>
+							<label class="control-label"
+								value="Tên viết tắt" />
+							<label value="" />
+						</hlayout>
+						<vlayout>
+							<textbox class="form-control" width="100%" maxlength="255"
+								value="@load(vm.vietTat) @save(vm.vietTat, before={'saveDonVi'})"/>
+							<label zclass="error"
+								value="@load(vmsgs[self.previousSibling])" />
+						</vlayout>
+					</div>
+				</div>
+				<div zclass="col-md-6">
+					<div zclass="form-group">
+						<hlayout>
+							<label class="control-label"
+								value="Email" />
+							<label value="" />
+						</hlayout>
+						<vlayout>
+							<textbox class="form-control" width="100%" maxlength="255"
+								value="@bind(vm.email) @save(vm.email, before='saveDonVi')  @validator(vm.validatorEmail,email=self.value)"/>
+							<label zclass="error"
+								value="@load(vmsgs[self.previousSibling])" />
+						</vlayout>
+					</div>
+					<div zclass="form-group">
+						<hlayout>
+							<label class="control-label"
+								value="Số điện thoại" />
+							<label value="" />
+						</hlayout>
+						<vlayout>
+							<textbox class="form-control" width="100%" maxlength="255"
+								value="@bind(vm.dienThoai) @save(vm.dienThoai, before='saveDonVi')  @validator(vm.phoneNumber,phone=self.value)"/>
+							<label zclass="error"
+								value="@load(vmsgs[self.previousSibling])" />
+						</vlayout>
+					</div>
+					<div zclass="form-group">
+						<hlayout>
+							<label class="control-label"
+								value="Địa chỉ" />
+							<label value="" />
+						</hlayout>
+						<vlayout>
+							<textbox class="form-control" width="100%" maxlength="255"
+								value="@load(vm.diaChi) @save(vm.diaChi, before={'saveDonVi'})"/>
+							<label zclass="error"
+								value="@load(vmsgs[self.previousSibling])" />
+						</vlayout>
+					</div>
+				</div>
+				
+			</div>
+			<!-- /.col-md-12 -->
+		</div>
+
+	<div zclass="row form-actions">
+		<div zclass="col-lg-12">
+			<x:button class="btn btn-primary"
+				onClick="@command('saveDonVi', list=vmArgs, attr='resetListDonVi',wdn=wdn,vm=nguoiDung)">
+				<n:i class="fa fa-save"></n:i>
+				Lưu
+			</x:button>
+			&#160;
+			<x:button class="btn btn-default"
+				onClick="@command('cancelNoVm',wdn=wdn)">
+				<n:i></n:i>
+				Hủy
+			</x:button>
+			&#160;
+		</div>
+	</div>
+
+	</window>
+</idspace>

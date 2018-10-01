@@ -1,0 +1,62 @@
+<z:div xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml"
+	xmlns:w="client">
+	<style>
+		#videoLocation{
+			opacity:0;
+			transition:all 1s ease-in-out;
+		}
+	</style>
+	<div class="item-details row" id="videoLocation">
+		<div class="col-md-12">
+			<div class="row list-image pb-video" zk:visible="@load(vm.detail.videos.size() ne 0)"
+				children="@load(vm.pageListGallaryImagesFrontEnd(vm.detail.videos))">
+				<template name="children">
+					<div class="col-md-4">
+						<z:a zk:onClick="@command('showView', vm = each,objectDetail = vm.detail , index = forEachStatus.index + 1 + vm.arg.page * 9, url='viewVideo.zhtml', list = vm.detail.videos)">
+							<div class="media-box">
+								<n:img class="d-block w-100" zk:if="${not empty each.pathAvatar}"
+									   src="/${each.path}/v_${each.pathAvatar}"></n:img>
+								
+								<img class="d-block w-100" zk:if="${empty each.pathAvatar}"
+							     	   src="/assets/frontend/image/v_noImage.jpg"></img>
+								
+									<div class="media-description">
+										<button type="button"
+											class="btn media-custom-button">
+											<i class="fas fa-play"></i>
+										</button>
+										<div class="media-title-box">
+											<span class="media-title">
+												${each.name}
+											</span>
+											<span class="media-clock">
+												${each.duration}
+											</span>
+										</div>
+									</div>
+							</div>
+						</z:a>
+					</div>
+				</template>
+			</div>
+			
+			<z:div class="item-update-waiting" zk:visible="@load(vm.detail.videos.size() eq 0)">
+				<div class="update-css">
+					<h6 style="text-align:center;padding-bottom:15px;">Video đang được cập nhật</h6>
+					<img src="/assets/frontend/image/nono.png" width="130px"
+						style="display:block;margin:auto">
+					</img>
+				</div>
+			</z:div>
+			
+			<div class="row view-more-img">
+				<z:paging pageSize="@load(vm.arg.pagesize)" mold="os"
+				totalSize="@load(vm.detail.videos.size())"
+				visible="@load(vm.detail.videos.size() > vm.arg.pagesize ? true : false)"
+				activePage="@bind(vm.arg.page)"
+				onPaging="@command('cmdLoadPageFrontEnd', notify=vm, atr='detail')" />
+			</div>
+			
+		</div>
+	</div>
+</z:div>

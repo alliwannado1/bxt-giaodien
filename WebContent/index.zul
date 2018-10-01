@@ -1,0 +1,62 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8" ?>
+<?style	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" type="text/css" ?>
+<?style href="/assetsfe/style/cssLoginDemo.css" type="text/css" ?>
+<?script type="text/javascript"  src="/login/js/login.min.js"?>
+<?style href="/assetsfe/style/alert.css" type="text/css" ?>
+<zk xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk">
+	<n:html>
+		<n:head>
+			<n:title></n:title>
+		</n:head>
+		<n:body>
+			<script type="text/javascript"
+				src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" />
+			<script type="text/javascript"
+				src="//code.jquery.com/jquery-1.11.1.min.js" />
+DEMO INDEX
+
+
+
+		<!-- 	<n:div class="container">
+				<n:h1 class="welcome text-center">Welcome to</n:h1>
+				<div class="card card-container"
+					apply="org.zkoss.bind.BindComposer"
+					viewModel="@id('vm') @init('vn.toancauxanh.service.StudentService')">
+
+					<include src="/WEB-INF/zul/notification.zul"></include>
+
+					<n:h2 class='login_title text-center'>Login</n:h2>
+
+					<n:form class="form-signin">
+						<n:span id="reauth-email"
+							class="reauth-email">
+						</n:span>
+						<n:p class="input_title">Email</n:p>
+
+						<textbox type="text" id="email"
+							class="login_box"
+							onOK="@command('login',email=email.getValue(),password=password.getValue())">
+						</textbox>
+
+						<n:p class="input_title">Password</n:p>
+
+						<textbox type="password" id="password"
+							class="login_box"
+							onOK="@command('login',email=email.getValue(),password=password.getValue())">
+						</textbox>
+
+
+						<button class="btn btn-lg btn-primary"
+							label="Login"
+							onClick="@command('login',email=email.getValue(),password=password.getValue())">
+						</button>
+					</n:form>
+				</div>
+			</n:div> -->
+
+		</n:body>
+	</n:html>
+
+
+</zk>
+

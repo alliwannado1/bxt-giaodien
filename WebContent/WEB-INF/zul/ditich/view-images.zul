@@ -1,0 +1,2 @@
+<?component name="add-view" inline="true" macroURI="add-view-images.zul"?>
+<add-view model="${arg.vm}" vmArgs="${arg.vmArgs}" save="Hình ảnh di tích" readOnly="${arg.readOnly}"/>

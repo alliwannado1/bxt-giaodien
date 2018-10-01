@@ -1,0 +1,122 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('vn.toancauxanh.service.LeHoiService')"
+	class="form-list">
+	<zscript>
+		<![CDATA[
+			page.title = "Quản lí bảo tàng";
+			vm.getArgChangeSessionPage();
+		]]>
+	</zscript>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						Danh sách bảo tàng
+						<div  zk:if="${entry.quyen.lehoi_them}" zclass="wd-action-bar" viewModel="@id('leHoiId') @init('vn.toancauxanh.model.LeHoi')">
+							<x:image class="img-add" src="${contexPath}/assets/img/front/congxanh.svg"/>
+							<a href="javascript:void(0);"
+								class="btn-custom">
+								<attribute name="onClick"><![CDATA[
+									vm.sendRedirectPageUrl("/cp/lehoi/add");
+								]]></attribute>
+								Thêm mới bảo tàng
+							</a>
+						</div>
+					</n:h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wd-search-form">
+		<div zclass="row">
+			<div zclass="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-sm-5">
+						<n:div class="form-group">
+							<x:span class="issue-search">Từ khóa</x:span> 
+							<textbox class="hv-textbox tb-search" zk:onOK='vm.cmd("", vm, "targetQuery");'
+								maxlength="255" value="@bind(vm.arg.tukhoa)"
+								placeholder="Tìm kiếm theo từ khóa" width="100%"/>
+						</n:div>
+					</div>
+					<div class="col-sm-5">
+						<n:div class="form-group">
+							<x:span class="issue-search">Loại bảo tàng</x:span> 
+							<combobox readonly="true" class="his" zk:onOK='vm.cmd("", vm, "targetQuery");'
+									value="@load(vm.arg.loai  eq null ? 'Tất cả' : vm.arg.loai.name)"
+									model="@load(entry.loaiLeHois.loaiLeHoiAndNull)" placeholder="Loại bảo tàng"
+									selectedItem="@save(vm.arg.loai)"
+									width="100%">
+								<template name="model">
+									<comboitem label="@load(each.name eq null ? 'Tất cả' : each.name)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div class="col-sm-2" style="padding-right:0px">
+						<x:label class="control-label">&#160;</x:label>
+						<n:div  zk:if="${entry.quyen.lehoi_timkiem}" class="form-group">
+							<x:button class="btn btn-search-page"
+								zk:onClick='vm.cmd("", vm, "targetQuery");'>
+								<x:image class="img-search"
+									src="${contexPath}/assets/img/front/search.svg" />
+								Tìm kiếm
+							</x:button>
+						</n:div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<grid model="@load(vm.page(vm.targetQuery).fetch())" id="grid" 
+				emptyMessage="Không có mục nào trong danh sách">
+				<columns>
+					<column label="STT" width="60px" style="text-align:center" />
+					<column label="Tên bảo tàng" />
+					<column label="Loai bảo tàng" />
+					<column label="Địa điểm"  />
+					<column label="Ngày sửa cuối" width="15%" />
+					<column label="Thao tác" style="text-align:center" width="20%" />
+				</columns>
+				 <template name="model">
+					<row viewModel="@id('item') @init(each)">
+						<label value="@bind(forEachStatus.index + 1 + vm.arg.page * vm.arg.pagesize)"
+							style="text-align:center;display:block" />
+						<a label="@load(each.name)"
+							onClick="@command('redirectPageLeHoi', url='/cp/lehoi/edit',vm=item ,service = vm)" class="link-title"/>
+						<label value="@load(each.loai.name)" />
+						<label value="@load(each.address)" />
+						<label value="@load(each.ngaySua) @converter('formatedDate',format='dd/MM/YYYY')" />
+						<div class="thaotac" style="text-align:center">
+							<x:a zk:if="${entry.quyen.lehoi_xem}" label="Xem" class="btn-thaotac" onClick="@command('redirectPageLeHoi', url='/cp/lehoi/view', vm=item,service = vm)">
+								<x:image class="img-see" src="${contexPath}/assets/img/front/view.png"/>
+							</x:a>
+							<x:a  zk:if="${entry.quyen.ditich_sua  and each.quyenQuanLi}" label="Sửa" class="btn-thaotac" onClick="@command('redirectPageLeHoi', url='/cp/lehoi/edit',vm=item,service = vm)">
+								<x:image class="img-edit" src="${contexPath}/assets/img/front/edit.svg"/>
+							</x:a>
+							<x:a  zk:if="${entry.quyen.ditich_xoa  and each.quyenQuanLi}" label="Xóa" class="btn-thaotac"
+								onClick="@command('deleteTrangThaiConfirmAndNotify', notify=vm, attr='targetQuery')">
+								<x:image class="img-edit" src="${contexPath}/assets/img/front/delete.svg"/>
+							</x:a>
+						</div>
+					</row>
+				</template> 
+				
+				 <foot visible="@load(vm.targetQuery.fetchCount() gt 10)">
+					<footer span="6">
+						<div class="">
+							<paging pageSize="@load(vm.arg.pagesize)" mold="os"
+								totalSize="@load(vm.targetQuery.fetchCount())"
+								activePage="@bind(vm.arg.page)"
+								onPaging="@command('cmd', notify=vm, attr='targetQuery')" />
+						</div>
+					</footer>
+				</foot> 
+			</grid>
+		</div>
+	</div>
+</window>

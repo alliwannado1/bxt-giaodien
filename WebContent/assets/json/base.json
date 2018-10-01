@@ -1,0 +1,31 @@
+{
+	"errorCode": 0,
+	"msg": "Success",
+	"token": "c7bbd057-8955-48a8-b390-834d9460d2f5",
+	"data": {
+		"success": true,
+		"id" : "lopnen",
+		"text" : "LỚP NỀN",
+		"expanded" : true,
+		"cls" : "noderoot-lop",
+		"children" : [{
+			"id" : "google",
+			"text" : "Google Map",
+			"leaf" : true,
+			"checked" : true,
+			"iconCls" : "icon-lopNen"
+			}, {
+			"id" : "vetinh",
+			"text" : "Vệ tinh",
+			"leaf" : true,
+			"checked" : false,
+			"iconCls" : "icon-lopNen"
+			}, {
+			"id" : "khongnen",
+			"text" : "Không nền",
+			"leaf" : true,
+			"checked" : false,
+			"iconCls" : "icon-lopNen"
+		}]
+	}
+}

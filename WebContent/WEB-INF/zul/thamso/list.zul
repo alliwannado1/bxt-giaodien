@@ -1,0 +1,191 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('vn.toancauxanh.cms.service.ThamSoService')"
+	validationMessages="@id('vmsgs')"
+	form="@id('fx') @load(vm) @save(vm, before={'saveThamSo'})"
+	class="form-list">
+	<zscript>
+	<![CDATA[
+		page.title = "Cấu hình hệ thống";
+		
+	]]>
+	</zscript>
+	<style>
+		.title-gopy-chucnang{
+			color:#0076D7;
+		}
+		.formac-cauhinh button{
+			margin-left:15px;
+		}
+		.txt-tailieu-dinhkem{
+			color:#0076D7;
+		}
+		.tailieu-dinhkiem-delete{
+			font-size:13px;
+			color:red;
+			margin-left:15px;
+		}
+		.dinhkem-toida{
+			font-size:13px;
+			font-style:italic;
+			margin-left:10px;
+		}
+		.btn-dinhkem{
+			background: #0076D7;
+			border: 1px solid #006BC3;
+			color: #FFFFFF;
+		}
+		.btn-dinhkem:hover{
+			background:#055496;
+			color:#FFFFFF;
+		}
+		.btn-dinhkem:sel
+		.btn:hover{
+			background-color: #3071a9;
+			border-color: #285e8e;
+		}
+		.xoa-dinhkem-c{
+			color:red;
+			font-style:italic;
+		}
+	</style>
+	<div class="panel-list">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<n:h3 class="page-header">
+					Cấu hình hệ thống
+				</n:h3>
+			</div>
+		</div>
+	</div>
+	<div class="line-panel">
+		</div>
+	<div class="panel-list">
+		<div zclass="row">
+			<div zclass="col-lg-6">
+				<div zclass="form-group">
+					<x:span class="issue-search">Đơn vị hỗ trợ<n:small class="required">*</n:small></x:span> 
+					<textbox class="form-control" readonly="${entry.nhanVien.quyens ne '[*]'}"
+					value="@bind(vm.donViHoTro) @save(vm.donViHoTro, before='saveThamSo') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')"  width="100%" maxlength="255"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-lg-6">
+				<div zclass="form-group">
+					<x:span class="issue-search">Số điện thoại hỗ trợ<n:small class="required">*</n:small></x:span> 
+					<textbox class="form-control" readonly="${entry.nhanVien.quyens ne '[*]'}" value="@bind(vm.phoneHoTro) @save(vm.phoneHoTro, before='saveThamSo') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" width="100%" maxlength="255"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel-list">
+		<div zclass="row">
+				<div zclass="col-lg-6">
+					<div zclass="form-group">
+						<x:span class="issue-search">Tài liệu HDSD Backend</x:span> 
+						<div style="padding:10px 0;" visible="@load(not empty vm.taiLieuHoTro)">
+							<x:img src="/backend/assets/img/12.File-512.png" width="30px" height="30px"></x:img>
+							<label class="name-file-dinhkem" value="@load(vm.taiLieuHoTro)"></label> 
+							<a  zk:if="${entry.nhanVien.quyens eq '[*]'}" disabled="${entry.nhanVien.quyens ne '[*]'}" onClick="@command('deleteTaiLieuHoTro', vm = vm)"><label class="xoa-dinhkem-c">Xóa</label></a>
+							<x:br></x:br>
+						</div>
+						<button class="btn-dinhkem" visible="@load(not empty vm.taiLieuHoTro)"
+							onClick="@command('downloadTepDinhKem', vm = vm)">Tải xuống</button>
+						<button class="btn-dinhkem"  zk:if="${entry.nhanVien.quyens eq '[*]'}"
+							upload="true,maxsize=50000,accept=.pdf|.doc|.docx"
+							onUpload="@command('uploadTaiLieuHoTro',media=event.media, vm = vm)">Đính kèm file</button>
+						<x:span  zk:if="${entry.nhanVien.quyens eq '[*]'}" class="dinhkem-toida">Tải lên tối đa 50mb</x:span>
+					</div>
+				</div>
+				
+				<div zclass="col-lg-6">
+					<div zclass="form-group">
+						<x:span class="issue-search">Tài liệu HDSD Frontend</x:span> 
+						<div style="padding:10px 0;" visible="@load(not empty vm.taiLieuHoTroFrontEnd)">
+							<x:img src="/backend/assets/img/12.File-512.png" width="30px" height="30px"></x:img>
+							<label class="name-file-dinhkem" value="@load(vm.taiLieuHoTroFrontEnd)"></label> 
+							<a  zk:if="${entry.nhanVien.quyens eq '[*]'}" disabled="${entry.nhanVien.quyens ne '[*]'}" onClick="@command('deleteTaiLieuHoTroFE', vm = vm)"><label class="xoa-dinhkem-c">Xóa</label></a>
+							<x:br></x:br>
+						</div>
+						<button class="btn-dinhkem" visible="@load(not empty vm.taiLieuHoTroFrontEnd)"
+							onClick="@command('downloadTepDinhKemFE', vm = vm)">Tải xuống</button>
+						<button class="btn-dinhkem"  zk:if="${entry.nhanVien.quyens eq '[*]'}"
+							upload="true,maxsize=50000,accept=.pdf|.doc|.docx"
+							onUpload="@command('uploadTaiLieuHoTroFE',media=event.media, vm = vm)">Đính kèm file</button>
+						<x:span  zk:if="${entry.nhanVien.quyens eq '[*]'}" class="dinhkem-toida">Tải lên tối đa 50mb</x:span>
+					</div>
+				</div>
+		</div>
+	</div>
+	<div class="line-panel"></div>
+	<div class="panel-list">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<n:h5 class="title-gopy-chucnang">
+					THÔNG TIN HỖ TRỢ
+				</n:h5>
+			</div>
+			<div zclass="col-lg-6">
+				<div zclass="form-group">
+					<x:span class="issue-search">Đơn vị hỗ trợ kỹ thuật<n:small class="required">*</n:small></x:span> 
+					<textbox class="form-control" readonly="${entry.nhanVien.quyens ne '[*]'}"
+					value="@bind(vm.donViHoTroKyThuat) @save(vm.donViHoTroKyThuat, before='saveThamSo') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" width="100%" maxlength="255"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-lg-3">
+				<div zclass="form-group">
+					<x:span class="issue-search">Số điện thoại<n:small class="required">*</n:small></x:span> 
+					<textbox class="form-control" readonly="${entry.nhanVien.quyens ne '[*]'}" value="@bind(vm.phoneLienHe) @save(vm.phoneLienHe, before='saveThamSo') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" width="100%" maxlength="255"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-lg-3">
+				<div zclass="form-group">
+					<x:span class="issue-search">Email<n:small class="required">*</n:small></x:span> 
+					<textbox class="form-control" readonly="${entry.nhanVien.quyens ne '[*]'}" value="@bind(vm.emailLienHe) @save(vm.emailLienHe, before='saveThamSo') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" width="100%" maxlength="255"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="line-panel">
+		</div>
+	<div class="panel-list">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<n:h5 class="title-gopy-chucnang">
+					GOOGLE API KEY
+				</n:h5>
+			</div>
+			<div zclass="col-lg-12">
+				<div zclass="form-group">
+					<x:span class="issue-search">API Key<n:small class="required">*</n:small></x:span> 
+					<textbox class="form-control" readonly="${entry.nhanVien.quyens ne '[*]'}"
+					value="@bind(vm.apiKeyGoogle) @save(vm.apiKeyGoogle, before='saveThamSo') @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')"
+					 width="100%" maxlength="255"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<div zclass="row formac-cauhinh">
+			<div zclass="col-lg-12">
+				<div zclass="form-group">
+				<!-- <x:button class="btn default right">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+					Đóng
+				</x:button> -->
+				<x:button class="btn primary right" onClick="@command('saveThamSo')" zk:if="${entry.nhanVien.quyens eq '[*]'}">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+					Lưu
+				</x:button>
+				</div>
+			</div>
+		</div>
+	</div>
+</window>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01._QLDA_Danh_Sach_Du_An" transform="translate(-1270.000000, -934.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group-6-Copy" transform="translate(1250.000000, 922.000000)">
+                <path d="M32.2944964,17.5930147 L27.4069552,17.5930147 L27.4069552,12.7054272 C27.4069552,12.4827775 27.1046192,12 26.4999736,12 C25.8953279,12 25.5929919,12.482804 25.5929919,12.7054272 L25.5929919,17.5930411 L20.7054243,17.5930411 C20.482802,17.5930147 20,17.8953519 20,18.4999736 C20,19.1045952 20.482802,19.4069589 20.7054243,19.4069589 L25.5930183,19.4069589 L25.5930183,24.2945728 C25.5930183,24.5171696 25.8953279,25 26.5,25 C27.1046721,25 27.4069817,24.5171696 27.4069817,24.2945728 L27.4069817,19.4069589 L32.2945757,19.4069589 C32.5171716,19.4069589 33,19.1046481 33,18.4999736 C33,17.895299 32.5171187,17.5930147 32.2944964,17.5930147 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

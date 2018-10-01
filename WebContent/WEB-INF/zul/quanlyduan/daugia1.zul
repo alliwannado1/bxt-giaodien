@@ -1,0 +1,819 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer" class="form-list">
+	<zscript>
+		page.title = "Xúc tiến dự án";
+	</zscript>
+	<zscript>
+		<![CDATA[
+			import java.awt.*;
+    		import java.awt.image.*;
+    		import java.awt.geom.*;	
+			BufferedImage imageTemp = new BufferedImage(460, 294, BufferedImage.TYPE_INT_ARGB); 
+		]]>
+	</zscript>
+<div> 
+	<div class="panel-box">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<div class="page-here">
+					<span>Quản lý dự án</span> > <span>Công ty TNHH A</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-box">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<n:span class="page-header-title">
+					Dự án của nhà đầu tư công ty TNHH A
+				</n:span>
+			</div>
+		</div>
+	</div>
+	<div class="panel-box border-box">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<div class="title-form">
+					<span>Thông tin dự án</span>
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<span>Người phụ trách</span> 
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<span>Nhà đầu tư</span> 
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<span>Lĩnh vực</span> 
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<span>Ngành nghề chi tiết</span> 
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<span>Thời gian bắt đầu xúc tiến</span> 
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<x:button  class="btn primary btn-blue">
+					<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/search.svg"/>
+						<span>Xem chi tiết thông tin dự án</span>
+					</x:button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-box border-box mg-bottom-15">
+		<div class="row">
+			<div zclass="col-lg-12">
+				<div class="box-plan">
+					<div class="plan-line">
+						
+					</div>
+					<div class="plan-item">
+						<div class="plan-number plan-number-active">
+							<span>1</span>
+						</div>
+						<div class="plan-title plan-title-active">
+							<span>Giới thiệu địa điểm thực hiện dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number">
+							<span>2</span>
+						</div>
+						<div class="plan-title">
+							<span>Khảo sát thực tế địa điểm dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number">
+							<span>3</span>
+						</div>
+						<div class="plan-title">
+							<span>Xin, thống nhất chủ trương xúc tiến dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number">
+							<span>4</span>
+						</div>
+						<div class="plan-title">
+							<span>Lựa chọn nhà đầu tư thực hiện dự án</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Đơn vị để gửi công văn đề nghị</span>
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div zclass="form-group">
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Gửi công văn đề nghị</span>
+				</div>
+			</div>
+			<div zclass="col-md-3">
+					<div zclass="form-group">
+						<span>Ngày gửi</span>
+						<datebox format="dd/MM/yyyy" class="hv-db"
+									 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+						<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+					</div>
+			</div>
+			<div zclass="col-md-3">
+					<div zclass="form-group">
+						<span>Ngày dự kiến nhận công văn</span>
+						<datebox format="dd/MM/yyyy" class="hv-db"
+									 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+						<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<span>Tài liệu đính kèm</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Nhận công văn trả lời</span>
+				</div>
+			</div>
+			<div zclass="col-md-6">
+					<div zclass="form-group">
+						<span>Ngày nhận</span>
+						<datebox format="dd/MM/yyyy" class="hv-db"
+									 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+						<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+					</div>
+			</div>
+			<div zclass="col-md-6">
+					<div zclass="form-group">
+						<span>Tài liệu đính kèm</span>
+						<x:br></x:br>
+						<x:button  class="btn primary btn-width">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+							<span>Chọn tài liệu</span>
+						</x:button>
+						<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Nhận văn bản giải thích lý do trễ</span>
+				</div>
+			</div>
+			<div zclass="col-md-6">
+					<div zclass="form-group">
+						<span>Ngày nhận</span>
+						<datebox format="dd/MM/yyyy" class="hv-db"
+									 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+						<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+					</div>
+			</div>
+			<div zclass="col-md-6">
+					<div zclass="form-group">
+						<span>Tài liệu đính kèm</span>
+						<x:br></x:br>
+						<x:button  class="btn primary btn-width">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+							<span>Chọn tài liệu</span>
+						</x:button>
+						<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-6">
+					<div zclass="form-group">
+						<x:button  class="btn primary btn-grey">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/dong.svg"/>
+							<span>Đóng</span>
+						</x:button>
+					</div>
+			</div>
+			<div zclass="col-md-6">
+					<div zclass="form-group right">
+						<x:button  class="btn primary btn-blue">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/luu.svg"/>
+								<span>Lưu</span>
+							</x:button>
+							<x:button  class="btn primary btn-blue mg-btn">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/tiep-tuc.svg"/>
+							<span>Tiếp tục</span>
+						</x:button>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-box border-box mg-bottom-15">
+		<div class="row">
+			<div zclass="col-lg-12">
+				<div class="box-plan">
+					<div class="plan-line">
+						
+					</div>
+					<div class="plan-item">
+						<div class="plan-number-completed">
+							<x:image class="img-title pd-left-11" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+						</div>
+						<div class="plan-title">
+							<span>Giới thiệu địa điểm thực hiện dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number plan-number-active">
+							<span>2</span>
+						</div>
+						<div class="plan-title plan-title-active">
+							<span>Khảo sát thực tế địa điểm dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number">
+							<span>3</span>
+						</div>
+						<div class="plan-title">
+							<span>Xin, thống nhất chủ trương xúc tiến dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number">
+							<span>4</span>
+						</div>
+						<div class="plan-title">
+							<span>Lựa chọn nhà đầu tư thực hiện dự án</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-3">
+				<div class="title-small-page">
+					<span>Ngày khảo sát thực tế</span>
+				</div>
+				<div zclass="form-group">
+					<datebox format="dd/MM/yyyy" class="hv-db"
+									 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div class="title-small-page">
+					<span>Ngày dự kiến nhận công văn</span>
+				</div>
+				<div zclass="form-group">
+					<datebox format="dd/MM/yyyy" class="hv-db"
+									 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Văn bản đồng ý địa điểm</span>
+				</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<span>Ngày nhận</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<span>Tài liệu đính kèm</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-6">
+					<div zclass="form-group">
+						<x:button  class="btn primary btn-grey">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/quay-lai.svg"/>
+							<span>Quay lại</span>
+						</x:button>
+					</div>
+			</div>
+			<div zclass="col-md-6">
+					<div zclass="form-group right">
+						<x:button  class="btn primary btn-blue">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/luu.svg"/>
+								<span>Lưu</span>
+							</x:button>
+							<x:button  class="btn primary btn-blue mg-btn">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/tiep-tuc.svg"/>
+							<span>Tiếp tục</span>
+						</x:button>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-box border-box mg-bottom-15">
+		<div class="row">
+			<div zclass="col-lg-12">
+				<div class="box-plan">
+					<div class="plan-line">
+						
+					</div>
+					<div class="plan-item">
+						<div class="plan-number-completed">
+							<x:image class="img-title pd-left-11" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+						</div>
+						<div class="plan-title">
+							<span>Giới thiệu địa điểm thực hiện dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number-completed">
+							<x:image class="img-title pd-left-11" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+						</div>
+						<div class="plan-title">
+							<span>Khảo sát thực tế địa điểm dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number plan-number-active">
+							<span>3</span>
+						</div>
+						<div class="plan-title plan-title-active">
+							<span>Xin, thống nhất chủ trương xúc tiến dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number">
+							<span>4</span>
+						</div>
+						<div class="plan-title">
+							<span>Lựa chọn nhà đầu tư thực hiện dự án</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Báo cáo UBND thành phố xem xét cho ý kiến về chủ trương xúc tiến dự án</span>
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày gửi UBND</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày gửi Sở xây dựng</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày dự kiến nhận công văn</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Tài liệu đính kèm</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width-md">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Văn bản ý kiến kết luận của lãnh đạo UBND thành phố</span>
+				</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<span>Ngày nhận</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<span>Tài liệu đính kèm</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-3">
+					<div zclass="form-group">
+						<x:button  class="btn primary btn-grey">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/quay-lai.svg"/>
+							<span>Quay lại</span>
+						</x:button>
+					</div>
+			</div>
+			<div zclass="col-md-9">
+					<div zclass="form-group right">
+						<x:button  class="btn primary btn-blue">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/luu.svg"/>
+							<span>Lưu</span>
+						</x:button>
+						<x:button  class="btn primary btn-blue mg-btn">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/tiep-tuc.svg"/>
+							<span>Tiếp tục</span>
+						</x:button>
+						<x:button  class="btn primary btn-green mg-btn">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/ket-thuc-du-an.svg"/>
+							<span>Kết thúc dự án</span>
+						</x:button>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-box border-box mg-bottom-15">
+		<div class="row">
+			<div zclass="col-lg-12">
+				<div class="box-plan">
+					<div class="plan-line">
+						
+					</div>
+					<div class="plan-item">
+						<div class="plan-number-completed">
+							<x:image class="img-title pd-left-11" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+						</div>
+						<div class="plan-title">
+							<span>Giới thiệu địa điểm thực hiện dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number-completed">
+							<x:image class="img-title pd-left-11" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+						</div>
+						<div class="plan-title">
+							<span>Khảo sát thực tế địa điểm dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number-completed">
+							<x:image class="img-title pd-left-11" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+						</div>
+						<div class="plan-title">
+							<span>Xin, thống nhất chủ trương xúc tiến dự án</span>
+						</div>
+					</div>
+					<div class="plan-item">
+						<div class="plan-number plan-number-active">
+							<span>4</span>
+						</div>
+						<div class="plan-title plan-title-active">
+							<span>Lựa chọn nhà đầu tư thực hiện dự án</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			
+			<div zclass="col-md-4">
+				<div class="title-small-page">
+					<span>Phương thức chọn nhà đầu tư</span>
+				</div>
+				<div zclass="form-group">
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-4">
+				<div class="title-small-page">
+					<span>Đơn vị chủ trì</span>
+				</div>
+				<div zclass="form-group">
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Địa điểm dự kiến thực hiện dự án đã có trong danh mục quỹ đất đầu giá quyền sử dụng đất được thành phố phê duyện chưa?</span>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<radio id="l1" label="Có" />
+				<radio id="l2" class="mg-left-30" label="Không" />
+			</div>
+		</div>
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Lập quy hoạch chi tiết 1/500</span>
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Đơn vị tư vấn</span>
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày gửi Sở Xây Dựng</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày dự kiến nhận công văn</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Hồ sơ quy hoạch</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width-md">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Quyết định phê duyệt</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width-md">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Xây dựng phương án đấu giá quyền sử dụng đất</span>
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Đơn vị tư vấn</span>
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày gửi lấy góp ý</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày dự kiến nhận công văn</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Phương án đấu giá</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width-md">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Quyết định đấu giá quyền sử dụng đất</span>
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày gửi</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày dự kiến nhận công văn</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Quyết định</span>
+					<x:br></x:br>
+					<x:button  class="btn primary btn-width-md">
+						<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/chon-tai-lieu.svg"/>
+						<span>Chọn tài liệu</span>
+					</x:button>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Quyết định phê duyệt giá đất khởi điểm đấu giá</span>
+				</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<span>Giá khởi điểm đấu giá (VNĐ)</span> 
+					<textbox class="form-control" value=""></textbox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+			<div zclass="col-md-3">
+				<div zclass="form-group">
+					<span>Ngày nhận</span>
+					<datebox format="dd/MM/yyyy" class="hv-db"
+								 onCreate="self.value = new Date()" width="100%" placeholder="Chọn ngày"/>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+				<div class="title-small-page">
+					<span>Quyết định phê duyệt giá đất khởi điểm đấu giá</span>
+				</div>
+			</div>
+			<div zclass="col-md-6">
+				<div zclass="form-group">
+					<combobox readonly="true" class="his" placeholder="Loại lễ hội" width="100%">
+						<comboitem label="Testcase 1" />
+						<comboitem label="Testcase 2" />
+						<comboitem label="Testcase 3" />
+						<comboitem label="Testcase 4" />
+					</combobox>
+					<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div zclass="col-md-12">
+					<div zclass="form-group right">
+						<x:button  class="btn primary btn-blue">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/luu.svg"/>
+								<span>Lưu</span>
+							</x:button>
+							<x:button  class="btn primary btn-blue mg-btn">
+							<x:image class="img-title" src="${contexPath}/assets/icon-bxtdn/check-qua-giai-doan.svg"/>
+							<span>Hoàn thành</span>
+						</x:button>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+</window>

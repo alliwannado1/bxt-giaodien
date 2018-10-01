@@ -1,0 +1,507 @@
+@font-face {
+  font-family: 'icomoon-custom';
+  src:  url('fonts/icomoon-custom.eot?g1pyo8');
+  src:  url('fonts/icomoon-custom.eot?g1pyo8#iefix') format('embedded-opentype'),
+    url('fonts/icomoon-custom.ttf?g1pyo8') format('truetype'),
+    url('fonts/icomoon-custom.woff?g1pyo8') format('woff'),
+    url('fonts/icomoon-custom.svg?g1pyo8#icomoon-custom') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-custom-"], [class*=" icon-custom-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon-custom' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-custom-arrow-avatar:before {
+  content: "\e900";
+  color: #fff;
+}
+.icon-custom-arrow-breadcrumb:before {
+  content: "\e901";
+}
+.icon-custom-arrow-select:before {
+  content: "\e902";
+}
+.icon-custom-Bao-cao-thong-ke .path1:before {
+  content: "\e903";
+  color: rgb(66, 116, 237);
+}
+.icon-custom-Bao-cao-thong-ke .path2:before {
+  content: "\e904";
+  margin-left: -1em;
+  color: rgb(153, 211, 255);
+}
+.icon-custom-Bao-cao-thong-ke .path3:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: rgb(34, 94, 155);
+}
+.icon-custom-Bao-cao-thong-ke .path4:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-Bao-cao-thong-ke .path5:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-calendar:before {
+  content: "\e908";
+}
+.icon-custom-cap-nhat-kq:before {
+  content: "\e909";
+  color: #5c6376;
+}
+.icon-custom-cap-nhat-table:before {
+  content: "\e90a";
+  color: #2569d4;
+}
+.icon-custom-check-qua-giai-doan:before {
+  content: "\e90b";
+  color: #fff;
+}
+.icon-custom-chon-tai-lieu:before {
+  content: "\e90c";
+  color: #5c6376;
+}
+.icon-custom-close-popup:before {
+  content: "\e90d";
+  color: #c2c7ce;
+}
+.icon-custom-danh-sach-thanh-vien:before {
+  content: "\e90e";
+  color: #5c6376;
+}
+.icon-custom-dieu-chinh:before {
+  content: "\e90f";
+  color: #fff;
+}
+.icon-custom-dong:before {
+  content: "\e910";
+  color: #5c6376;
+}
+.icon-custom-luu:before {
+  content: "\e911";
+  color: #fff;
+}
+.icon-custom-menu-top:before {
+  content: "\e912";
+  color: #fff;
+}
+.icon-custom-next-pagination:before {
+  content: "\e913";
+}
+.icon-custom-nhac-nho:before {
+  content: "\e914";
+  color: #5c6376;
+}
+.icon-custom-nhap-excel:before {
+  content: "\e915";
+  color: #5c6376;
+}
+.icon-custom-notification:before {
+  content: "\e916";
+  color: #fff;
+}
+.icon-custom-plus-popup:before {
+  content: "\e917";
+  color: #5c6376;
+}
+.icon-custom-prev-pagination:before {
+  content: "\e918";
+}
+.icon-custom-QL-doan-vao .path1:before {
+  content: "\e919";
+  color: rgb(66, 116, 237);
+}
+.icon-custom-QL-doan-vao .path2:before {
+  content: "\e91a";
+  margin-left: -1em;
+  color: rgb(153, 211, 255);
+}
+.icon-custom-QL-doan-vao .path3:before {
+  content: "\e91b";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-doan-vao .path4:before {
+  content: "\e91c";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-doan-vao .path5:before {
+  content: "\e91d";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-doan-vao .path6:before {
+  content: "\e91e";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-doan-vao .path7:before {
+  content: "\e91f";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-doan-vao .path8:before {
+  content: "\e920";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-doan-vao .path9:before {
+  content: "\e921";
+  margin-left: -1em;
+  color: rgb(34, 94, 155);
+}
+.icon-custom-Ql-du-an .path1:before {
+  content: "\e922";
+  color: rgb(66, 116, 237);
+}
+.icon-custom-Ql-du-an .path2:before {
+  content: "\e923";
+  margin-left: -1em;
+  color: rgb(153, 211, 255);
+}
+.icon-custom-Ql-du-an .path3:before {
+  content: "\e924";
+  margin-left: -1em;
+  color: rgb(34, 94, 155);
+}
+.icon-custom-Ql-du-an .path4:before {
+  content: "\e925";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-QL-giao-viec .path1:before {
+  content: "\e926";
+  color: rgb(66, 116, 237);
+}
+.icon-custom-QL-giao-viec .path2:before {
+  content: "\e927";
+  margin-left: -1em;
+  color: rgb(153, 211, 255);
+}
+.icon-custom-QL-giao-viec .path3:before {
+  content: "\e928";
+  margin-left: -1em;
+  color: rgb(34, 94, 155);
+}
+.icon-custom-QL-giao-viec .path4:before {
+  content: "\e929";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-Quan-tri-he-thong .path1:before {
+  content: "\e92a";
+  color: rgb(66, 116, 237);
+}
+.icon-custom-Quan-tri-he-thong .path2:before {
+  content: "\e92b";
+  margin-left: -1em;
+  color: rgb(153, 211, 255);
+}
+.icon-custom-Quan-tri-he-thong .path3:before {
+  content: "\e92c";
+  margin-left: -1em;
+  color: rgb(0, 172, 234);
+}
+.icon-custom-Quan-tri-he-thong .path4:before {
+  content: "\e92d";
+  margin-left: -1em;
+  color: rgb(34, 94, 155);
+}
+.icon-custom-Quan-tri-he-thong .path5:before {
+  content: "\e92e";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-custom-Quan-tri-he-thong .path6:before {
+  content: "\e92f";
+  margin-left: -1em;
+  color: rgb(66, 116, 237);
+}
+.icon-custom-quay-lai:before {
+  content: "\e930";
+  color: #5c6376;
+}
+.icon-custom-search:before {
+  content: "\e931";
+  color: #fff;
+}
+.icon-custom-sua:before {
+  content: "\e932";
+  color: #4274ed;
+}
+.icon-custom-tai-lai-tai-lieu:before {
+  content: "\e933";
+  color: #5c6376;
+}
+.icon-custom-tao-ke-hoach-lam-viec:before {
+  content: "\e934";
+  color: #5c6376;
+}
+.icon-custom-them-moi:before {
+  content: "\e935";
+  color: #fff;
+}
+.icon-custom-tiep-tuc:before {
+  content: "\e936";
+  color: #fff;
+}
+.icon-custom-tim-kiem-lai:before {
+  content: "\e937";
+  color: #5c6376;
+}
+.icon-custom-xoa-tai-lieu:before {
+  content: "\e938";
+  color: #5c6376;
+}
+.icon-custom-xoa:before {
+  content: "\e939";
+  color: #c73a3a;
+}
+.icon-custom-xuat-excel:before {
+  content: "\e93a";
+  color: #5c6376;
+}
+.icon-custom-xuat-ke-hoach:before {
+  content: "\e93b";
+  color: #5c6376;
+}
+
+.panel-box{
+	margin:15px 15px 0 15px;
+}
+.page-here{
+	font-family: Roboto-Regular;
+	font-size: 13px;
+	line-height: 18px;
+}
+.page-here > span:nth-child(1){
+	color: #2772E0;
+}
+.page-here > span:nth-child(2){
+	color: #404247;
+}
+.page-header-title{
+	font-family: Roboto-Medium;
+	font-size: 24px;
+	color: #292A2D;
+	line-height: 38px;
+	margin:0;
+}
+.title-form{
+	padding-bottom:15px;
+}
+.title-form span{
+	font-family: Roboto-Bold;
+	font-size: 16px;
+	color: #292A2D;
+	line-height: 25px;
+}
+.border-box{
+	padding:15px;
+	background: #FFFFFF;
+	border: 1px solid #E2E5EB;
+	box-shadow: 0 1px 2px 0 rgba(38,50,69,0.08);
+	border-radius: 3px;
+}
+.btn-blue{
+	background: #4274ED;
+	border: 1px solid #045AC2;
+	border-radius: 3px !important;
+	margin-top:18px;
+}
+.btn-blue span{
+	font-family: Roboto-Bold;
+	font-size: 13px;
+	color: #FFFFFF;
+	line-height: 18px;
+}
+
+.btn-green{
+	background: #23A76E;
+	border: 1px solid #23A76E;
+	border-radius: 3px !important;
+	margin-top:18px;
+}
+.btn-green span{
+	font-family: Roboto-Bold;
+	font-size: 13px;
+	color: #FFFFFF;
+	line-height: 18px;
+}
+
+.btn-grey{
+	background: #E2E5EB;
+	border-radius: 3px !important;
+	margin-top:18px;
+}
+.btn-grey span{
+	font-family: Roboto-Bold;
+	font-size: 13px;
+	color: #000000;
+	line-height: 18px;
+}
+
+
+.plan-number{
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	background: #FFFFFF;
+	border: 2px solid #D3D9E2;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.plan-number-active{
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	background: #FFFFFF;
+	border: 2px solid #4274ED;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.plan-number-completed{
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	background: #4274ED;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.plan-line{
+	background: #D3D9E2;
+	height:1px;
+	width:71%;
+	position:absolute;
+	top:19px;
+}
+.box-plan{
+	display:flex;
+	justify-content: center;
+}
+.plan-item{
+	z-index:2000;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width:25%;
+}
+
+.plan-title{
+	padding-top:8px;
+}
+
+.plan-title > span span{
+	font-family: Roboto-Regular;
+	font-size: 13px;
+	color: #7F7F7F;
+	text-align: center;
+	line-height: 18px;
+}
+
+.plan-title-active > span span{
+	font-family: Roboto-Regular;
+	font-size: 13px;
+	color: #292A2D;
+	text-align: center;
+	line-height: 18px;
+	font-weight: 600;
+}
+
+.title-small-page{
+	padding-top:15px;
+	padding-bottom:6px;
+}
+
+.title-small-page > span span{
+	font-family: Roboto-Bold;
+	font-size: 13px;
+	color: #292A2D;
+	line-height: 18px;
+}
+
+.title-sub{
+	padding-bottom:6px;
+}
+
+.title-sub > span span{
+	font-family: Roboto-Bold;
+	font-size: 12px;
+	color: #292A2D;
+	line-height: 18px;
+}
+
+.btn{
+	margin-bottom:2px;
+}
+.mg-btn{
+	margin-left:15px;
+}
+
+.btn-width{
+	width: 30%;
+	border-radius: 3px !important;
+}
+.btn-width-md{
+	width: 64%;
+	border-radius: 3px !important;
+}
+.mg-bottom-15{
+	margin-bottom: 15px;
+}
+.pd-top-5 span{
+	padding-bottom: 5px;
+}
+.mg-left-30{
+	margin-left: 30px;
+}
+.mgn-lr-10{
+	margin: 0px 0px;
+}
+.mgn-lr-5{
+	margin: 0px -5px;
+}
+.mgn-bt-0{
+	padding-bottom: 0px;
+}
+.mgn-top-18{
+	margin-top: 18px;
+}
+.pd-left-11{
+	padding-left: 11px;
+}
+.z-datebox{
+	margin-top:8px !important;
+}
+.z-combobox-readonly{
+	margin-top:8px !important;
+}
+.z-textbox{
+	margin-top:8px !important;
+}
+.img-arrow-right{
+	margin:0 5px;
+}

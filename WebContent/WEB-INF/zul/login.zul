@@ -1,0 +1,93 @@
+<?style href="/assets/css/bootstrap.css" type="text/css" ?>
+<!-- Custom CSS -->
+<?style href="/assets/css/sb-admin-2.css" type="text/css" ?>
+<?style href="/assets/css/common.css" type="text/css" ?>
+<?style href="/assets/font-awesome-4.2.0/css/font-awesome.min.css" type="text/css" ?>
+<?style href="/assets/toastr/build/toastr.css" type="text/css" ?>
+<?style href="/assets/css/gopy.css" type="text/css" ?>
+<!-- Bootstrap Core JavaScript -->
+<?script type="text/javascript" src="/assets/js/bootstrap.min.js"?>
+<?script type="text/javascript" src="/assets/js/sb-admin-2.js"?>
+<?script type="text/javascript" src="/assets/toastr/build/toastr.min.js" ?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml" id="wdn" xmlns:z="zul"  mode="modal" width="400px"
+	viewModel="@id('vm') @init('vn.toancauxanh.service.NhanVienService')">
+	<style>
+		.formac-cauhinh {
+			margin: 10px 0px;
+		}
+		.checkbox input {
+			margin-left: 0px !important;
+		    margin: 0px;
+		    box-shadow: none;
+		}
+		.font-text-lg{
+			font-family:Arial;
+		}
+	</style>
+	<zscript><![CDATA[
+	       String type = execution.getParameter("type");
+	]]></zscript>      
+	<a href="javascript:void(0);" class="close-btn" onClick="@command('cancelHome',wdn=wdn)" >
+			<x:image class="img-title" src="${contexPath}/assets/img/front/close.svg"/>
+	</a>
+	<div class="line-panel">
+	</div>
+	<div zclass="panel-list ho-tro panel-list-fit">
+		<div zclass="row">
+			<div zclass="col-lg-12">
+				<n:h3 class="page-header">
+					Đăng nhập
+				</n:h3>
+			</div>
+		</div>
+	</div>         
+	<div zclass="panel-list ho-tro">
+		<div class="message" if="${not empty type }">
+			<div class='alert alert-success alert-dismissable'>
+				Cập nhập mật khẩu thành công !
+			</div>
+       	</div>
+		<div zclass="row">
+			<div zclass="col-md-12">
+				<div class="form-group">
+					<x:span class="issue-search font-text-lg">Tài khoản đăng nhập<n:small class="required">*</n:small></x:span> 
+					<textbox type="text"
+						class="form-control user-input font-text-lg" id="account" placeholder="" onCreate="self.focus()" onBlur="password.focus()"/> 
+					<label class="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<div zclass="row">
+			<div zclass="col-md-12">
+				<div class="form-group">
+					<x:span class="issue-search">Mật khẩu<n:small class="required">*</n:small></x:span> 
+					<textbox id="password" placeholder="" class="form-control pass-input" type="password" 
+											onOK='vm.login(account.getValue(), password.getValue());' />
+					<label class="error" value="@load(vmsgs[self.previousSibling])" />
+				</div>
+			</div>
+		</div>
+		<!-- <n:button id="check-cookies">check</n:button> -->
+		<div zclass="row">
+			<div zclass="col-md-12">
+				<div class="formac-cauhinh">
+					<x:button type="submit" style="width:100%"
+						class="btn primary"
+						zk:onClick='vm.login(account.getValue(), password.getValue());'>
+						Đăng nhập
+					</x:button>
+				</div>
+			</div>
+		</div>
+		<!-- <div zclass="row">
+			<div zclass="col-md-12">
+				<div class="box-bottom-login">
+		          <div class="box-remember checkbox checkbox-primary">
+		          		<checkbox class="ip-checkbox" checked="@bind(vm.remember)" label="Ghi nhớ"/>
+		          	 <a href="/reset-password" class="link-forget" >Quên mật khẩu?</a>
+		          </div>
+		        </div>
+		    </div>
+		</div> -->
+	</div>
+</window>

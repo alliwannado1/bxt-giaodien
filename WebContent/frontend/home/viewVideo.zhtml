@@ -1,0 +1,148 @@
+<z:window id="wdn" xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml"
+	xmlns:w="client"  mode="modal" border="none"
+	contentStyle="overflow:auto;" style="width:550px"
+	action="show: slideIn">
+<zscript>
+	objectDetail = arg.get("objectDetail");
+	index = arg.get("index");
+	list = arg.get("list");
+	
+</zscript>
+
+<n:style>
+.z-modal-mask{
+	background: #2F2F2F !important;
+	opacity: 0.8 !important;
+	z-index: 999999 !important;
+	height:100% !important;
+}
+.z-window {
+	 background: transparent;
+	 left:0 !important;
+	 width:100vw !important;
+	 height: calc(100vh - 200px);
+	 z-index: 999999 !important;
+}
+.z-window-content{
+	background: transparent;
+	height: calc(100vh - 200px);
+	overflow:visible !important;
+}
+.z-window-shadow{
+	box-shadow: 0 0 0 rgba(0,0,0,0.5) !important;
+}
+.z-window-icon {
+	border-radius: 1px;
+}
+.z-window-header{
+	padding-left : 10px;
+	color:white;
+}
+.slider-image-show{
+	background: transparent;
+	
+}
+.image-slider-show{
+	width: calc(100% - 72px);
+	display: flex;
+	justify-content: center;
+}
+.right-btn-next{
+	height: 50px;
+	width: 50px;
+	background: #2F2F2F;
+	display:flex;
+	justify-content:center;
+	align-items: center;
+	opacity: 0.8;
+	transition:all 0.5s ease;
+	cursor: pointer;
+}
+.left-btn-prev{
+	height: 50px;
+	width: 50px;
+	background: #2F2F2F;
+	display:flex;
+	justify-content:center;
+	align-items: center;
+	opacity: 0.8;
+	transition:all 0.5s ease;
+	cursor: pointer;
+}
+.left-btn-prev:hover{
+	opacity: 1;
+}
+.right-btn-next:hover{
+	opacity: 1;
+}
+.content-image-slider{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: calc(100vh - 200px);
+}
+.img-thumbnail-cs{
+	max-width:100%;
+	max-height: calc(100vh - 300px);
+	transition:all 1s ease;
+}
+.close-btn{
+	position:absolute;
+	top:0;
+	right:0;
+	width:36px;
+	height:36px;
+	cursor: pointer;
+	
+}
+</n:style>
+	<div class="container slider-image-show">
+		<div class="row">
+			<div class="col-12 content-image-slider" style="padding:0;position:relative;">
+				<div class="close-btn" zk:onClick="wdn.detach()">
+					<img src="/assets/frontend/image/close.png"></img>
+				</div>
+				<div class="left-btn-prev position-btn-left" onclick="plusDivs(-1)">
+					<img src="/assets/frontend/image/left-arrow.png"></img>
+				</div>
+				<div class="image-slider-show">
+						<div class="img-thumbnail-cs" zk:forEach="${list}">
+								<div zk:if="${each.typeVideo eq 'Video youtube'}" style="display:flex;align-items: center;justify-content: center;">
+									<iframe zk:if="${each.typeVideo eq 'Video youtube'}" width="575" height="380px" src="${each.urlYoutube}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+								</div>
+								<div zk:if="${each.typeVideo eq 'Video từ máy'}" style="display:flex;align-items: center;justify-content: center;">
+									<video class="video-reponsive" width="575" height="380px" controls>
+										<n:source src="/${each.path}/${each.urlVideo}" type="video/mp4"></n:source>
+									</video>
+								</div>
+						</div>
+				</div>
+				<div class="right-btn-next position-btn-right" onclick="plusDivs(1)">
+					<img src="/assets/frontend/image/right-arrow.png"></img>
+				</div>
+				
+			</div>
+		</div>
+	
+	</div>
+	<script>
+		
+	var slideIndex = 1;
+		showDivs(${index} + 1);
+		function plusDivs(n) {
+		  showDivs(slideIndex += n);
+		}
+		function showDivs(n) {
+			
+			slideIndex = n;
+		  var i;
+		  var x = document.getElementsByClassName("img-thumbnail-cs");
+		  if (n > x.length) {slideIndex = 1}    
+		  if (n < 1) {slideIndex = x.length}
+		  for (i = 0; i < x.length; i++) {
+		     x[i].style.display = "none";  
+		  }
+		  x[slideIndex-1].style.display = "block";  
+		}
+	</script>
+</z:window>

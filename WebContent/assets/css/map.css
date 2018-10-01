@@ -1,0 +1,46 @@
+html,
+body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+.map {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.button-wrapper {
+	display: block;
+	position: relative;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px;
+	margin-left: 300px;
+	background: #fff;
+	box-shadow: 0 0 5px 1px rgba(0,0,0,.3);
+	height: 50px;
+}
+.btn-active {
+	background-color: #0d47a1 !important;
+}
+
+
+/*css map*/
+.wrapper-map {
+	position: unset !important;
+}
+.z-window-header {
+	display: none !important;
+}
+.body-map {
+	margin:0;
+	padding:0;
+}
+.z-window  {
+	padding:0;
+}

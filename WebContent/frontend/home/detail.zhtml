@@ -1,0 +1,105 @@
+<div class="custom-height box-details"  xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml" xmlns:w="client">
+	<div class="row">
+		<div class="col-md-12 comback-search">
+			<x:button type="button" zk:visible="@load(vm.checkShow ne hiddenMap)" class="btn back-custom-button" zk:onClick="@command('goBack')">
+				<img src="/assets/frontend/image/back-arrow.png">
+					Về trang tìm kiếm
+			</x:button>
+			
+			<x:button type="button" zk:visible="@load(vm.checkShow eq hiddenMap)"  class="btn back-custom-button"  zk:onClick="@command('goBackPageDetail')">
+				<img src="/assets/frontend/image/back-arrow.png">
+					Về trang trước
+			</x:button>
+			
+			<z:doublebox style="display:none" id="ditich" value="@bind(vm.idDetail)"></z:doublebox>
+		</div>
+	</div>
+	<div class="row">
+		<div class="more-details-box">
+			<div class="details-no-showdetail">
+				<z:div class="col-md-12 info-title" children="@load(vm.detail)">
+					<template name="children">
+						<h5>${each.name}</h5>
+						<span>
+							<z:label value="@load(vm.nameDoiTuong)"></z:label> / 
+							<z:label value="@load(each.loai.name)"></z:label></span>
+						</span>
+						<div class="item-address">
+							<img src="/assets/frontend/image/placeholder.svg"></img>
+							<span>${each.address}</span>
+						</div>
+					</template>
+				</z:div>
+				<div class="col-md-12 info-basic-slide" zk:visible="@load(vm.checkShow eq 0)">
+					<div id="infoBasic" class="@load(vm.detail.list5Images.size() ne 0 ? 'carousel slide' : '')" data-ride="carousel">
+						<z:div class="carousel-indicators" zk:children="@load(vm.detail.list5Images)" zk:visible="@load(vm.detail.list5Images.size() ne 0)">
+							<template name="children">
+								<li data-target="#infoBasic" data-slide-to="${forEachStatus.index}" 
+									class="${forEachStatus.index eq 0  ?  'active' : ' '}"></li>
+							</template>
+						</z:div>
+						<z:div class="carousel-inner" zk:visible="@load(vm.detail.list5Images.size() gt 0)" zk:children="@load(vm.detail.list5Images)">
+							<template name="children">
+								<div class="${forEachStatus.index eq 0  ?  'carousel-item active' : 'carousel-item'}">
+									<n:img class="d-block w-100" src="/${each.imageUrl}/d_${each.nameFileHash}" alt="Hình ảnh đại diện"></n:img>
+								</div>
+							</template>
+						</z:div>
+						<z:div class="carousel-inner" zk:visible="@load(vm.detail.list5Images.size() le 0)">
+							<div class="carousel-item active">
+								<img class="d-block w-100" src="/assets/frontend/image/noImageChung.jpg" alt="Hình ảnh đại diện">
+							</div>
+						</z:div>
+					</div>
+					<div class="row" zk:visible="@load(vm.checkShow eq 0)">
+						<div class="col-md-12 info-detail">
+							<h5>Giới thiệu<h5>
+						</div>
+					</div>
+					<z:div class="info-basic-details" children="@load(vm.detail)"  zk:visible="@load(vm.checkShow eq show_map)">
+						<template name="children">
+							<n:div>
+							${each.description}
+							</n:div>
+						</template>
+					</z:div>
+				</div>
+			</div>
+			<z:div class="" zk:visible="@load(vm.checkShow ne hiddenMap)">
+				<div class="col-md-12">
+					<x:button type="button" class="btn showmore-custom-button"  zk:onClick="@command('showDetail')">
+						<span>Xem thông tin chi tiết</span>
+						<i class="fas fa-angle-right icon-button-showmore"></i>
+					</x:button>
+				</div>
+			</z:div>
+			<z:include zk:visible="@load(vm.checkShow eq hide_map)" class="col-md-12" id="get-height-menu" src="/frontend/home/moreDetail.zhtml"></z:include>
+		</div>
+	</div>
+	<script>
+		$(".carousel").swipe({
+		  swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
+		    if (direction == 'left') $(this).carousel('next');
+		    if (direction == 'right') $(this).carousel('prev');
+		  },
+		  allowPageScroll:"vertical"
+		});
+		function resetInputId() {
+			checkClicked = true;
+			idObjectUrl = -1;
+			if(markTemp != null) {
+				markTemp.setMap(null);
+				markTemp=null; 
+			}
+			stringActive = "gioithieu";
+			<!-- map.setCenter({lat: ${latDefaultOfQn}, lng:${lngDefaultOfQn}}); -->
+			<!-- map.setZoom(${zoomDefault}); -->
+			thutuTemp = 0;
+			zk.afterMount(function(){
+				zk.Widget.$('$ditich').setValue(-1);
+				zk.Widget.$('$ditich').fireOnChange();
+			});
+			checkHoverMarker = true;
+		}
+	</script>
+</div>

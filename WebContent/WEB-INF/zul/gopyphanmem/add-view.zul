@@ -1,0 +1,180 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client"
+	viewModel="@id('vm') @init(arg.model)"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native" title="${arg.save}" id="wdn"
+		border="normal" mode="modal" contentStyle="overflow:auto;"
+		closable="true" class="popup-gopy-phanmem"
+		onClose="@command('close', detach=wdn, fileName=fileName)"
+		whatever="@load(false,after='saveGopYPhanMem') @converter('vn.toancauxanh.service.DetachConverter')">
+		<zscript><![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			import java.awt.*;
+			import java.awt.image.*;
+			import javax.imageio.ImageIO;
+			import java.net.URL;
+			import java.awt.geom.*;
+			BufferedImage imagevar2 = new BufferedImage(400, 300, BufferedImage.TYPE_INT_ARGB);
+
+			fileName = arg.get("fileName");
+			fileNameError = "/uploads/gopy/"+fileName;
+			System.out.println("fileNameError : "+fileNameError)
+			
+		]]></zscript>
+		<script type="text/javascript">
+			function zoomImg(index){
+				// Get the modal
+				var modal = document.getElementById('myModal');
+				// Get the image and insert it inside the modal - use its "alt" text as a caption
+				var img = document.getElementById('img-'+index);
+				var modalImg = document.getElementById("img01");
+				var captionText = document.getElementById("caption");
+				modal.style.display = "block";
+				modalImg.src = img.src;
+				captionText.innerHTML = img.alt;
+				var span = document.getElementsByClassName("close")[0];
+				span.onclick = function() { 
+					modal.style.display = "none";
+				}
+			}
+		</script>
+		<style>
+			.label-description {
+				font-size : 12px;
+			}
+		</style>
+		<div class="line-panel">
+				<div zclass="panel-list ho-tro">
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div zclass="form-group">
+								<x:label class="control-label">
+									Họ và tên
+								</x:label>
+								<textbox class="hv-textbox"
+									readonly="true" width="100%" maxlength="255"
+									value="@load(entry.nhanVien.hoVaTen) @save(vm.hoTen, before={'saveGopYPhanMem'})" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-6">
+							<div class="form-group">
+								<x:label class="control-label">
+									Email
+								</x:label>
+								<textbox class="hv-textbox"
+									readonly="true" width="100%" maxlength="255"
+									value="@load(entry.nhanVien.email) @save(vm.email, before={'saveGopYPhanMem'})" />
+							</div>
+						</div>
+						<div zclass="col-md-6">
+							<div class="form-group">
+								<x:label class="control-label">
+									Số điện thoại
+								</x:label>
+								<textbox class="hv-textbox"
+									readonly="true" width="100%" maxlength="255"
+									value="@load(entry.nhanVien.soDienThoai) @save(vm.soDienThoai, before={'saveGopYPhanMem'})" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div class="form-group">
+								<x:label class="control-label">
+									Nội dung góp ý
+									<n:small class="required">
+										*
+									</n:small>
+								</x:label>
+								<textbox multiline="true" rows="5" height="100px"
+									class="hv-textbox lb-description" width="100%"
+									maxlength="10000" placeholder="Nhập nội dung..."
+									value="@load(vm.noiDung) @save(vm.noiDung, before='saveGopYPhanMem') 
+											@validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" />
+								<label class="error"
+									value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<div class="form-group">
+								<x:label class="control-label">
+									Đính kèm tài liệu hoặc hình ảnh. Tối đa 3 tệp tin
+								</x:label>
+								<n:p class="label-description">
+									Định dạng tập tin đính kèm: .doc,
+									.docx, xls, xlsx, .pdf, .jpg, .jpeg,
+									.png. Dung lượng tối đa của 1 tập
+									tin: 10Mb.
+								</n:p>
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-lg-12" style="margin-bottom: 3%;">
+							<div children="@load(vm.images)"
+								class="content-gopy">
+								<template name="children" var="p">
+									<div style="@load(vm.style)"
+										class="medium-img">
+										<image width="100%"
+											sclass="mis-image-upload-2" content="@bind(p.imageContent)">
+										</image>
+										<a href="javascript:void(0);" style="position: absolute;color:red;top: 6px;right: 8px;z-index: 300;"
+											class="fa da-remove rm"
+											onClick="@command('delImg', each= p, attr='images',indexFile= pStatus.index)">
+											<n:span class="fa fa-times"></n:span>
+										</a>
+									</div>
+								</template>
+							</div>
+							<x:img onClick="return zoomImg(0)"
+								sclass="images-error mis-image-upload-2" id="img-0"
+								src="@load(fileNameError)" width="264px" height="100px"
+								visible="@load(fileName ne null)" />
+							<!-- The Modal -->
+							<x:div id="myModal" class="modal">
+								<n:span class="fa fa-close btn-circle"
+									title="Đóng hình ảnh">
+									X
+								</n:span>
+								<x:img class="modal-content" id="img01" />
+								<x:div id="caption"></x:div>
+							</x:div>
+							<div class="block-img medium-img"
+								visible="@load(vm.images.size() ne 3 and fileName eq null)">
+								<hlayout>
+									<button zclass="btn-icon"
+										label="Nhấn vào để tải lên"
+										upload="true,maxsize=10240,multiple=true,accept=.xlsx|.xls|.doc|.docx|.pdf|.png|.jpg|.jpeg"
+										onUpload="@command('attachImages',media=event.medias,vmsgs=vmsgs,sizeImgOld=vm.sizeImg)" />
+								</hlayout>
+								<label class="error"
+									value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div zclass="row formac-cauhinh">
+					<div zclass="col-lg-12">
+						<x:button class="btn default left"
+							onClick="@command('close', detach=wdn, fileName=fileName)">
+							<x:image class="img-title"
+								src="${contexPath}/assets/img/front/dong.svg" />
+							Đóng
+						</x:button>
+						<x:button class="btn primary right"
+							if="${!readOnly and vm.noId()}"
+							onClick="@command('saveGopYPhanMem', list=vmArgs, attr='targetQuery',wdn=wdn,fileError= fileName)">
+							<x:image class="img-title"
+								src="${contexPath}/assets/img/front/themmoi.svg" />
+							Gửi phản hồi
+						</x:button>
+					</div>
+				</div>
+			</div>
+	</window>
+</idspace>

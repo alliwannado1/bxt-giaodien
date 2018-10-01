@@ -1,0 +1,97 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk"  xmlns:w="client"
+	viewModel="@id('vm') @init(arg.model)"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native"  id="wdn" 
+		border="normal" mode="modal" contentStyle="overflow:auto;" class="popup-vaitro"
+		action="show: slideIn"
+		closable="true" title="${arg.save}"
+		whatever="@load(false,after={'saveLoaiDiSan'}) @converter('vn.toancauxanh.service.DetachConverter')">
+		<zscript>
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			readOnly = arg.get("readOnly") == null ? false : arg.get("readOnly");
+		</zscript>
+		<style>
+		.z-listbox-autopaging .z-listcell-connamet {
+		    height: auto;
+		}
+		</style>
+		<div class="line-panel">
+			<div zclass="panel-list ho-tro">
+				<div zclass="row">
+					<div zclass="col-md-12">
+						<div zclass="form-group">
+							<x:span class="issue-search">Tên đơn vị<n:small class="required"> *</n:small></x:span> 
+							<textbox readonly="${readOnly}" class="form-control" width="100%" maxlength="255" placeholder="Nhập tên đơn vị"
+							value="@bind(vm.name)  @save(vm.name,before='saveDonVi') @validator('vn.toancauxanh.vm.BaseValid', constraint = 'no empty')"/>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						</div>
+						<div zclass="col-md-12">
+						<div zclass="form-group">
+							<x:span>Đơn vị quản lí cấp tỉnh</x:span> 
+								<combobox readonly="true" class="his" onCreate="@command('boxCapTinhOnCreate')"
+									value="@bind(vm.donViCapTinh.ten)"
+									model="@load(vm.listDonViCapTinh)"
+									selectedItem="@bind(vm.donViCapTinh)"
+									width="100%">
+									<template name="model">
+										<comboitem label="@load(each.ten)" />
+									</template>
+								</combobox>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						</div>
+						<div zclass="col-md-12">
+						<div zclass="form-group">
+							<x:span>Đơn vị quản lí cấp huyện</x:span> 
+								<combobox readonly="true" class="his" onCreate="@command('boxCapHuyenOnCreate')" onSelect="@command('boxCapHuyenOnSelect')"
+										value="@load(vm.donViCapHuyen.ten)"
+										model="@load(vm.listDonViCapHuyen)"
+										selectedItem="@bind(vm.donViCapHuyen)"
+										width="100%">
+										<template name="model">
+											<comboitem label="@load(each.ten)" />
+										</template>
+								</combobox>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						</div>
+						<div zclass="col-md-12">
+						<div zclass="form-group">
+							<x:span>Đơn vị quản lí cấp xã</x:span> 
+							<combobox readonly="true" class="his" onCreate="@command('boxCapXaOnCreate')"
+								value="@load(vm.donViCapXa.ten)"
+								model="@load(vm.listDonViCapXa)"
+								selectedItem="@bind(vm.donViCapXa)"
+								width="100%">
+								<template name="model">
+									<comboitem label="@load(each.ten)" />
+								</template>
+							</combobox>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div zclass="row formac-cauhinh">
+				<div zclass="col-lg-12">
+					<x:button class="btn default left" onClick="@command('invokeGG', notify=notifyObject, detach=wdn, attr='targetQuery')" >
+						<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+						Đóng
+					</x:button>
+					<x:button class="btn primary right" if="${!readOnly and vm.noId()}" 
+						onClick="@command('saveDonVi',list=vmArgs, attr='targetQuery', wdn=wdn)">
+						<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+						Thêm mới
+					</x:button>
+					<x:button class="btn primary right" if="${!readOnly and !vm.noId()}" 
+						onClick="@command('saveDonVi',list=vmArgs, attr='targetQuery', wdn=wdn)">
+						<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+						Cập nhật
+					</x:button>
+				</div>
+			</div>
+		</div>
+	</window>
+</idspace>

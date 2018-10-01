@@ -1,0 +1,103 @@
+<?page title="Quản lý người dùng" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml" class="form-list"
+	viewModel="@id('vm') @init('vn.toancauxanh.service.NhanVienService')">
+	<zscript>
+	page.title= "Quản lý người dùng";
+</zscript>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						Danh sách người dùng
+						<div  zk:if="${entry.quyen.nguoidung_them}" zclass="wd-action-bar" >
+							<x:image class="img-add" src="${contexPath}/assets/img/front/congxanh.svg"/>
+							<x:a  href="javascript:void(0);"
+								class="btn-custom"
+								onClick="@command('redirectPage', zul='nguoidung/add.zul',vmArgs=vm,vm=null)">
+								Thêm mới người dùng
+							</x:a>
+						</div>
+					</n:h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wd-search-form">
+		<div zclass="row">
+			<div zclass="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-sm-10">
+						<n:div class="form-group">
+							<x:span>Từ khóa</x:span>
+							<textbox class="hv-textbox tb-search" onOK="@command('cmd', notify=vm, attr='targetQuery')"
+								maxlength="255" value="@bind(vm.arg.tukhoa)"
+								placeholder="Tìm kiếm theo từ khóa" width="100%"/>
+						</n:div>
+					</div>
+					<div class="col-sm-2" style="padding-right:0px">
+						<x:label class="control-label">&#160;</x:label>
+						<n:div zk:if="${entry.quyen.dsvhpvt_timkiem}" class="form-group">
+							<x:button class="btn btn-search-page"
+								zk:onClick='vm.cmd("", vm, "targetQuery");'>
+								<x:image class="img-search"
+									src="${contexPath}/assets/img/front/search.svg" />
+								Tìm kiếm
+							</x:button>
+						</n:div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<grid model="@load(vm.page(vm.targetQueryNhanVien).fetch())"
+				emptyMessage="Không có mục nào trong danh sách">
+				<columns>
+					<column label="STT" width="60px" style="text-align:center" />
+					<column label="Họ và tên" width="25%" />
+					<column label="Tên đăng nhập"  width="20%" />
+					<column label="Vai trò"  width="15%" />
+					<column label="Đơn vị" width="20%" />
+					<column label="Thao tác" style="text-align:center" width="25%" />
+				</columns>
+				<template name="model">
+					<row viewModel="@id('item') @init(each)">
+						<label value="@bind(forEachStatus.index + 1 + vm.arg.page * vm.arg.pagesize)"
+							style="text-align:center;display:block" />
+						<a label="@load(each.hoVaTen)" 
+							onClick="@command('redirectPageAction', zul='nguoidung/view.zul',vmArgs=vm,vm=item,readOnly=false)" class="link-title"/>
+						<label value="@load(each.tenDangNhap)"/>
+						<label value="@load(each.vaiTroText)"/>
+						<label value="@load(each.donVi.name)"></label>
+						<div class="thaotac" style="text-align:center">
+							<x:a label="Xem"  zk:if="${entry.quyen.nguoidung_xem}" class="btn-thaotac" 
+								onClick="@command('redirectPageAction', zul='nguoidung/view.zul',vmArgs=vm,vm=item,readOnly=true)">
+								<x:image class="img-see" src="${contexPath}/assets/img/front/view.png"/>
+							</x:a>
+							<x:a label="Sửa"  zk:if="${entry.quyen.nguoidung_sua}" class="btn-thaotac"
+								onClick="@command('redirectPageAction', zul='nguoidung/view.zul',vmArgs=vm,vm=item,readOnly=false)">
+								<x:image class="img-edit" src="${contexPath}/assets/img/front/edit.svg"/>
+							</x:a>
+							<x:a label="Xóa"  zk:if="${entry.quyen.nguoidung_xoa}" class="btn-thaotac" 
+								onClick="@command('deleteTrangThaiConfirmAndNotify', notify=vm, attr='targetQueryNhanVien')">
+								<x:image class="img-edit" src="${contexPath}/assets/img/front/delete.svg"/>
+							</x:a>
+						</div>
+					</row>
+				</template>
+				<foot visible="@load(vm.targetQueryNhanVien.fetchCount() gt 10)">
+					<footer span="6">
+						<div class="">
+							<paging pageSize="@load(vm.arg.pagesize)"
+								totalSize="@load(vm.targetQueryNhanVien.fetchCount())"
+								activePage="@bind(vm.arg.page)"
+								onPaging="@command('cmd', notify=vm, attr='targetQueryNhanVien')" />
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</div>
+	</div>
+</window>

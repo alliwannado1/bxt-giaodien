@@ -1,0 +1,143 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:n="native" xmlns:zk="zk" xmlns:x="xhtml" xmlns:u="zul">
+
+	<n:link
+		href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+		rel="stylesheet">
+	</n:link>
+	<zscript>
+		Session session = Sessions.getCurrent();
+	</zscript>
+	<style>
+		.active-icon { color: #f4f5f7; position: absolute; font-size:
+		25px; right: 0px; } .ac-icon1 { top: 8px; } .ac-icon2 { top:
+		66px; } .ac-icon3 { top: 120px; } .ac-icon4 { top: 180px; }
+		.ac-icon5 { top: 234px; } i { font-style: normal; }
+		.collapse{display:block;}
+	</style>
+	<div class="nav-side-menu">
+        <div class="menu-list">
+			<n:ul class="menu-content collapse out" role="menu">
+				<n:li>
+					<n:a href="${execution.contextPath}/cp/quanlyduan"
+						class="${resource eq 'quanlyduan' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu qlda" zk:if="${resource ne 'ditich'}"></x:span>
+						<x:span class="img-menu qlda"  zk:if="${resource eq 'ditich'}"></x:span>
+						Quản lý dự án
+					</n:a>
+				</n:li>
+				<n:li>
+					<n:a href="${execution.contextPath}/cp/ditich"
+						class="${resource eq 'ditich' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu ditich" zk:if="${resource ne 'ditich'}"></x:span>
+						<x:span class="img-menu ditichat"  zk:if="${resource eq 'ditich'}"></x:span>
+						Quản lý di tích - danh thắng
+					</n:a>
+				</n:li>
+				<n:li>
+					<n:a href="${execution.contextPath}/cp/lehoi"
+						class="${resource eq 'lehoi' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu lehoi" zk:if="${resource ne 'lehoi'}"></x:span>
+						<x:span class="img-menu lehoiat"  zk:if="${resource eq 'lehoi'}"></x:span>
+						Quản lý bảo tàng
+					</n:a>
+				</n:li>
+				<n:li>
+					<n:a href="${execution.contextPath}/cp/dsvhpvt"
+						class="${resource eq 'dsvhpvt' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu disan" zk:if="${resource ne 'dsvhpvt'}"></x:span>
+						<x:span class="img-menu disanat"  zk:if="${resource eq 'dsvhpvt'}"></x:span>
+						Quản lý di sản
+					</n:a>
+				</n:li>
+		 		<n:li>
+		 			<x:a href="${execution.contextPath}/cp/thuctrangditich"
+		 				class="${resource eq 'thuctrangditich' ? 'active-heder-li flex' : 'flex'}">
+		 				<x:span class="img-menu thuctrang" zk:if="${resource ne 'thuctrangditich'}"></x:span>
+						<x:span class="img-menu thuctrangat"  zk:if="${resource eq 'thuctrangditich'}"></x:span>
+		 				Quản lý thực trạng di tích
+		 			</x:a>
+		 		</n:li>
+				<n:li>
+					<x:a href="${execution.contextPath}/cp/loaiditich"
+						class="${resource eq 'loaiditich' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu loaiditich" zk:if="${resource ne 'loaiditich'}"></x:span>
+						<x:span class="img-menu loaiditichat"  zk:if="${resource eq 'loaiditich'}"></x:span>
+						Quản lý loại di tích - danh thắng
+					</x:a>
+				</n:li>
+				<n:li>
+					<x:a href="${execution.contextPath}/cp/loailehoi"
+						class="${resource eq 'loailehoi' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu loailehoi" zk:if="${resource ne 'loailehoi'}"></x:span>
+						<x:span class="img-menu loailehoiat"  zk:if="${resource eq 'loailehoi'}"></x:span>
+						Quản lý loại bảo tàng
+					</x:a>
+				</n:li>
+				<n:li>
+					<x:a href="${execution.contextPath}/cp/loaidisan"
+						class="${resource eq 'loaidisan' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu loaidisan" zk:if="${resource ne 'loaidisan'}"></x:span>
+						<x:span class="img-menu loaidisanat"  zk:if="${resource eq 'loaidisan'}"></x:span>
+						Quản lý loại di sản
+					</x:a>
+				</n:li>
+				<n:li>
+					<x:a href="${execution.contextPath}/cp/donvi"
+						class="${resource eq 'donvi' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu donvi2" zk:if="${resource ne 'donvi'}"></x:span>
+						<x:span class="img-menu donvi2at"  zk:if="${resource eq 'donvi'}"></x:span>
+						Quản lý đơn vị
+					</x:a>
+				</n:li>
+				<n:li>
+					<x:a href="${execution.contextPath}/cp/thongke"
+						class="${resource eq 'thongke' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu thongke2" zk:if="${resource ne 'thongke'}"></x:span>
+						<x:span class="img-menu thongke2at"  zk:if="${resource eq 'thongke'}"></x:span>
+						Thống kê
+					</x:a>
+				</n:li>
+				<n:li>
+					<n:a href="${execution.contextPath}/cp/nguoidung" class="${resource eq 'nguoidung' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu nguoidung" zk:if="${resource ne 'nguoidung'}"></x:span>
+						<x:span class="img-menu nguoidungat"  zk:if="${resource eq 'nguoidung'}"></x:span>
+						Người dùng
+					</n:a>
+				</n:li>
+				<n:li>
+					<n:a href="${execution.contextPath}/cp/vaitro"
+						class="${resource eq 'vaitro' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu nhomnguoidung" zk:if="${resource ne 'vaitro'}"></x:span>
+						<x:span class="img-menu nhomnguoidungat"  zk:if="${resource eq 'vaitro'}"></x:span>
+						Vai trò
+					</n:a>
+				</n:li>
+				<x:li zk:if="${entry.nhanVien.quyens ne '[*]'}">
+					<n:a href="${execution.contextPath}/cp/thamso" 
+						class="${resource eq 'thamso' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu cauhinh" zk:if="${resource ne 'thamso'}"></x:span>
+						<x:span class="img-menu cauhinhat"  zk:if="${resource eq 'thamso'}"></x:span>
+						Trợ giúp
+					</n:a>
+				</x:li>
+				<x:li zk:if="${entry.nhanVien.quyens eq '[*]'}">
+					<n:a href="${execution.contextPath}/cp/thamso" 
+						class="${resource eq 'thamso' ? 'active-heder-li flex' : 'flex'}">
+						<x:span class="img-menu caidatthamso" zk:if="${resource ne 'thamso'}"></x:span>
+						<x:span class="img-menu caidatthamsoat"  zk:if="${resource eq 'thamso'}"></x:span>
+						Cài đặt tham số
+					</n:a>
+				</x:li>
+				<n:li>
+					<x:a viewModel="@id('vmGopY') @init('vn.toancauxanh.service.GopYPhanMemService')"
+						zk:onClick="@command('redirectPage', zul='gopyphanmem/add.zul',vmArgs=null,vm=null)" 
+							class="${resource eq 'gopyphanmem' ? 'active-heder-li flex' : 'flex'}">
+								<x:span class="img-menu gop-y"></x:span>
+							Góp ý phần mềm
+					</x:a>
+				</n:li>
+			</n:ul>
+		</div>
+	</div>
+</zk>

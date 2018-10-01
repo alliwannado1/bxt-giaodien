@@ -1,0 +1,43 @@
+<div style="height:100%" xmlns:n="native" xmlns:zk="zk" xmlns:z="zul"
+	xmlns:x="xhtml" xmlns:w="client">
+	<style>
+		#hinhanhLocation{
+			opacity:0;
+			transition:all 1s ease;
+		}
+	</style>
+	<div class="item-details row" id="hinhanhLocation">
+		<div class="col-md-12">
+			<div class="row list-image"
+				zk:visible="@load(vm.detail.images.size() ne 0)"
+				children="@load(vm.pageListGallaryImagesFrontEnd(vm.detail.images))" >
+				<template name="children">
+						<div class="col-md-4 fix-pd-item">
+							<z:a zk:onClick="@command('showView', vm = each,objectDetail = vm.detail , index = forEachStatus.index + 1 + vm.arg.page * 9, url='viewimage.zhtml', list = vm.detail.images)">
+								<n:img class="d-block w-100"
+									src="/${each.imageUrl}/v_${each.nameFileHash}"></n:img>
+									<p><z:label value="@load(empty each.description ? 'Hình ảnh '.concat(vm.detail.name) : each.description)"></z:label></p>
+								</z:a>
+						</div>
+				</template>
+			</div>
+			<z:div zk:visible="@load(vm.detail.images.size() eq 0)">
+				<div class="update-css">
+					<h6 style="text-align:center;padding-bottom:15px;">Hình ảnh đang được cập nhật</h6>
+					<img src="/assets/frontend/image/nono.png" width="130px"
+						style="display:block;margin:auto">
+					</img>
+				</div>
+			</z:div>
+
+			<div class="row col-md-12 view-more-img">
+				<z:paging pageSize="@load(vm.arg.pagesize)" mold="os"
+					totalSize="@load(vm.detail.images.size())"
+					visible="@load(vm.detail.images.size() > vm.arg.pagesize ? true : false)"
+					activePage="@bind(vm.arg.page)"
+					onPaging="@command('cmdLoadPageFrontEnd', notify=vm, atr='detail')" />
+			</div>
+
+		</div>
+	</div>
+</div>

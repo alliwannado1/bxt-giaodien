@@ -1,0 +1,247 @@
+ <div xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml" xmlns:w="client">
+	<div class="row">
+		<div class="col-md-12 info-detail">
+			<h5>Thông tin chi tiết</h5>
+			<x:button type="button" class="btn back-custom-button2" style="display:none" zk:onClick="@command('goBackPageDetail')">
+				<img src="/assets/frontend/image/back-arrow.png">
+					Về trang detail
+			</x:button>
+		</div>
+	</div>
+	<div class="moredetails-pd">
+		<div class="row">
+			<div class="col-md-12 menu-list">
+				<ul>
+					<z:a zk:onClick="@command('showMoreDetail', url = '/frontend/home/thongtin.zhtml')">
+						<li class="active" id="gioithieu">
+							<span class="db-flex">
+								<img id="gioithieuimg" src="/assets/frontend/image/gioithieuactive.svg" style="margin-right:23px;"></img>
+								<span>Giới thiệu</span>
+							</span>
+							<i class="fas fa-angle-right"></i>
+							
+						</li>
+						<attribute w:name="onClick"><![CDATA[
+									stringActive = "gioithieu";
+									imageActive = "gioithieuimg";
+									clickActive();
+						]]></attribute>		
+					</z:a>
+					<z:a zk:onClick="@command('showMoreDetail' , url = '/frontend/home/tailieu.zhtml')">
+						<li class="" id="tailieu">
+							<span class="db-flex">
+								<img id="tailieuimg" src="/assets/frontend/image/tailieu.svg" style="margin-right:21px;"></img>
+								<span>Tài liệu liên quan</span>
+							</span>
+							<i class="fas fa-angle-right"></i>
+						</li>
+						<attribute w:name="onClick"><![CDATA[
+										stringActive = "tailieu";
+										imageActive = "tailieuimg";
+										clickActive();
+						]]></attribute>
+					</z:a>
+					<z:a zk:onClick="@command('showMoreDetail', url = '/frontend/home/danhsachanh.zhtml')">
+						<li class="" id="hinhanh">
+							<span class="db-flex">
+								<img id="hinhanhimg" src="/assets/frontend/image/hinhanh.svg" style="margin-right:22px;"></img>
+								<span>Hình ảnh liên quan</span>
+							</span>
+							<i class="fas fa-angle-right"></i>
+						</li>
+						<attribute w:name="onClick"><![CDATA[
+										stringActive = "hinhanh";
+										imageActive = "hinhanhimg";
+										clickActive();
+						]]></attribute>
+					</z:a>
+					<z:a zk:onClick="@command('showMoreDetail' , url = '/frontend/home/danhsachvideo.zhtml')">
+						<li class="" id="video">
+							<span class="db-flex">
+								<img id="videoimg" src="/assets/frontend/image/video.svg" style="margin-right:20px;"></img>
+								<span>Video tài liệu</span>
+							</span>
+							<i class="fas fa-angle-right"></i>
+						</li>
+						<attribute w:name="onClick"><![CDATA[
+									stringActive = "video";
+									imageActive = "videoimg";
+									clickActive();
+						]]></attribute>
+					</z:a>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 info-detail">
+				<h5>
+					<z:label style="font-family: Roboto-Bold; font-size: 14px; color: #2C2C2C; text-align: left; line-height: 20px; margin: 1rem 0;" 
+					value="@load(vm.nameDoiTuongLienQuan)"></z:label> liên quan</h5>
+			</div>
+		</div>
+		<div class="row list-search">
+			<div class="col-md-12 box-list-item h-box-lienquan">
+				<z:div class="list-item" zk:visible="@load(vm.listLienQuanByLoai.size() eq 0)">
+									Không có dứ liệu
+				</z:div>
+				
+				<div id="idLoadingDetail" class="list-item" style="display:none;text-align:center;z-index:1;">
+					<img src="/assets/frontend/image/loading.gif" height="80px" width="80px"></img>
+				</div>
+		
+				<div id="idDivDetail" style="z-index:999999;" zk:visible="@load(vm.listLienQuanByLoai.size() ne 0)" children="@load(vm.listLienQuanByLoai)">
+					<template name="children">
+						 <z:a href="javascript:void(0)">
+							<attribute w:name="onClick"><![CDATA[
+										showLoadingDetail();
+										$(document).ready(function() {
+											setTimeout(function(){
+											    	stringActive = "gioithieu";
+											    	clickActive();
+												    map.setCenter({lat: ${each.banDo.lat}, lng: ${each.banDo.lng}});              
+													map.setZoom(${zoomClickMarker});
+													smoothZoom(map, 12, map.getZoom());
+													if (getThuThuByIdObject(${each.id}) != null) {
+														thutuTemp = getThuThuByIdObject(${each.id});
+														if (getThuThuByIdObject(${vm.detail.id}) != null){
+															markers[getThuThuByIdObject(${vm.detail.id})].setIcon('${execution.contextPath}/assets/frontend/image/pinred.png');
+														}
+														// Xóa marker đã thêm không tồn tại trong list ban đầu đi
+														else{
+															markTemp.setMap(null);
+															markTemp=null;
+														}
+														markers[getThuThuByIdObject(${each.id})].setIcon('${execution.contextPath}/assets/frontend/image/pinblue.png');
+														zk.afterMount(function(){
+															zk.Widget.$('$ditich').setValue(${each.id});
+															zk.Widget.$('$ditich').fireOnChange();
+														});
+														addMarkerWithTimeout();
+													}
+													else{
+														// Nêu như marker này không tồn tại trong listObject thì tạo mới nó
+													     if (getThuThuByIdObject(${vm.detail.id}) != null) {
+													    	 markers[getThuThuByIdObject(${vm.detail.id})].setIcon('${execution.contextPath}/assets/frontend/image/pinred.png');
+													     }
+													     else{
+													    	 markTemp.setMap(null);
+															 markTemp=null;
+													     }
+													   	 markTemp = new google.maps.Marker({
+											                    position: new google.maps.LatLng(${each.banDo.lat}, ${each.banDo.lng}),
+											                    map: map,
+											                    icon : '${execution.contextPath}/assets/frontend/image/pinblue.png'
+											              });
+													   	 map.setZoom(${zoomClickMarker});
+													 	 smoothZoom(map, 12, map.getZoom());
+													 	 <!-- addInfoWindowContentMarker('/dtdsfiles/qnfiles/${each.getClass().getSimpleName().toLowerCase()}/image/s_${each.avatarImage.nameFileHash}' ,'${each.name}'); -->
+														 zk.afterMount(function(){
+																zk.Widget.$('$ditich').setValue(${each.id});
+																zk.Widget.$('$ditich').fireOnChange();
+														 });
+														 
+													}
+													firstBegin = 0;
+											}, firstBegin);
+										
+									})
+									
+
+								]]></attribute>
+						<div class="list-item" style="z-index:99999999;">
+							<z:div class="item-image"
+								zk:visible="@load(each.avatarImage ne null)">
+								<n:img
+									src="/${each.avatarImage.imageUrl}/s_${each.avatarImage.nameFileHash}">
+								</n:img>
+							</z:div>
+		
+							<z:div class="item-image"
+								zk:visible="@load(each.avatarImage eq null)">
+								<img
+									src="/assets/frontend/image/noImageChung.jpg">
+								</img>
+							</z:div>
+		
+							<div class="item-description">
+								<h5>${each.name}</h5>
+								<span>${each.loai.name}</span>
+								<div class="item-address">
+									<img src="/assets/frontend/image/placeholder.svg"></img>
+									<span>${each.address}</span>
+								</div>
+							</div>
+						</div>
+						</z:a>
+					</template>
+				</div>
+					<z:div class="row"
+						zk:visible="@load(vm.sizeLienQuan gt (vm.offsetReSultLienQuans + limitReSultDetailLienQuans) )">
+						<div class="col-md-12">
+							<x:button type="button"
+								zk:onClick="@command('showMoreResultLienQuan')"
+								class="btn showmore-custom-button">
+								<span>Xem thêm</span>
+								<i
+									class="fas fa-angle-right icon-button-showmore">
+								</i>
+							</x:button>
+						</div>
+					</z:div>
+			</div>
+		</div>
+	</div>
+	<script>
+			function scrollLocation(){
+				var elmnt = stringActive+"Location";
+				$('html, body').animate({
+			    	scrollTop: $("#"+elmnt).offset().top
+			    }, 500)
+			    document.getElementById(elmnt).style.opacity = "1";
+			}
+			function showGioiThieu(){
+				document.getElementById("gioithieuLocation").style.opacity = "1";
+			}
+			function setHeightSearchBack(){
+				var wrapperH = window.innerHeight;
+				var optionHeight;
+				$(".get-height-search").css({'position':'absolute','visibility':'hidden', 'display':'block'});
+				var height ;
+				height = $(".box-search").height()  + $(".height-search").height() + 76;
+				optionHeight = $(".checkclass").height();
+				$(".h-box-search").css('height', (wrapperH) - (height)+'px');
+				$(".get-height-search").removeAttr('style');
+			}
+		    var typeActive = ["gioithieu", "tailieu", "hinhanh", "video"];
+		    var typeActive1 = ["gioithieuimg", "tailieuimg", "hinhanhimg", "videoimg"];
+			var stringActive = "gioithieu";
+			var imageActive = "gioithieuimg";
+		    function clickActive() {
+				for (var i = 0; i < typeActive.length; i++) {
+					 if(stringActive == typeActive[i]){
+					 	 document.getElementById(stringActive).className = "active";
+					 	 document.getElementById(imageActive).src = "/csdlditichdisan/assets/frontend/image/"+stringActive+"active.svg";
+					  }
+				     else{
+						 document.getElementById(typeActive[i]).className = "";
+						 document.getElementById(typeActive1[i]).src = "/csdlditichdisan/assets/frontend/image/"+typeActive[i]+".svg";
+					 }
+				}
+			 }
+			 function showLoadingDetail() {
+				// Hiển thị icon loading
+				jq("$idLoadingDetail").css('display', "block");
+				// Set height lại div của icon loading
+				
+				// Ẩn div danh sách search
+				jq("$idDivDetail").css('display', "none");
+			}
+			
+			function hiddenLoadingDetail() {
+				// Ẩn thị icon loading
+				jq("$idLoadingDetail").css('display', "none");
+				// Hiển thị div danh sách search
+				jq("$idDivDetail").css('display', "block");
+			}
+	</script>
+</div>

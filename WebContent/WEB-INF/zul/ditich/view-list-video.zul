@@ -1,0 +1,110 @@
+<?page title="Danh sách video" contentType="text/html;charset=UTF-8"?>
+<window xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk"
+	apply="org.zkoss.bind.BindComposer"  id="wdn" border="normal"
+	mode="modal" action="show: slideIn" contentStyle="overflow:auto;"
+	closable="true" title="${arg.save}"
+	viewModel="@id('vm') @init(arg.model)" validationMessages="@id('vmsgs')"
+	class="form-list popup-image">
+	<zscript>
+		page.title = "Thêm mới di tích";
+	</zscript>
+	<zscript>
+		<![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			readOnly = arg.get("readOnly") == null ? false : arg.get("readOnly");
+			import java.awt.*;
+    		import java.awt.image.*;
+    		import java.awt.geom.*;
+			BufferedImage imageTemp = new BufferedImage(460, 294, BufferedImage.TYPE_INT_ARGB); 
+		]]>
+	</zscript>
+	<style>
+		.close { position: absolute; top: 5px; right: 29px; color:
+		#f1f1f1; font-size: 20px; font-weight: bold; transition: 0.3s;
+		opacity: 1; }
+
+		.carousel-indicators li { display: inline-block; width: 20px;
+		height: 20px; margin: 1px; text-indent: -999px; cursor: pointer;
+		background-color: #000 \9; background-color: rgba(3, 169, 244,
+		0.59); border: 1px solid #fff; border-radius: 2px; }
+
+		.carousel-indicators .active { width: 20px; height: 20px;
+		margin: 0; background-color: red; }
+
+		.xoa { position: absolute; top: 15px; color: #f1f1f1; font-size:
+		20px; font-weight: bold; transition: 0.3s; opacity: 1; left:
+		22px; top: 0px; }
+	</style>
+
+
+		<div class="line-panel">
+			<div zclass="panel-list ho-tro">
+					<n:div class="form-group">
+						<button label="Tải video lên" zk:if="${!readOnly}"
+							sclass="wd-upload-btn2"
+							onClick="@command('redirectPage', zul='ditich/add-video.zul',vmArgs = vm)"
+							image="/img/attachment.png" />
+					</n:div>
+			</div>
+		</div>
+		<div class="line-panel" style="border-top:none">
+			<div zclass="panel-list ho-tro">
+				<n:div id="carousel-simple"
+					class="carousel slide media-carousel">
+					<div class="carousel-inner">
+						<div class="item  active">
+							<div visible="@load((vm.videos.size() eq 0))" class="alert alert-secondary"
+								style="margin-top:10px;padding-top:20px;color: #383d41;background-color: #e2e3e542;border-color: #e2e3e50a;">
+								<n:h4>Chưa có video nào !</n:h4>
+							</div>
+							<grid model="@load(vm.videos)" visible="@load((vm.videos.size() ne 0))" id="grid" 
+							emptyMessage="Không có video nào">
+							<columns>
+								<column label="STT" width="60px" style="text-align:center" />
+								<column label="Tên video" width="60%" />
+								<column label="Loại video" />
+								<column label="Thao tác" style="text-align:center" width="20%" />
+							</columns>
+							<template name="model">
+								<row>
+									<label value="@bind(forEachStatus.index + 1 + vm.arg.page * 3)"
+										style="text-align:center;display:block" />
+									<label value="@bind(each.name)" width="99%" class="link-title"/>
+									<label value="@bind(each.typeVideo)" width="99%" class="link-title"/>
+									<div class="thaotac" style="text-align:center">
+										<x:a label="Sửa" class="btn-thaotac" zk:if="${!readOnly}"
+											onClick="@command('redirectPageAction', zul='ditich/view-video.zul',vmArgs=vm,vm=each, readOnly=false)">
+											<x:image class="img-edit" src="${contexPath}/assets/img/front/edit.svg"/>
+										</x:a>
+										<x:a label="Xóa" class="btn-thaotac" zk:if="${!readOnly}"
+											onClick="@command('deleteVideo', item = each, vmArgs = vm)"	>
+											<x:image class="img-edit" src="${contexPath}/assets/img/front/delete.svg"/>
+										</x:a>
+									</div>
+								</row>
+							</template>
+						</grid>
+					</div>
+				</div>
+			</n:div>
+		</div>
+	</div>
+	<div zclass="row formac-cauhinh">
+		<div zclass="col-lg-12">
+			<x:button zk:if="${!readOnly}" class="btn default left" onClick="@command('closePopupVideo', vm=vm, wdn=wdn, attr='targetQuery')" >
+				<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+				Hủy
+			</x:button> 
+			<x:button zk:if="${!readOnly}" class="btn primary right" 
+				onClick="@command('close', wdn=wdn)">
+				<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+				Lưu
+			</x:button>
+			<x:button zk:if="${readOnly}" class="btn default left" onClick="@command('closeView', wdn=wdn)" >
+				<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+				Đóng
+			</x:button> 
+		</div>
+	</div>
+</window>

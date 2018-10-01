@@ -1,0 +1,2 @@
+<?component name="add-view" inline="true" macroURI="add-view2.zul"?>
+<add-view model="${arg.vm}" vmArgs="${arg.vmArgs}" save="Chỉnh sửa đơn vị hành chinh" readOnly="${arg.readOnly}"/>

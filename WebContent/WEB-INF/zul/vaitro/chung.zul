@@ -1,0 +1,68 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client"
+	viewModel="@id('vm') @init(arg.model)"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native" id="wdn" border="normal" mode="modal"
+		class="popup-vaitro"
+		action="show: slideIn" closable="true" title="${arg.save}"
+		whatever="@load(false,after={'saveVaiTro'}) @converter('vn.toancauxanh.service.DetachConverter')">
+		<zscript><![CDATA[
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");		
+			readOnly = arg.get("readOnly") == null ? false : arg.get("readOnly");
+	]]></zscript>
+	<div class="line-panel"></div>
+		<div zclass="panel-list ho-tro">
+			<div class="row">
+				<div class="col-md-12">
+					<n:div class="form-group">
+						<n:span class="title-issue title-issue-detail">
+							Tên vai trò
+							<n:small class="required">*</n:small>
+						</n:span>
+						<textbox readonly="${readOnly}" class="form-control" maxlength="255" width="100%"
+							value="@load(vm.tenVaiTro) @save(vm.tenVaiTro, before='saveVaiTro') 
+							@validator('vn.toancauxanh.vm.BaseValid', constraint='no empty', field='tenVaiTro', id=vm, cmsg='Tên vai trò này đã tồn tại.')" />
+						<label class="error" value="@load(vmsgs[self.previousSibling])" />
+					</n:div>
+				</div>
+				<div class="col-md-12">
+					<tree multiple="true" checkmark="${!readOnly}"
+						model="@load(vm.model)" selectedItems="@bind(vm.selectedItems)">
+						<treecols >
+							<treecol label="Tên chức năng và quyền"></treecol>
+						</treecols>
+						<template name="model" var="node">
+							<treeitem open="true">
+								<treerow>
+									<treecell>
+										<label value="@load(node.data[0])"></label>
+									</treecell>
+								</treerow>
+							</treeitem>
+						</template>
+					</tree>
+				</div>
+			</div>
+		</div>
+		<div zclass="row formac-cauhinh">
+			<div zclass="col-lg-12">
+			<x:button class="btn default left" onClick="@command('invokeGG', notify=notifyObject, detach=wdn, attr='targetQuery')" >
+					<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+					Đóng
+				</x:button>
+				<x:button class="btn primary right" if="${!readOnly and vm.noId()}" 
+					onClick="@command('saveVaiTro',list=vmArgs, attr='vaiTroQuery', wdn=wdn)">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+					Thêm mới
+				</x:button>
+				<x:button class="btn primary right" if="${!readOnly and !vm.noId()}" 
+					onClick="@command('saveVaiTro',list=vmArgs, attr='vaiTroQuery', wdn=wdn)">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+					Cập nhật
+				</x:button>
+		</div>
+		</div>
+
+	</window>
+
+</idspace>

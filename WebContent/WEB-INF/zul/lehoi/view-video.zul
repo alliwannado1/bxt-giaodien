@@ -1,0 +1,2 @@
+<?component name="add-view" inline="true" macroURI="add-view-video.zul"?>
+<add-view model="${arg.vm}"  vmArgs="${arg.vmArgs}" save="Thông tin video"/>

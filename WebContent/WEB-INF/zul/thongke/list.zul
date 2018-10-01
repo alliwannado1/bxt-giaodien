@@ -1,0 +1,214 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('vn.toancauxanh.service.ThongKeService')"
+	class="form-list">
+	<zscript>
+	<![CDATA[
+		page.title = "Thống kê";
+		vm.getArgChangeSessionPage();
+	]]>
+	</zscript>
+	<style>
+		.z-grid-body{
+			max-height: calc(100vh - 490px);
+		}
+	</style>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						Thống kê
+					</n:h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wd-search-form">
+		<div zclass="row">
+			<div zclass="col-lg-12 col-md-12 col-sm-12" style="padding-left: 15px;">
+				<div class="row">
+					<div class="col-sm-3">
+						<n:div class="form-group">
+							<x:span>Loại</x:span>
+							<combobox id="cbbDiTich" readonly="true" class="his"
+								model="@load(vm.listDiTichDiSan)" placeholder="Loại"
+								selectedItem="@bind(vm.selectDitich)" 
+								onSelect="@command('chooseDiTich')" onCreate="@command('boxLoaiOnCreate')"
+								value="@bind(vm.selectDitich)"
+								width="100%">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div class="col-sm-3" zk:visible="@load(vm.checkDiTich)">
+						<n:div class="form-group">
+							<x:span>Loại di tích - thắng cảnh</x:span>
+							<combobox readonly="true" class="his"
+								model="@load(vm.loaiDiTich)"
+								value="@load(vm.arg.loaiditich eq null ? 'Tất cả' : vm.arg.loaiditich.name)"
+								selectedItem="@bind(vm.arg.loaiditich)"
+								width="100%">
+								<template name="model">
+									<comboitem label="@load(each.name eq null ? 'Tất cả' : each.name)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div class="col-sm-3" zk:visible="@load(vm.checkDiSan)">
+						<n:div class="form-group">
+							<x:span>Loại di sản</x:span>
+							<combobox readonly="true" class="his"
+								model="@load(vm.loaiDiSan)"
+								value="@load(vm.arg.loaidisan eq null ? 'Tất cả' : vm.arg.loaidisan.name)"
+								width="100%" selectedItem="@bind(vm.arg.loaidisan)">
+								<template name="model">
+									<comboitem label="@load(each.name eq null ? 'Tất cả' : each.name)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div class="col-sm-3" zk:visible="@load(vm.checkLeHoi)">
+						<n:div class="form-group">
+							<x:span>Loại bảo tàng</x:span>
+							<combobox readonly="true" class="his"
+								model="@load(vm.loaiLeHoi)" 
+								value="@load(vm.arg.loailehoi eq null ? 'Tất cả' : vm.arg.loailehoi.name)"
+								width="100%" selectedItem="@bind(vm.arg.loailehoi)">
+								<template name="model">
+									<comboitem label="@load(each.name eq null ? 'Tất cả' : each.name)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+				</div>
+			</div>
+			<div zclass="col-lg-12 col-md-12 col-sm-12" style="padding-left: 15px;">
+				<div class="row">
+					<div zclass="col-sm-3">
+						<n:div class="form-group">
+							<x:label class="control-label">
+								Tỉnh
+							</x:label>
+							<combobox readonly="true" class="his"
+								onCreate="@command('boxCapTinhOnCreate')"
+								value="@bind(vm.donViCapTinh.ten)"
+								model="@load(vm.listDonViCapTinh)"
+								selectedItem="@bind(vm.donViCapTinh)" width="100%">
+								<template name="model">
+									<comboitem label="@load(each.ten)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>	
+					<div zclass="col-sm-3">
+						<n:div class="form-group">
+							<x:label class="control-label">
+								Huyện
+							</x:label>
+							<combobox readonly="true" class="his"
+								onCreate="@command('boxCapHuyenOnCreate')"
+								onSelect="@command('boxCapHuyenOnSelect')"
+								value="@load(vm.donViCapHuyen.ten)"
+								model="@load(vm.listDonViCapHuyen)"
+								selectedItem="@bind(vm.donViCapHuyen)" width="100%">
+								<template name="model">
+									<comboitem label="@load(each.ten)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div zclass="col-sm-3">
+						<n:div class="form-group">
+							<x:label class="control-label">
+								Xã
+							</x:label>
+							<combobox readonly="true" class="his"
+								onCreate="@command('boxCapXaOnCreate')"
+								value="@load(vm.donViCapXa.ten)"
+								model="@load(vm.listDonViCapXa)"
+								selectedItem="@bind(vm.donViCapXa)" width="100%">
+								<template name="model">
+									<comboitem label="@load(each.ten)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div zclass="col-sm-3">
+						<div class="row">
+							<div class="col-sm-6" style="padding-top: 5px;">
+								<x:label class="control-label">
+									&#160;
+								</x:label>
+								<x:label class="control-label">
+									&#160;
+								</x:label>
+								<n:div class="form-group" zk:if="${entry.quyen.thongkebieumaubaocao_timkiem}">
+									<x:button
+										class="btn btn-search-page"
+										zk:onClick="@command('thongKe')">
+										<x:image class="img-search"
+											src="${contexPath}/assets/img/front/search.svg" />
+										Thống kê
+									</x:button>
+								</n:div>
+							</div>
+							<div class="col-sm-6" style="padding-top: 5px;">
+								<x:label class="control-label">
+									&#160;
+								</x:label>
+								<x:label class="control-label">
+									&#160;
+								</x:label>
+								<n:div class="form-group" zk:if="${entry.quyen.thongkebieumaubaocao_thongke}">
+									<x:button
+										class="btn btn-search-page"
+										zk:onClick="@command('xuatExcel')">
+										<x:image class="img-search" width="15px" height="15px"
+											src="${contexPath}/assets/img/front/icon.png" />
+										Xuất Excel
+									</x:button>
+								</n:div>
+							</div>
+						</div>
+					</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<x:span>Tìm thấy được </x:span><label value="@load(vm.listThongKe.size())"></label><x:span> kết quả</x:span>
+			<grid model="@load(vm.pageList(vm.listThongKe))" id="grid" 
+				emptyMessage="Không có mục nào trong danh sách">
+				<columns>
+					<column label="STT" width="10%" style="text-align:center" />
+					<column label="Tên" width="40%" />
+					<column label="Loại" width="40%" />
+					<column label="Địa điểm" width="40%"/>
+				</columns>
+				 <template name="model">
+					<row viewModel="@id('item') @init(each)">
+						<label value="@bind(forEachStatus.index + 1 + vm.arg.page * vm.arg.pagesize)"
+							style="text-align:center;display:block" />
+						<a label="@load(each.name)" onClick="@global-command('viewItemThongKe', url='/cp/thongke/', item = each)" />
+						<label value="@load(each.loai.name)" />
+						<label value="@load(each.address)" />
+					</row>
+				</template> 
+				<foot visible="@load(vm.listThongKe.size() gt 10)">
+					<footer span="5">
+						<paging pageSize="@load(vm.arg.pagesize)" mold="os"
+								totalSize="@load(vm.listThongKe.size())"
+								activePage="@bind(vm.arg.page)"
+								onPaging="@command('cmd', notify=vm, attr='listThongKe')" />
+					</footer>
+				</foot> 
+			</grid>
+		</div>
+	</div>
+</window>

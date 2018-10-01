@@ -1,0 +1,87 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk"  xmlns:w="client"
+	viewModel="@id('vm') @init(arg.model)"
+	validationMessages="@id('vmsgs')">
+	<window xmlns:n="native"  id="wdn" 
+		border="normal" mode="modal" contentStyle="overflow:auto;" style="width:610px"
+		action="show: slideIn"
+		closable="true" title="${arg.save}">
+		<zscript>
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			readOnly = arg.get("readOnly") == null ? false : arg.get("readOnly");
+		</zscript>
+		<style>
+		.z-listbox-autopaging .z-listcell-connamet {
+		    height: auto;
+		}
+		</style>
+		<div class="line-panel">
+			<div zclass="panel-list ho-tro">
+				<div zclass="row">
+					<div zclass="col-md-12">
+						<div zclass="form-group">
+							<x:span class="issue-search">Loại đơn vị hành chính<n:small class="required"> *</n:small></x:span> 
+							<combobox disabled="${readOnly}" readonly="true" class="his" placeholder="--Chọn--"
+								model="@load(entry.donVis.capDonViMoi)" onSelect="@command('selectDonViMoi')"
+								 selectedItem="@bind(vm.arg.capdonvi)" width="100%">
+								<template name="model">
+									<comboitem label="@load(each.value)" />
+								</template>
+							</combobox>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						<div zclass="form-group" visible="@bind(vm.themDonViCapXa)">
+							<x:span class="issue-search">Thành phố/Huyện<n:small class="required"> *</n:small></x:span> 
+							<combobox disabled="${readOnly}" readonly="true" class="his" placeholder="--Chọn--"
+									model="@load(vm.listHuyen)"
+									value="@bind(vm.donViHanhChinhCha.name)" width="100%"
+									selectedItem="@bind(vm.donViHanhChinhCha)">
+									<template name="model">
+										<comboitem label="@load(each.name)" />
+									</template>
+							</combobox>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						<div zclass="form-group" visible="@bind(vm.themDonViCapXa)">
+							<x:span class="issue-search">Tên xã/phường<n:small class="required"> *</n:small></x:span> 
+							<textbox class="form-control" width="100%" maxlength="255"
+							value="@bind(vm.name) @save(vm.name, before={'saveDonViHanhChinh'}) @validator(vm.validatorNameDonViHanhChinhCapXa)"/>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						<div zclass="form-group" visible="@bind(vm.themDonViCapHuyen)">
+							<x:span class="issue-search">Tỉnh<n:small class="required"> *</n:small></x:span> 
+							<combobox disabled="true" readonly="true" class="his"
+									model="@load(vm.listTinh)"
+									value="@bind(vm.listTinh.get(0).name)" width="100%"
+									selectedItem="@bind(vm.donViHanhChinhCha)">
+									<template name="model">
+										<comboitem label="@load(each.name)" />
+									</template>
+							</combobox>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						<div zclass="form-group" visible="@bind(vm.themDonViCapHuyen)">
+							<x:span class="issue-search">Tên thành phố/huyện<n:small class="required"> *</n:small></x:span> 
+							<textbox class="form-control" width="100%" maxlength="255"
+							value="@bind(vm.name) @save(vm.name, before={'saveDonViHanhChinh'}) @validator(vm.validatorNameDonViHanhChinhCapHuyen)"/>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div zclass="row formac-cauhinh">
+				<div zclass="col-lg-12">
+					<x:button class="btn default left" onClick="@command('invokeGG', notify=notifyObject, detach=wdn, attr='targetQuery')" >
+						<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+						Đóng
+					</x:button>
+					<x:button class="btn primary right" if="${!readOnly and vm.noId()}" 
+						onClick="@command('saveDonViHanhChinh',list=vmArgs, attr='model', wdn=wdn)">
+						<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+						Thêm mới
+					</x:button>
+				</div>
+			</div>
+		</div>
+	</window>
+</idspace>

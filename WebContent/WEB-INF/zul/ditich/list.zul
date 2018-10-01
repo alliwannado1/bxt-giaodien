@@ -1,0 +1,134 @@
+<?page title="Thông tin văn bản" contentType="text/html;charset=UTF-8"?>
+<window xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('vn.toancauxanh.service.DiTichService')"
+	class="form-list">
+	<zscript>
+		<![CDATA[
+			page.title = "Quản lí di tích - danh thắng";
+			vm.getArgChangeSessionPage();
+		]]>
+	</zscript>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						Danh sách di tích - danh thắng
+						<div zk:if="${entry.quyen.ditich_them}" zclass="wd-action-bar">
+							<x:image class="img-add" src="${contexPath}/assets/img/front/congxanh.svg"/>
+							<a href="javascript:void(0);" class="btn-custom">
+								<attribute name="onClick"><![CDATA[
+									vm.sendRedirectPageUrl("/cp/ditich/add");
+								]]></attribute>
+								Thêm mới di tích - danh thắng
+							</a>
+						</div>
+					</n:h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wd-search-form">
+		<div zclass="row">
+			<div zclass="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-sm-4">
+						<n:div class="form-group">
+							<x:span>Từ khóa</x:span> 
+							<textbox zk:onOK='vm.cmd("", vm, "targetQuery");' class="hv-textbox tb-search" maxlength="255" value="@bind(vm.arg.tukhoa)"
+								placeholder="Tìm kiếm theo từ khóa" width="100%"/>
+						</n:div>
+					</div>
+					<div class="col-sm-3">
+						<n:div class="form-group">
+							<x:span>Loại di tích - danh thắng</x:span> 
+							<combobox readonly="true" class="his" zk:onOK='vm.cmd("", vm, "targetQuery");'
+									value="@load(vm.arg.loai  eq null ? 'Tất cả' : vm.arg.loai.name)"
+									model="@load(entry.loaiDiTichs.loaiDiTichAndNull)" placeholder="Loại di tích, danh thắng"
+									selectedItem="@save(vm.arg.loai)"
+									width="100%">
+								<template name="model">
+									<comboitem label="@load(each.name eq null ? 'Tất cả' : each.name)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div class="col-sm-3">
+						<n:div class="form-group">
+							<x:span>Thực trạng di tích - danh thắng</x:span> 
+							<combobox readonly="true" class="his" zk:onOK='vm.cmd("", vm, "targetQuery");'
+									value="@load(vm.arg.thuctrangditich  eq null ? 'Tất cả' : vm.arg.thuctrangditich.name)"
+									model="@load(entry.thucTrangDitichs.thucTrangDiTichAndNull)" placeholder="Thực trang di tích"
+									selectedItem="@save(vm.arg.thuctrangditich)"
+									width="100%">
+								<template name="model">
+									<comboitem label="@load(each.name eq null ? 'Tất cả' : each.name)" />
+								</template>
+							</combobox>
+						</n:div>
+					</div>
+					<div class="col-sm-2" style="padding-right:0px">
+						<x:label class="control-label">&#160;</x:label>
+						<n:div class="form-group" zk:if="${entry.quyen.ditich_timkiem}">
+							<x:button class="btn btn-search-page" zk:onClick='vm.cmd("", vm, "targetQuery");'>
+								<x:image class="img-search"
+									src="${contexPath}/assets/img/front/search.svg" />
+								Tìm kiếm
+							</x:button>
+						</n:div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-list">
+		<div zclass="panel-list ho-tro">
+			<grid model="@load(vm.page(vm.targetQuery).fetch())" id="grid" 
+				emptyMessage="Không có mục nào trong danh sách">
+				<columns>
+					<column label="STT" width="60px" style="text-align:center" />
+					<column label="Tên di tích - danh thắng" width="20%" />
+					<column label="Loại di tich - danh thắng" width="15%" />
+					<column label="Địa điểm" width="15%"/>
+					<column label="Người tạo" width="15%" />
+					<column label="Ngày sửa cuối" width="15%" />
+					<column label="Thao tác" style="text-align:center" width="20%" />
+				</columns>
+				 <template name="model">
+					<row viewModel="@id('item') @init(each)">
+						<label value="@bind(forEachStatus.index + 1 + vm.arg.page * vm.arg.pagesize)"
+							style="text-align:center;display:block" />
+						<a label="@load(each.name)"
+							onClick="@command('redirectPageDiTich', url='/cp/ditich/edit',vm=item , service = vm)" class="link-title"/>
+						<label value="@load(each.loai.name)"/>
+						<label value="@load(each.address)" />
+						<label value="@load(each.nguoiTao.hoVaTen)" />
+						<label value="@load(each.ngaySua) @converter('formatedDate',format='dd/MM/YYYY')" />
+						<div class="thaotac" style="text-align:center">
+							<x:a zk:if="${entry.quyen.ditich_xem}" label="Xem" class="btn-thaotac" onClick="@command('redirectPageDiTich', url='/cp/ditich/view', vm=item, service = vm)">
+								<x:image class="img-see" src="${contexPath}/assets/img/front/view.png"/>
+							</x:a>
+							<x:a zk:if="${entry.quyen.ditich_sua and each.quyenQuanLi}" label="Sửa" class="btn-thaotac" onClick="@command('redirectPageDiTich', url='/cp/ditich/edit', vm=item, service = vm)">
+								<x:image class="img-edit" src="${contexPath}/assets/img/front/edit.svg"/>
+							</x:a>
+							<x:a zk:if="${entry.quyen.ditich_xoa  and each.quyenQuanLi}"  label="Xóa" class="btn-thaotac"
+								onClick="@command('deleteTrangThaiConfirmAndNotify', notify=vm, attr='targetQuery')">
+								<x:image class="img-edit" src="${contexPath}/assets/img/front/delete.svg"/>
+							</x:a>
+						</div>
+					</row>
+				</template> 
+				 <foot visible="@load(vm.targetQuery.fetchCount() gt 10)">
+					<footer span="7">
+						<div class="">
+							<paging pageSize="@load(vm.arg.pagesize)" mold="os"
+								totalSize="@load(vm.targetQuery.fetchCount())"
+								activePage="@bind(vm.arg.page)"
+								onPaging="@command('cmd', notify=vm, attr='targetQuery')" />
+						</div>
+					</footer>
+				</foot> 
+			</grid>
+		</div>
+	</div>
+</window>

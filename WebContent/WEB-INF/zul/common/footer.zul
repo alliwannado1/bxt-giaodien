@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?> -->
+<zk xmlns:n="native" xmlns:zk="zk" xmlns:x="xhtml">
+	<div zclass="footer">
+		<div class="container" style="margin-left: 20%; width: 100%;">
+			<div zclass="row" style="margin-right: 0; margin-left: 0;">
+				<div zclass="col-sm-8">
+					<vlayout>
+						<x:label>Bản quyền © 2018 thuộc Sở Xây Dựng Quảng Ngãi - Phần mềm quản lý quy hoạch</x:label>
+						<x:label>Địa chỉ: Số 68 đường Phạm Văn Đồng - thành phố Quảng Ngãi</x:label>
+						<x:label>Điện thoại: <x:span><!-- ${entry.setting.donViTroGiup} --></x:span>; Fax: 0255.3825466; Email: <x:span><!-- ${entry.setting.sdtDonViTroGiup} --></x:span></x:label>
+					</vlayout>
+				</div>
+				<div zclass="col-sm-4">
+					<div zclass="form-group">
+						<x:label class="control-label">Phát triển bởi <a href="http://toancauxanh.vn/">Toàn cầu xanh</a></x:label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</zk>

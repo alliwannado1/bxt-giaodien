@@ -1,0 +1,165 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+.map {
+	height: 100%;
+	width: 100%;
+}
+
+#btnPoint {
+	position: absolute;
+	top: 4%;
+	right: 360px;
+}
+
+#btnLine {
+	position: absolute;
+	top: 4%;
+	right: 290px;
+}
+
+#btnArea {
+	position: absolute;
+	top: 4%;
+	right: 220px;
+}
+
+#btnEdit {
+	position: absolute;
+	top: 4%;
+	right: 150px;
+}
+
+#btnDelete {
+	position: absolute;
+	top: 4%;
+	right: 80px;
+}
+
+.btn-active {
+	background-color: #0d47a1 !important;
+}
+
+
+.x-grid-rowbody {
+	padding: 0;
+}
+.legend {
+	margin: 3px 0 0 0;
+	border: 1px solid transparent;
+	border-radius: 6px;
+}
+
+.map:-moz-full-screen {
+	height: 100%;
+}
+.map:-webkit-full-screen {
+	height: 100%;
+}
+.map:-ms-fullscreen {
+	height: 100%;
+}
+.map:fullscreen {
+	height: 100%;
+}
+
+.map, .righ-panel {
+	height: 500px;
+	width: 40%;
+	float: left;
+}
+
+.map {
+	border: 1px solid #000;
+}
+
+.map .ol-zoom .ol-zoom-out {
+	margin-top: 204px;
+}
+.map .ol-zoomslider {
+	background-color: transparent;
+	top: 2.3em;
+}
+
+.map .ol-touch .ol-zoom .ol-zoom-out {
+	margin-top: 212px;
+}
+.map .ol-touch .ol-zoomslider {
+	top: 2.75em;
+}
+
+.map .ol-zoom-in.ol-has-tooltip:hover [role=tooltip],
+.map2 .ol-zoom-in.ol-has-tooltip:focus [role=tooltip] {
+	top: 3px;
+}
+
+.map .ol-zoom-out.ol-has-tooltip:hover [role=tooltip],
+.map2 .ol-zoom-out.ol-has-tooltip:focus [role=tooltip] {
+	top: 232px;
+}
+
+/* position the rotate control lower than usual */
+.ol-rotate {
+	top: 3em;
+}
+
+.ol-popup {
+	position: absolute;
+	background-color: white;
+	-webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+	filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+	padding: 15px;
+	border-radius: 10px;
+	border: 1px solid #cccccc;
+	bottom: 12px;
+	left: -50px;
+	min-width: 255px;
+}
+
+.ol-popup:after, .ol-popup:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.ol-popup:after {
+	border-top-color: white;
+	border-width: 10px;
+	left: 48px;
+	margin-left: -10px;
+}
+
+.ol-popup:before {
+	border-top-color: #cccccc;
+	border-width: 11px;
+	left: 48px;
+	margin-left: -11px;
+}
+
+.ol-popup-closer {
+	text-decoration: none;
+	position: absolute;
+	top: 2px;
+	right: 8px;
+}
+
+.ol-popup-closer:after {
+	content: "<img draggable="false" class="emoji" alt="✖" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2716.svg">";
+}
+
+#panel-1010 {
+	top: 4% !important;
+}
+
+#tabpanel-1021{
+	top: 4% !important;
+}

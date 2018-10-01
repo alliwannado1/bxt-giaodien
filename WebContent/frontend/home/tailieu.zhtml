@@ -1,0 +1,73 @@
+<z:div xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml"
+	xmlns:w="client">
+	<style>
+		#tailieuLocation{
+			opacity:0;
+			transition:all 1s ease;
+		}
+		.tailieu-viewdown{
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+		}
+	</style>
+	
+	<div class="item-details" id="tailieuLocation">
+		<div class="col-md-12">
+			<table class="table" zk:visible="@load(vm.detail.tepTins.size() ne 0)">
+				<thead>
+					<tr>
+						<th scope="col">STT</th>
+						<th scope="col">Tên tài liệu</th>
+						<th scope="col" class="tailieu-title-thaotac">
+							Thao tác
+						</th>
+					</tr>
+				</thead>
+				
+				<tbody children="@load(vm.pageListFrontEnd(vm.detail.tepTins))">
+					<template name="children">
+						<z:div viewModel="@id('vmTepTin') @init(each)">
+							<n:tr>
+								<n:th scope="row" width="10%"
+									class="tailieu-font">
+									${forEachStatus.index + 1  + vm.arg.page * vm.arg.pagesize}
+								</n:th>
+								<n:td width="60%" class="tailieu-font">
+									<a href="/${each.pathFile}/${each.nameHash}" target="_blank" style="text-decoration:underline !important;" >
+										${each.tenFile}${each.typeFile}
+									</a>
+								</n:td>
+								<n:td width="30%" class="tailieu-viewdown">
+									<a href="/${each.pathFile}/${each.nameHash}" target="_blank" style="color:#0076D7 !important;margin-right:15px;">
+										<img src="/assets/frontend/image/xem.svg" style="margin-right:8px;"></img>
+										Xem
+									</a>
+									<z:a zk:onClick="@command('downLoadTepTin')" style="display: flex;flex-direction: row-reverse;color:#0076D7 !important;font-family: Roboto-Bold !important;font-size:13px !important;">
+										Tải về
+										<img src="/assets/frontend/image/taive.svg" style="margin-right:8px;"></img>
+									</z:a> 
+								</n:td>
+							</n:tr>
+						</z:div>
+					</template>
+				</tbody>
+			</table>
+			<z:div zk:visible="@load(vm.detail.tepTins.size() eq 0)">
+				<div class="update-css">
+					<h6 style="text-align:center;padding-bottom:15px;">Tài liệu đang được cập nhật</h6>
+					<img src="/assets/frontend/image/nono.png" width="130px"
+						style="display:block;margin:auto">
+					</img>
+				</div>
+			</z:div>
+			<div class="row col-md-12 view-more-img">
+				<z:paging pageSize="@load(vm.arg.pagesize)" mold="os"
+				totalSize="@load(vm.detail.tepTins.size())"
+				visible="@load(vm.detail.tepTins.size() > vm.arg.pagesize ? true : false)"
+				activePage="@bind(vm.arg.page)"
+				onPaging="@command('cmdLoadPageFrontEnd', notify=vm, atr='detail')" />
+			</div>
+		</div>
+	</div>
+</z:div>

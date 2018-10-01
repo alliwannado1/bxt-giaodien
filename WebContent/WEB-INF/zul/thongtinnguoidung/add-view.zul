@@ -1,0 +1,2 @@
+<?component name="add-view" inline="true" macroURI="list.zul"?>
+<add-view model="${arg.vm}" model2="${arg.vm2}"  vmArgs="${arg.vmArgs}" save="Thông tin người dùng" />

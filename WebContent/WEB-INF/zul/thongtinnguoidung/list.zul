@@ -1,0 +1,168 @@
+<window id="wdn" border="normal" xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client" class="tt_info"
+		viewModel="@id('vm') @init(arg.model)" validationMessages="@id('vmsgs')" mode="modal"
+		form="@id('fx') @load(vm) @save(vm, before={'saveNhanVien'}) @validator(vm.getValidator())"
+		width="1000px"
+		closable="true">
+	<style>
+		.z-page {
+			    background: #f4f5f7;
+		}
+		 .z-window-content {
+			border: 1px solid #E0E2E6;
+		 }
+		.z-combobox-input[readonly]{
+			font-weight: bold;
+		}
+		.tt_info {
+		}
+	</style>
+	<zscript><![CDATA[
+		import java.awt.image.*;
+		BufferedImage image = new BufferedImage(400, 300, BufferedImage.TYPE_INT_ARGB);
+		model2 = arg.get("model2");
+	]]></zscript>
+	<div class="panel-list form-trogiup mo-windown">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<x:span class="issue-search">Xin chào ${entry.nhanVien.hoVaTen}</x:span>
+					<n:h3 class="page-header">
+						Quản lý thông tin tài khoản
+					</n:h3>
+				</div>
+			</div>
+	</div>
+		<div zclass="panel-list form-trogiup mo-windown" style="margin-bottom:50px">
+			<div class="row">
+				<div class="col-lg-8 col-sm-8 col-md-8">
+					<div zclass="row">
+						<div zclass="col-lg-6 col-sm-6 col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Họ và tên<n:small class="required">*</n:small></x:span> 
+								<textbox class="form-control" width="100%" maxlength="255"
+									value="@bind(vm.hoVaTen) @save(vm.hoVaTen, before={'saveNhanVien'}) @validator('vn.toancauxanh.vm.BaseValid', constraint='no empty')" 
+									onFocus="self.select()" onBlur="self.setValue(self.getValue().trim())"/>
+								<label zclass="error"
+									value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-lg-6 col-sm-6 col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Nhóm người dùng<n:small class="required">*</n:small></x:span> 
+								<combobox readonly="true" disabled="true" class="his"
+									model="@load(entry.vaiTros.vaiTroQuery.fetch())" placeholder="Chọn"
+									selectedItem="@bind(vm.vaiTro) @save(vm.vaiTro, before='updateNhanVien') @validator(vm.validateVaiTro)"
+									width="100%">
+									<template name="model">
+										<comboitem label="@load(each.tenVaiTro)" />
+									</template>
+								</combobox>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-lg-6 col-sm-6 col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Địa chỉ email</x:span>
+								<textbox class="form-control"
+									width="100%" maxlength="255"
+									value="@bind(vm.email) @save(vm.email, before={'updateNhanVien'}) @validator(vm.validatorEmail)" 
+									onFocus="self.select()" onBlur="self.setValue(self.getValue().trim())"/>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+						<div zclass="col-lg-6 col-sm-6 col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Số điện thoại</x:span>
+								<textbox class="form-control"
+									width="100%" maxlength="11"
+									value="@bind(vm.soDienThoai) @save(vm.soDienThoai, before={'updateNhanVien'}) @validator(vm.validateSoDienThoai)" 
+									onFocus="self.select()" onBlur="self.setValue(self.getValue().trim())" >
+								</textbox>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-lg-6 col-sm-6 col-md-6">
+							<div zclass="form-group">
+								<x:span class="issue-search">Tên đăng nhập</x:span>
+								<textbox class="form-control" width="100%" maxlength="255" readonly="true"
+									value="@bind(vm.tenDangNhap) @save(vm.tenDangNhap, before={'updateNhanVien'}) @validator(vm.validateTenDangNhap)" 
+									onFocus="self.select()" onBlur="self.setValue(self.getValue().trim())"/>
+								<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+							</div>
+						</div>
+					</div>
+					<div zclass="row">
+						<div zclass="col-lg-12">
+							<div zclass="form-group">
+								<div class="checkbox checkbox-primary">
+									<checkbox class="ck-box" checked="@bind(vm.changePass)" label="Đổi mật khẩu" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div zclass="row" visible="@load(vm.changePass)">
+						<div if="${!vm.noId()}">
+							<div zclass="col-lg-6" visible="@load(vm.changePass)">
+								<div zclass="form-group">
+									<x:span class="issue-search">Mật khẩu mới<n:small class="required">*</n:small></x:span>
+									<textbox class="form-control"
+										width="100%" type="password" 
+										value="@bind(vm.matKhauUpdate) @save(vm.matKhauUpdate, before='updateNhanVien')  @validator(vm.validateMatKhauMoiEdit)" />
+									<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+								</div>
+							</div>
+							<div zclass="col-lg-6" visible="@load(vm.changePass)">
+								<div zclass="form-group">
+									<x:span class="issue-search">Nhập lại mật khẩu</x:span>
+									<textbox class="form-control"
+										width="100%" type="password"
+										value="@bind(vm.matKhauEdit) @save(vm.matKhauEdit, before='updateNhanVien') @validator(vm.validateMatKhauMoi, pass = vm.matKhauUpdate)" />
+									<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-4 col-md-4">
+					<div style="text-align:center;">
+						<x:span class="issue-search">Ảnh đại diện</x:span>
+				    	<div class="form-group" style="margin-top: 20px;">
+				    		<div class="div-image">
+					    			<image id="imageCmp" visible="@load(vm.avatarImage ne null)" style="width: 200px; height: 200px;object-fit:cover;border-radius: 50%;"
+										content="@load(vm.avatarImage eq null ? image : vm.avatarImage) @save(vm.avatarImage, before='updateNhanVien')">
+									</image>
+									<image visible="@load(vm.avatarImage eq null)" style="width: 200px; height: 200px;object-fit:cover;border-radius: 50%;"
+									src="/assets/img/employeebig.png">
+									</image>
+								<x:button visible="@load(!empty vm.avatarImage)" zk:onClick="@command('deleteAvatarImage', vm=vm,vm2 = model2)"
+										type="button" class="close custom-remove" aria-label="Close">
+										<x:image class="img-edit" src="${contexPath}/assets/img/front/close.svg"/>
+								</x:button>
+								<div class="div-image-btn2" style="left: 145px !important">
+									<button class="btn-ad-image" upload="true,maxsize=50000"
+									onUpload="@command('attachImages',media=event.media,vmsgs=vmsgs)"/>												
+								</div>
+				    		</div>			
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div zclass="row formac-cauhinh">
+				<div zclass="col-lg-12">
+					<x:button class="btn default left" style="margin-left:10px"
+						onClick="@command('close', wdn=wdn, vm = vm)">
+						<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+						Đóng
+					</x:button>
+					<x:button class="btn primary right" style="margin-right:10px"
+						onClick="@command('updateNhanVien',wdn = wdn, vm = vm, vm2 = model2)">
+						<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+						Cập nhật
+					</x:button>
+				</div>
+			</div>
+</window>

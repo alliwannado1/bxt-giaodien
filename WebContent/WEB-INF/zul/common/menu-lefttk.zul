@@ -1,0 +1,15 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:n="native" xmlns:zk="zk" xmlns:x="xhtml" xmlns:u="zul">
+	<div class="nav-side-menu">
+        <div class="menu-list">
+            <n:ul id="menu-content" class="menu-content collapse out" role="menu">
+				<n:li zk:if="${entry.quyen.thongke_lietke}">
+					<n:a style="font-size: 13px !important; font-weight: bold;margin-left: 10px;"
+						href="${execution.contextPath}/thongke" class="flex">
+						Danh mục báo cáo
+					</n:a>
+				</n:li>
+			</n:ul> 
+	     </div>
+	</div>
+</zk>

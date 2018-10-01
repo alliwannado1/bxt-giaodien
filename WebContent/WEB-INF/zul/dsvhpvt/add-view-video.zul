@@ -1,0 +1,136 @@
+<idspace xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client"
+	xmlns:w2="http://www.zkoss.org/2005/zk/client"
+	onClientInfo="@command('onClientInfo',flag=true)"
+	validationMessages="@id('vmsgs')">
+	<window id="wdn" border="normal" mode="modal" action="show: slideIn"
+		contentStyle="overflow:auto;" closable="true"
+		onClose="@command('invokeGG', notify=vmArgs, detach=wdn, attr='targetQuery')"
+		whatever="@load(false,after='saveBanner') @converter('vn.toancauxanh.service.DetachConverter')"
+		viewModel="@id('vm') @init(arg.model)"
+		validationMessages="@id('vmsgs')" width="1000px"
+		form="@id('fx') @load(vm) @save(vm, before='closePopupVideo')">
+		<zscript>
+			vmArgs = arg.get("vmArgs");
+			strSave = arg.get("save");
+			import java.awt.*;
+    		import java.awt.image.*;
+    		import java.awt.geom.*;
+			BufferedImage imagevar2 = new BufferedImage(400, 300, BufferedImage.TYPE_INT_ARGB); 
+		</zscript>
+		<style>
+		.z-listbox-autopaging .z-listcell-content {
+		    height: auto;
+		}
+		</style>
+		<a href="javascript:void(0);" class="close-btn" onClick="@command('close',wdn=wdn)" >
+			<x:image class="img-title" src="${contexPath}/assets/img/front/close.svg"/>
+		</a>
+		<div class="line-panel"/>
+		<div zclass="panel-list ho-tro panel-list-fit">
+			<div zclass="row">
+				<div zclass="col-lg-12">
+					<n:h3 class="page-header">
+						<x:image class="img-popup" src="${contexPath}/assets/img/front/donvi.svg"/>
+						${arg.save}
+					</n:h3>
+				</div>
+			</div>
+		</div>
+		<div class="line-panel"/>
+		<div zclass="panel-list ho-tro">
+			<div zclass="row">
+				<div zclass="col-lg-8">
+					<div zclass="row">
+						<div zclass="col-md-12">
+							<x:span class="issue-search">Tên video<n:small class="required"> *</n:small></x:span> 
+							<textbox class="form-control" width="100%" maxlength="255"
+							value="@bind(vm.name) @save(vm.name, before='closePopupVideo') @validator('vn.toancauxanh.vm.BaseValid', constraint = 'no empty')"/>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						<div zclass="col-md-12">
+							<div zclass="form-group">
+								<x:span class="issue-search">Mô tả video</x:span> 
+								<textbox class="form-control" rows="6" width="100%" maxlength="255" value="@bind(vm.description)"></textbox>
+							</div>
+						</div>
+						<div zclass="col-md-12">
+							<div zclass="form-group">
+								<hlayout class="control-label">
+									<x:span class="issue-search">Loại video<n:small class="required"> *</n:small></x:span> 
+								</hlayout>
+								<vlayout>
+									 <combobox readonly="true" placeholder="Chọn loại video" width="40%"
+										 model="@load(vm.listTypeVideo)" 
+										 selectedItem="@bind(vm.typeVideo) @save(vm.typeVideo,before='closePopupVideo') @validator('vn.toancauxanh.vm.BaseValid', constraint = 'no empty')"
+										 onSelect="@command('chageCheck')" onCreate="@command('chageCheck')">
+										<template name="model">
+					                        <comboitem label="@load(each)" />
+					                    </template>
+					                </combobox>
+					               <label class="error custom-error" value="@load(vmsgs[self.previousSibling])"/>
+				                </vlayout>
+							</div>
+						</div>
+						<div zclass="col-md-12" visible="@load(vm.visibleTextbox)">
+							<x:span class="issue-search">Link youtube<n:small class="required"> *</n:small></x:span> 
+							<textbox class="form-control" width="100%" maxlength="255" onBlur="@command('showVideo')"
+							value="@bind(vm.urlVideo) @save(vm.urlVideo, before='closePopupVideo') @validator(vm.validaLinkYoutube)"/>
+							<label zclass="error" value="@load(vmsgs[self.previousSibling])" />
+						</div>
+						<div zclass="col-md-12" visible="@load(vm.visibleButton)">
+							<vlayout>
+								<button label="Tải video lên" sclass="mis-btn-group mis-btn-lucent" upload="true,accept=.mp4"
+									onUpload="@command('uploadVideo',media=event.media, folder='disanvanhoaphivatthe')" image="/img/icon_upload.png" />
+								<textbox width="100%" readonly="true" visible="@bind(!empty vm.urlVideo)"
+								value="@bind(vm.urlVideo) @save(vm.urlVideo, before='closePopupVideo') @validator(vm.validaLocalVideo)"></textbox>
+								<n:small>*Hỗ trợ định dạng *.mp4</n:small>
+								<label class="error custom-error" value="@load(vmsgs[self.previousSibling])"/>
+								<a onClick="@command('deleteVideo', vm = vm)" visible="@bind(!empty vm.urlVideo)">Xóa</a>
+							</vlayout>
+							
+						</div>
+					</div>
+				</div>
+				<div zclass="col-lg-4">
+					<div zclass="form-group" class="control-label">
+						<div class="wd-image-box">
+							<x:span class="issue-search">Hình đại diện</x:span> 
+							<image id="imageCmp" width="100%" height="@load(vm.avatarVideo eq null ? '150px!important' : '150px!important')"
+								content="@bind(vm.avatarVideo eq null ? imagevar2 : vm.avatarVideo)" sclass="mis-image-upload"
+								style="margin-bottom: 5px;background-color: rgb(238, 238, 238);" >
+							</image>
+							<label class="error custom-error" value="@load(vmsgs[self.previousSibling])"/>
+						</div>
+						<div zclass="form-group wd-vmargin-space">
+							<hlayout>
+								<button label="Chọn hình"
+									sclass="mis-btn-group mis-btn-lucent" upload="true,maxsize=10000, accept=.jpg|.jpeg"
+									onUpload="@command('uploadAvatarVideo',media=event.media, folder='disanvanhoaphivatthe')"
+									image="/img/icon_upload.png" />
+								<a  href="#" sclass="mis-remove-image" visible="@load(!empty vm.avatarVideo)"
+									onClick="@command('deleteImg')">
+									<n:i class="fa fa-trash-o"> </n:i>
+									Xóa
+								</a>
+							</hlayout>
+							<n:small>*Hỗ trợ định dạng *.png, *.jpg, *.jpeg tối đa 10MB</n:small>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div zclass="row formac-cauhinh">
+			<div zclass="col-lg-12">
+				<x:button class="btn default left" onClick="@command('close', wdn = wdn)" >
+					<x:image class="img-title" src="${contexPath}/assets/img/front/dong.svg"/>
+					Hủy
+				</x:button>
+				<x:button  class="btn primary right"
+					onClick="@command('closePopupVideo',wdn = wdn) @global-command('updateVideo',list=vmArgs, item=vm)">
+					<x:image class="img-title" src="${contexPath}/assets/img/front/themmoi.svg"/>
+					Lưu
+				</x:button>
+			</div>
+		</div>
+	</window>
+</idspace>

@@ -1,0 +1,11 @@
+ <div xmlns:n="native" xmlns:zk="zk" xmlns:z="zul" xmlns:x="xhtml" xmlns:w="client"
+apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('vn.toancauxanh.cms.service.HomeService')">
+  <zscript>
+  	<![CDATA[
+		String valueKeyMap = new vn.toancauxanh.cms.service.ThamSoService().getStringApiKeyGoogle();
+	]]>
+</zscript>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${valueKeyMap}&libraries=places&callback=initMap"
+       defer="true" ></script> 
+ </div>

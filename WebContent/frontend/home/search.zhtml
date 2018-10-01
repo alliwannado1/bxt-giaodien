@@ -1,0 +1,224 @@
+<div onresize="" style="height:100%" xmlns:n="native" xmlns:zk="zk" xmlns:z="zul"
+	xmlns:x="xhtml" xmlns:w="client">
+	<!--Search form-->
+	<div id="get-height-search" class="row box-search">
+		<div class="col-sm-12 col-xl-12 search-title">
+			<div class="search-dp">
+				<img src="/assets/frontend/image/zoom-tool.png">
+					<z:textbox type="text" value="@bind(vm.searchByKey)" zclass="input-search-custome" 
+					placeholder="Nhập từ khóa tìm kiếm..."
+					zk:onOK="@command('submitSearch',searchCategory = radioSearch.selectedItem.value)"></z:textbox>
+			</div>
+		</div>
+		<div class="col-sm-12 search-radio">
+			<z:radiogroup class="row" id="radioSearch" onCheck="@command('chooseSearch',searchCategory = self.selectedItem.value)">
+				<div class="col-6">
+					<z:radio label="Di tích và danh thắng" checked="${checkedDiTich}" 
+						value="${valueDiTich}" />
+				</div>
+				<div class="col-6">
+					<z:radio label="Bảo tàng" value="${valueLeHoi}" checked="${checkedLeHoi}"  />
+				</div>
+				<div class="col-12">
+					<z:radio label="Di sản phi vật thể" value="${valueDiSan}" checked="${checkedDiSan}"  />
+				</div>
+			</z:radiogroup>
+		</div>
+		<div class="col-xl-12 col-sm-12 form-search">
+			<div class="row">
+				<div class="col-xl-6 col-lg-6 col-sm-6">
+					<h6>Quận/Huyện</h6>
+					 <z:combobox readonly="true" onCreate="@command('boxCapHuyenOnCreate')" onSelect="@command('boxCapHuyenOnSelect')"
+					   	model="@load(vm.listDonViCapHuyen)"
+	  			   		selectedItem="@bind(vm.donViCapHuyen)"
+	  			  	 	value="@load(vm.donViCapHuyen.ten)"
+  			  	 		width="100%">
+  			  	 	 	<template name="model">
+		  			   		<z:comboitem class="his"
+		  			   			label="@load(each.ten)" />
+		  			   	</template>
+  			 	    </z:combobox>
+  			 	    
+				</div>
+				<div class="col-xl-6 col-lg-6 col-sm-6">
+					<h6>Phường/Xã</h6>
+					 <z:combobox readonly="true" onCreate="@command('boxCapXaOnCreate')"
+					   	model="@load(vm.listDonViCapXa)"
+	  			   		selectedItem="@bind(vm.donViCapXa)"
+	  			  	 	value="@load(vm.donViCapXa.ten)"
+  			  	 		width="100%">
+  			  	 	 	<template name="model">
+		  			   		<z:comboitem class="his"
+		  			   			label="@load(each.ten)" />
+		  			   	</template>
+  			 	    </z:combobox>
+				</div>
+				<div class="col-xl-6 col-lg-6 col-sm-6">
+					<h6>
+						<z:label class="search-font-custom" value="@load(vm.searchLoai)"></z:label>
+					</h6>
+					 <z:combobox readonly="true" 
+	  			   		model="@load(vm.listObjectLoai)"
+	  			   		selectedItem="@bind(vm.arg.loai)"
+	  			  	 	value="@load(vm.listObjectLoai eq 'Tất cả' ? each.name : 'Tất cả')"
+	  			  	 	width="100%">
+		  			   	<template name="model">
+		  			   		<z:comboitem class="his"
+		  			   			label="@load(each.name eq 'Tất cả' ? 'Tất cả' : each.name)" />
+		  			   	</template>
+	  			   </z:combobox>
+				</div>
+				
+				<div class="col-xl-6 col-lg-6 col-sm-6">
+					<x:button type="button" zk:onClick="@command('submitSearch',searchCategory = radioSearch.selectedItem.value)"
+						class="btn search-custom-button">
+						<img
+							src="/assets/frontend/image/zoom-tool1.png">
+							<span style="font-size:17px;padding-left:5px;">Tìm kiếm</span>
+					</x:button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--list search-->
+	<div class="row list-search">
+		<div class="col-sm-12 col-xl-12 height-search">
+			<div class="row result-search">
+
+				<div class="col-sm-12 col-xl-12 d-flex">
+					<span style="padding: 10px 0;">Hiển thị
+					<b><z:label value="@load(vm.numberResultBegin)" style="font-weight: bold;"></z:label></b> - 
+					<b><z:label value="@load(vm.numberResultEnd)" style="font-weight: bold;"></z:label></b>
+					trên <z:label value="@load(vm.numberSizeList)" style="font-weight: bold;"></z:label> kết qủa</span>
+							<x:button visible="@load(vm.numberResultBegin gt 1)" type="button" zk:onClick="@command('prevMore')"
+								class="btn search-custom-btn">
+								<i class="fas fa-angle-left"></i>
+							</x:button>
+						
+							<x:button visible="@load(vm.numberResultEnd lt vm.numberSizeList)" type="button" zk:onClick="@command('nextMore')"
+								class="btn search-custom-btn">
+								<i class="fas fa-angle-right"></i>
+							</x:button>
+				</div>
+			</div>
+		</div>
+		<script>
+			function setHeightSearch(){
+						var wrapperH = window.innerHeight;
+						var height;
+						height = $(".box-search").height() + $(".height-search").height() + 75;
+						$(".h-box-search").css('height', (wrapperH) - (height)+'px');
+					}
+			$(window).ready(function(){
+						var wrapperH = window.innerHeight;
+						var height;
+						height = $(".box-search").height() + $(".height-search").height() + 75;
+						$(".h-box-search").css('height', (wrapperH) - (height)+'px');
+					});
+					$(window).resize(function(){
+						var wrapperH = window.innerHeight;
+						var height;
+						height = $(".box-search").height() + $(".height-search").height() + 75;
+						$(".h-box-search").css('height', (wrapperH) - (height)+'px');
+					});
+		</script>	
+		
+		<div id="idLoading" class="col-sm-12 col-xl-12 loadingDiv" style="display:none;text-align:center;">
+			<img src="/assets/frontend/image/loading.gif" height="80px" width="80px"></img>
+		</div>
+		
+		<div id="idDivSearch" class="col-sm-12 col-xl-12 box-list-item h-box-search" children="@load(vm.listObject)">
+			<template name="children">
+				<z:a href="javascript:void(0)">
+					<div class="list-item">
+								<attribute w:name="bind_">
+								   function hoverInAndHoverOutDiv(){
+									   this.$bind_.apply(this,arguments);
+									   jq(this.$n()).mouseover(function(){
+											if(checkClicked){
+												jq(this).css("background","#9e9e9e12");
+												markers[${forEachStatus.index}].setIcon('${execution.contextPath}/assets/frontend/image/pinblue.png')
+											}
+										}).mouseout(function(){
+											jq(this).css("background","");
+											if(checkHoverMarker) { 
+												markers[${forEachStatus.index}].setIcon('${execution.contextPath}/assets/frontend/image/pinred.png');
+											}
+									    });
+								    }
+								    </attribute>
+
+								    <attribute w:name="onClick"><![CDATA[
+										showLoading();
+										checkClicked = false;
+										$(document).ready(function() {
+										setTimeout(function(){
+												markers[${forEachStatus.index}].setIcon('${execution.contextPath}/assets/frontend/image/pinblue.png');
+												checkDemo = true;
+												checkHoverMarker = false;
+											 	map.setCenter({lat: ${each.banDo.lat}, lng: ${each.banDo.lng}});              
+												map.setZoom(15);
+												smoothZoom(map, 12, map.getZoom());
+												thutuTemp = ${forEachStatus.index};
+												
+												zk.afterMount(function(){
+													zk.Widget.$('$ditich').setValue(${each.id});
+													zk.Widget.$('$ditich').fireOnChange();
+												});
+												firstBegin = 0;
+										}, firstBegin);
+										setHeightDetails();
+									});
+						]]></attribute>
+    
+						<div class="item-image" zk:visible="@load(each.avatarImage ne null)">
+							<n:img src="/${each.avatarImage.imageUrl}/s_${each.avatarImage.nameFileHash}"></n:img>
+						</div>
+						
+						<div class="item-image" zk:visible="@load(each.avatarImage eq null)">
+							<img src="/assets/frontend/image/noImageChung.jpg" class="item-img-css"></img>
+						</div>
+						
+						<div class="item-description">
+							<h5>${each.name}</h5>
+							<span>
+								${each.loai.name}
+							</span>
+							<div class="item-address">
+								<img src="/assets/frontend/image/placeholder.svg"></img>
+								<span>
+									${each.address}
+								</span>
+							</div>
+						</div>
+					</div>
+				</z:a>
+			</template>
+		</div>
+	</div>
+	
+	<script>
+		function setHeightSearchLoading(){
+						var wrapperH = window.innerHeight;
+						var height;
+						height = $(".box-search").height() + $(".height-search").height() + 75;
+						$(".loadingDiv").css('height', (wrapperH) - (height)+'px');
+						$(".loadingDiv").css('padding-top', (( wrapperH  - height ) / 2) - 40 +'px');
+					}
+		function showLoading() {
+			// Hiển thị icon loading
+			jq("$idLoading").css('display', "block");
+			// Set height lại div của icon loading
+			setHeightSearchLoading();
+			// Ẩn div danh sách search
+			jq("$idDivSearch").css('display', "none");
+		}
+		
+		function hiddenLoading() {
+			// Ẩn thị icon loading
+			jq("$idLoading").css('display', "none");
+			// Hiển thị div danh sách search
+			jq("$idDivSearch").css('display', "block");
+		}
+	</script>
+</div>

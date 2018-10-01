@@ -1,0 +1,19 @@
+.z-grid {
+    border: 1px solid #ccc;
+    overflow: hidden;
+    zoom: 1;
+}
+body,.content-report {
+	padding: 30px !important;
+}
+.z-grid-footer {
+    border-top: 1px solid #ccc;
+    background: #f5f5f5;
+    overflow: hidden;
+}
+.z-grid-header, .z-grid-body, .z-grid-footer {
+	width:100%;
+}
+.z-grid-footer {
+	background: #fff !important;
+}

@@ -1,0 +1,25 @@
+<div style="height:100%" xmlns:n="native" xmlns:zk="zk" xmlns:z="zul"
+	xmlns:x="xhtml" xmlns:w="client" style="background:#f9fafa;">
+	<style>
+		#gioithieuLocation{
+			opacity:0;
+			transition:all 1s ease;
+		}
+	</style>
+	<div class="item-details row" id="gioithieuLocation">
+		<z:div class="col-md-12 thongtin-details" zk:visible="@load(vm.detail.details ne '')" children="@load(vm.detail)">
+			<template name="children">
+				<n:span>${each.details}</n:span>
+			</template>
+		</z:div>
+		<z:div class="col-md-12" zk:visible="@load(vm.detail.details eq '')">
+			<div class="update-css">
+				<h6 style="text-align:center;padding-bottom:15px;">Nội dung đang được cập nhật</h6>
+				<img src="/assets/frontend/image/nono.png" width="130px"
+					style="display:block;margin:auto">
+				</img>
+			</div>
+		</z:div>
+	</div>
+	
+</div>

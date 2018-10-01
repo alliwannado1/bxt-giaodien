@@ -1,0 +1,74 @@
+package vn.toancauxanh.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.zul.Window;
+
+import com.querydsl.jpa.impl.JPAQuery;
+
+@Entity
+@Table (name = "thuctrangditich")
+public class ThucTrangDitich extends Model<ThucTrangDitich> {
+	private String name;
+	private String description;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public ThucTrangDitich() {
+		super();
+	}
+	
+	@Command
+	public void saveThucTrangDiTich(@BindingParam("list") Object list, @BindingParam("wdn") Window wdn
+			, @BindingParam("attr") String attr) {
+		
+		save();
+		wdn.detach();
+		BindUtils.postNotifyChange(null, null, list, attr);
+		
+	}
+	
+	@Transient
+	public AbstractValidator getValidatorNameThucTrangDiTich() {
+		return new AbstractValidator() {
+			
+			@Override
+			public void validate(ValidationContext ctx) {
+				String nameTemp = (String) ctx.getProperty().getValue();
+				if (nameTemp.isEmpty()) {
+					addInvalidMessage(ctx, "Không được để trống trường này");
+				} else {
+					JPAQuery<ThucTrangDitich> q = find(ThucTrangDitich.class)
+							.where(QThucTrangDitich.thucTrangDitich.daXoa.isFalse())
+							.where(QThucTrangDitich.thucTrangDitich.trangThai.ne(core().TT_DA_XOA))
+							.where(QThucTrangDitich.thucTrangDitich.name.eq(nameTemp))
+							;
+					if (!ThucTrangDitich.this.noId()) {
+						q.where(QThucTrangDitich.thucTrangDitich.id.ne(getId()));
+					}
+					
+					if (q.fetchCount() > 0) {
+						addInvalidMessage(ctx, "Đã tồn tại thực trạng di tích này");
+					}
+				}
+			}
+		};
+	}
+	
+}
